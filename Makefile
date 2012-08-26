@@ -1,0 +1,36 @@
+##### Configuration parts that you can modify
+CC       = gcc
+CFLAGS   = -Wall
+CXX      = g++
+CXXFLAGS = -Wall
+LD       = g++
+LDFLAGS  =
+LIBS     =
+
+ifdef RELEASE
+CFLAGS   += -O3
+CXXFLAGS += -O3
+STRIP     = lxlite /B- /L- /CS
+else
+CFLAGS   += -O0 -g -DDEBUG
+CXXFLAGS += -O0 -g -DDEBUG
+LDFLAGS  += -g
+STRIP     = echo
+endif
+
+RC      = rc
+RCFLAGS = -n
+
+RM = rm -f
+
+PROGRAM     = kpmw
+PROGRAM_EXT = .exe
+
+OBJ_EXT = .o
+
+CSRCS   =
+CXXSRCS = kpmw.cpp KPMApp.cpp KWindow.cpp KFrameWindow.cpp KDialog.cpp \
+          KStaticText.cpp KButton.cpp
+
+include Makefile.common
+
