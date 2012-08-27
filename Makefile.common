@@ -3,7 +3,9 @@
 
 .SUFFIXES : .exe .dll .a .lib .o .obj .res .c .cpp .h .rc .d
 
-ifndef RELEASE
+ifdef RELEASE
+LDFLAGS += -s
+else
 LDFLAGS += -Zomf
 endif
 
