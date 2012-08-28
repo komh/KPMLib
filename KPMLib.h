@@ -7,5 +7,8 @@
 #include "KDialog.h"
 #include "KStaticText.h"
 #include "KButton.h"
+#include "KScrollBar.h"
+#include "KMenu.h"
+#include "KTitleBar.h"
 
 #endif
