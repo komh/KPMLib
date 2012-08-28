@@ -1,9 +1,9 @@
 #ifndef KDIALOG_H
 #define KDIALOG_H
 
-#include "KWindow.h"
+#include "KFrameWindow.h"
 
-class KDialog : public KWindow
+class KDialog : public KFrameWindow
 {
 public :
     KDialog();
@@ -28,7 +28,7 @@ protected :
 
 private :
     ULONG _ulResult;
-    
+
     MRESULT KDefDlgProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     { return WinDefDlgProc( _hwnd, msg, mp1, mp2 ); }
 };

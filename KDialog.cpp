@@ -9,7 +9,7 @@ struct CreateParams
     KDialog* pkdlg;
 };
 
-KDialog::KDialog() : KWindow()
+KDialog::KDialog() : KFrameWindow()
 {
     _ulResult = 0;
 }
