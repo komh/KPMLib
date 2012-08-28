@@ -57,7 +57,7 @@ MRESULT KMyDialog::OnInitDlg( HWND hwndFocus, PVOID pCreate )
 
     WindowFromID( DID_CANCEL, _kbtCancel );
     _kbtCancel.SetWindowText( PMLITERAL("Exit"));
-    
+
     return FALSE;
 }
 

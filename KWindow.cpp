@@ -140,7 +140,7 @@ bool KWindow::WindowFromID( ULONG id, KWindow& kwnd )
         return false;
 
     kwnd.SetHWND( hwnd );
-    
+
     return true;
 }
 
