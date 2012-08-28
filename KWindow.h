@@ -29,6 +29,7 @@ public :
     virtual bool DestroyWindow();
     virtual bool SetWindowText( PCSZ pcszString );
     virtual bool WindowFromID( ULONG id, KWindow& kwnd );
+    virtual bool ShowWindow( BOOL fNewVisibility );
 
     HWND GetHWND() const { return _hwnd; }
     PCSZ GetClassName() const { return _pcszClassName; }

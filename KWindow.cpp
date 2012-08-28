@@ -144,6 +144,11 @@ bool KWindow::WindowFromID( ULONG id, KWindow& kwnd )
     return true;
 }
 
+bool KWindow::ShowWindow( BOOL fNewVisibility )
+{
+    return WinShowWindow( _hwnd, fNewVisibility );
+}
+
 MRESULT EXPENTRY KWindow::WndProc( HWND hwnd, ULONG msg, MPARAM mp1,
                                    MPARAM mp2 )
 {
