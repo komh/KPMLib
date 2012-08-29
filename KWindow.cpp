@@ -174,7 +174,13 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
 {
     switch( msg )
     {
-        case WM_PAINT : return OnPaint();
+        case WM_PAINT   : return OnPaint();
+        case WM_COMMAND : return OnCommand( SHORT1FROMMP( mp1 ),
+                                            SHORT1FROMMP( mp2 ),
+                                            SHORT2FROMMP( mp2 ));
+        case WM_CONTROL : return OnControl( SHORT1FROMMP( mp1 ),
+                                            SHORT2FROMMP( mp1 ),
+                                            LONGFROMMP( mp2 ));
     }
 
     return KDefWndProc( msg, mp1, mp2 );
@@ -183,5 +189,48 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
 MRESULT KWindow::OnPaint()
 {
     return KDefWndProc( WM_PAINT, 0, 0 );
+}
+
+MRESULT KWindow::OnCommand( USHORT usCmd, USHORT usSource, USHORT usPointer )
+{
+    switch( usSource )
+    {
+        case CMDSRC_PUSHBUTTON : return CmdSrcPushButton( usCmd, usPointer );
+    }
+
+    return 0;
+}
+
+MRESULT KWindow::CmdSrcPushButton( USHORT usCmd, USHORT usPointer )
+{
+    return 0;
+}
+
+MRESULT KWindow::OnControl( USHORT id, USHORT usNotifyCode,
+                            ULONG ulControlSpec )
+{
+    switch( usNotifyCode )
+    {
+        case BN_CLICKED    : return BnClicked( id );
+        case BN_DBLCLICKED : return BnDblClicked( id );
+        case BN_PAINT      : return BnPaint( id, ulControlSpec );
+    }
+
+    return 0;
+}
+
+MRESULT KWindow::BnClicked( USHORT id )
+{
+    return 0;
+}
+
+MRESULT KWindow::BnDblClicked( USHORT id )
+{
+    return 0;
+}
+
+MRESULT KWindow::BnPaint( USHORT id, ULONG ulControlSpec )
+{
+    return 0;
 }
 

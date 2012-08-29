@@ -30,6 +30,17 @@ public :
     virtual bool SetWindowText( PCSZ pcszString );
     virtual bool WindowFromID( ULONG id, KWindow& kwnd );
     virtual bool ShowWindow( BOOL fNewVisibility );
+    virtual ULONG MessageBox( PCSZ pcszText, PCSZ pcszCaption, ULONG flStyle )
+    {
+        return WinMessageBox( HWND_DESKTOP, _hwnd, pcszText, pcszCaption,
+                              0xFFFF, flStyle );
+    }
+    virtual ULONG MessageBox( PCSZ pcszText, PCSZ pcszCaption, ULONG id,
+                              ULONG flStyle )
+    {
+        return WinMessageBox( HWND_DESKTOP, _hwnd, pcszText, pcszCaption,
+                              id, flStyle );
+    }
 
     HWND GetHWND() const { return _hwnd; }
     PCSZ GetClassName() const { return _pcszClassName; }
@@ -48,6 +59,16 @@ protected :
 
     virtual MRESULT KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 );
     virtual MRESULT OnPaint();
+
+    virtual MRESULT OnCommand( USHORT usCmd, USHORT usSource,
+                               USHORT usPointer );
+    virtual MRESULT CmdSrcPushButton( USHORT usCmd, USHORT usPointer );
+
+    virtual MRESULT OnControl( USHORT id, USHORT usNotifyCode,
+                                ULONG ulControlSpec );
+    virtual MRESULT BnClicked( USHORT id );
+    virtual MRESULT BnDblClicked( USHORT id );
+    virtual MRESULT BnPaint( USHORT id, ULONG ulControlSpec );
 
 private :
     PFNWP _pfnwpOldProc;
