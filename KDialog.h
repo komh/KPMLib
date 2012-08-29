@@ -20,6 +20,8 @@ public :
     ULONG GetResult() const { return _ulResult; }
 
 protected :
+    ULONG _ulResult;
+
     static MRESULT EXPENTRY DlgProc( HWND hwndDlg, ULONG msg, MPARAM mp1,
                                      MPARAM mp2 );
 
@@ -27,8 +29,6 @@ protected :
     virtual MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate );
 
 private :
-    ULONG _ulResult;
-
     MRESULT KDefDlgProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     { return WinDefDlgProc( _hwnd, msg, mp1, mp2 ); }
 };
