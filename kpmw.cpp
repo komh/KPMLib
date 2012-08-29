@@ -72,6 +72,7 @@ void KMyPMApp::Run()
 #if 1
     KFrameWindow    kframe;
     KMyClientWindow kclient;
+    KButton         kbtn;
 
     kclient.RegisterClass( _hab, PMLITERAL( WC_KPMW ), CS_SIZEREDRAW,
                            sizeof( PVOID ));
@@ -88,6 +89,10 @@ void KMyPMApp::Run()
                             ID_KPMW,                // frame window id
                             kclient                 // client window handle
                           );
+
+
+    kbtn.CreateWindow( &kclient, PMLITERAL("My OK"), WS_VISIBLE | BS_PUSHBUTTON,
+                       10, 10, 100, 100, &kclient, KWND_TOP, DID_OK );
 
     KPMApp::Run();
 
