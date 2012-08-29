@@ -25,7 +25,7 @@ public :
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
-                               PVOID pCtlData, PVOID pPresParams );
+                               PVOID pCtlData = 0, PVOID pPresParams = 0 );
     virtual bool DestroyWindow();
     virtual bool SetWindowText( PCSZ pcszString );
     virtual bool WindowFromID( ULONG id, KWindow& kwnd );
