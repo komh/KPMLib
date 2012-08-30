@@ -29,45 +29,45 @@ bool KButton::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
 
 bool KButton::AutoSize()
 {
-    return WinSendMsg( _hwnd, BM_AUTOSIZE, 0, 0 );
+    return SendMsg( BM_AUTOSIZE, 0, 0 );
 }
 
 void KButton::Click( bool fUp )
 {
-    WinSendMsg( _hwnd, BM_CLICK, MPFROMLONG( fUp ), 0 );
+    SendMsg( BM_CLICK, MPFROMLONG( fUp ), 0 );
 }
 
 KButton::CheckState KButton::QueryCheck()
 {
     return static_cast< CheckState >
-                ( LONGFROMMR( WinSendMsg( _hwnd, BM_QUERYCHECK, 0, 0 )));
+                ( LONGFROMMR( SendMsg( BM_QUERYCHECK, 0, 0 )));
 }
 
 int KButton::QueryCheckIndex()
 {
-    return LONGFROMMR( WinSendMsg( _hwnd, BM_QUERYCHECKINDEX, 0, 0 ));
+    return LONGFROMMR( SendMsg( BM_QUERYCHECKINDEX, 0, 0 ));
 }
 
 bool KButton::QueryHilite()
 {
-    return WinSendMsg( _hwnd, BM_QUERYHILITE, 0, 0 );
+    return SendMsg( BM_QUERYHILITE, 0, 0 );
 }
 
 KButton::CheckState KButton::SetCheck( CheckState bcsNew )
 {
     return static_cast< CheckState >
-                ( LONGFROMMR( WinSendMsg( _hwnd, BM_SETCHECK,
+                ( LONGFROMMR( SendMsg( BM_SETCHECK,
                                           MPFROMLONG( bcsNew ), 0 )));
 }
 
 bool KButton::SetDefault( bool fDefault )
 {
-    return WinSendMsg( _hwnd, BM_SETDEFAULT, MPFROMLONG( fDefault ), 0 );
+    return SendMsg( BM_SETDEFAULT, MPFROMLONG( fDefault ), 0 );
 }
 
 bool KButton::SetHilite( bool fHilite )
 {
-    return WinSendMsg( _hwnd, BM_SETHILITE, MPFROMLONG( fHilite ), 0 );
+    return SendMsg( BM_SETHILITE, MPFROMLONG( fHilite ), 0 );
 }
 
 
