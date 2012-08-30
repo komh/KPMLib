@@ -43,12 +43,12 @@ public :
     }
     virtual MRESULT SendMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
     {   return WinSendMsg( _hwnd, ulMsg, mp1, mp2 ); }
+    virtual HAB QueryAnchorBlock() { return WinQueryAnchorBlock( _hwnd ); }
 
     HWND GetHWND() const { return _hwnd; }
     PCSZ GetClassName() const { return _pcszClassName; }
 
 protected :
-    HAB      _hab;
     KWindow* _pkwndP;
     KWindow* _pkwndO;
     HWND     _hwnd;

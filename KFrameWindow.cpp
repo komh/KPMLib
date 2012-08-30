@@ -32,8 +32,6 @@ bool KFrameWindow::CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
     CreateWindow( pkwndP, pcszTitle, flStyle, 0, 0, 0, 0, 0,
                   KWND_TOP, ulId, &fcd, 0 );
 
-    _hab = WinQueryAnchorBlock( _hwnd );
-
     kwndClient.CreateWindow( this, PMLITERAL(""),
                              flClientStyle,
                              0, 0, 0, 0, this, KWND_TOP, FID_CLIENT,
@@ -50,7 +48,7 @@ bool KFrameWindow::CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
     if( *pflCreateFlags & FCF_SHELLPOSITION )
     {
         SWP swp;
-        WinQueryTaskSizePos( _hab, 0, &swp );
+        WinQueryTaskSizePos( QueryAnchorBlock(), 0, &swp );
         WinSetWindowPos( _hwnd, HWND_TOP, swp.x, swp.y, swp.cx, swp.cy,
                          SWP_MOVE | SWP_SIZE );
     }

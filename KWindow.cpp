@@ -25,7 +25,6 @@ HWND pkwnd2hwnd( const KWindow* kwnd )
 
 KWindow::KWindow()
 {
-    _hab           = 0;
     _pkwndP        = 0;
     _pkwndO        = 0;
     _hwnd          = 0;
@@ -62,8 +61,6 @@ void KWindow::SetHWND( HWND hwnd )
         _pfnwpOldProc = WinSubclassWindow( hwnd, WndProc );
     }
 
-    _hab = WinQueryAnchorBlock( hwnd );
-
     _pkwndP = new KWindow;
     _pkwndP->SetHWND( WinQueryWindow( hwnd, QW_PARENT ));
 
@@ -80,7 +77,6 @@ void KWindow::SetHWND( HWND hwnd )
 bool KWindow::RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
                              ULONG cbWindowData )
 {
-    _hab           = hab;
     _pcszClassName = reinterpret_cast< PCSZ >(
                         strdup( reinterpret_cast< const char * >
                                     ( pcszClassName )));
