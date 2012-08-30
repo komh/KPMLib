@@ -6,7 +6,7 @@
 class KStaticText : public KWindow
 {
 public :
-    KStaticText();
-    virtual ~KStaticText();
+    KStaticText() : KWindow() {};
+    virtual ~KStaticText() {};
 };
 #endif

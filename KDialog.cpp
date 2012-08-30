@@ -52,16 +52,6 @@ void KDialog::DlgBox( KWindow* pkwndP, KWindow* pkwndO, HMODULE hmod,
     _ulResult = WinDlgBox( hwndP, hwndO, DlgProc, hmod, idDlg, &cp );
 }
 
-void KDialog::ProcessDlg()
-{
-    _ulResult = WinProcessDlg( _hwnd );
-}
-
-bool KDialog::DismissDlg( ULONG ulResult )
-{
-    return WinDismissDlg( _hwnd, ulResult );
-}
-
 MRESULT EXPENTRY KDialog::DlgProc( HWND hwndDlg, ULONG msg, MPARAM mp1,
                                    MPARAM mp2 )
 {
@@ -95,8 +85,3 @@ MRESULT KDialog::KDlgProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     return KDefDlgProc( msg, mp1, mp2 );
 }
 
-MRESULT KDialog::OnInitDlg( HWND hwndFocus, PVOID pCreate )
-{
-    return KDefDlgProc( WM_INITDLG, MPFROMHWND( hwndFocus ),
-                        MPFROMP( pCreate ));
-}

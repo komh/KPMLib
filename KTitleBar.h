@@ -6,7 +6,7 @@
 class KTitleBar : public KWindow
 {
 public :
-    KTitleBar();
-    virtual ~KTitleBar();
+    KTitleBar() : KWindow() {};
+    virtual ~KTitleBar() {};
 };
 #endif

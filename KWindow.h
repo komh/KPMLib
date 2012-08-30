@@ -24,10 +24,14 @@ public :
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
-    virtual bool DestroyWindow();
-    virtual bool SetWindowText( PCSZ pcszString );
+    virtual bool DestroyWindow() { return WinDestroyWindow( _hwnd ); }
+    virtual bool SetWindowText( PCSZ pcszString )
+    { return WinSetWindowText( _hwnd, pcszString ); }
+
     virtual bool WindowFromID( ULONG id, KWindow& kwnd );
-    virtual bool ShowWindow( BOOL fNewVisibility );
+    virtual bool ShowWindow( BOOL fNewVisibility )
+    { return WinShowWindow( _hwnd, fNewVisibility ); }
+
     virtual ULONG MessageBox( PCSZ pcszText, PCSZ pcszCaption, ULONG flStyle )
     {
         return WinMessageBox( HWND_DESKTOP, _hwnd, pcszText, pcszCaption,
@@ -65,17 +69,17 @@ protected :
                                      MPARAM mp2 );
 
     virtual MRESULT KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 );
-    virtual MRESULT OnPaint();
-
+    virtual MRESULT OnPaint() { return KDefWndProc( WM_PAINT, 0, 0 ); }
     virtual MRESULT OnCommand( USHORT usCmd, USHORT usSource,
                                USHORT usPointer );
-    virtual MRESULT CmdSrcPushButton( USHORT usCmd, USHORT usPointer );
+    virtual MRESULT CmdSrcPushButton( USHORT usCmd, USHORT usPointer )
+    { return 0; }
 
     virtual MRESULT OnControl( USHORT id, USHORT usNotifyCode,
                                 ULONG ulControlSpec );
-    virtual MRESULT BnClicked( USHORT id );
-    virtual MRESULT BnDblClicked( USHORT id );
-    virtual MRESULT BnPaint( USHORT id, ULONG ulControlSpec );
+    virtual MRESULT BnClicked( USHORT id ) { return 0; }
+    virtual MRESULT BnDblClicked( USHORT id ) { return 0; }
+    virtual MRESULT BnPaint( USHORT id, ULONG ulControlSpec ) { return 0; }
 
 private :
     PFNWP _pfnwpOldProc;

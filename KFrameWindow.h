@@ -12,8 +12,8 @@
 class KFrameWindow : public KWindow
 {
 public :
-    KFrameWindow();
-    virtual ~KFrameWindow();
+    KFrameWindow() : KWindow() {}
+    virtual ~KFrameWindow() {}
 
     virtual bool CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
                                   PULONG pflCreateFlags,

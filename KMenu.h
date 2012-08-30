@@ -6,7 +6,7 @@
 class KMenu : public KWindow
 {
 public :
-    KMenu();
-    virtual ~KMenu();
+    KMenu() : KWindow() {};
+    virtual ~KMenu() {};
 };
 #endif

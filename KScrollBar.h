@@ -6,7 +6,7 @@
 class KScrollBar : public KWindow
 {
 public :
-    KScrollBar();
-    virtual ~KScrollBar();
+    KScrollBar() : KWindow() {};
+    virtual ~KScrollBar() {};
 };
 #endif

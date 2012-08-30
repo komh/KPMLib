@@ -101,15 +101,6 @@ bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
     return _hwnd;
 }
 
-bool KWindow::DestroyWindow()
-{
-    return WinDestroyWindow( _hwnd );
-}
-
-bool KWindow::SetWindowText( PCSZ pcszString )
-{
-    return WinSetWindowText( _hwnd, pcszString );
-}
 
 bool KWindow::WindowFromID( ULONG id, KWindow& kwnd )
 {
@@ -122,11 +113,6 @@ bool KWindow::WindowFromID( ULONG id, KWindow& kwnd )
     kwnd.SetHWND( hwnd );
 
     return true;
-}
-
-bool KWindow::ShowWindow( BOOL fNewVisibility )
-{
-    return WinShowWindow( _hwnd, fNewVisibility );
 }
 
 MRESULT EXPENTRY KWindow::WndProc( HWND hwnd, ULONG msg, MPARAM mp1,
@@ -166,11 +152,6 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     return KDefWndProc( msg, mp1, mp2 );
 }
 
-MRESULT KWindow::OnPaint()
-{
-    return KDefWndProc( WM_PAINT, 0, 0 );
-}
-
 MRESULT KWindow::OnCommand( USHORT usCmd, USHORT usSource, USHORT usPointer )
 {
     switch( usSource )
@@ -178,11 +159,6 @@ MRESULT KWindow::OnCommand( USHORT usCmd, USHORT usSource, USHORT usPointer )
         case CMDSRC_PUSHBUTTON : return CmdSrcPushButton( usCmd, usPointer );
     }
 
-    return 0;
-}
-
-MRESULT KWindow::CmdSrcPushButton( USHORT usCmd, USHORT usPointer )
-{
     return 0;
 }
 
@@ -196,21 +172,6 @@ MRESULT KWindow::OnControl( USHORT id, USHORT usNotifyCode,
         case BN_PAINT      : return BnPaint( id, ulControlSpec );
     }
 
-    return 0;
-}
-
-MRESULT KWindow::BnClicked( USHORT id )
-{
-    return 0;
-}
-
-MRESULT KWindow::BnDblClicked( USHORT id )
-{
-    return 0;
-}
-
-MRESULT KWindow::BnPaint( USHORT id, ULONG ulControlSpec )
-{
     return 0;
 }
 

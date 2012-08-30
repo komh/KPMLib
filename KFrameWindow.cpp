@@ -7,14 +7,6 @@
 #include "KWindow.h"
 #include "KFrameWindow.h"
 
-KFrameWindow::KFrameWindow() : KWindow()
-{
-}
-
-KFrameWindow::~KFrameWindow()
-{
-}
-
 bool KFrameWindow::CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
                                     PULONG pflCreateFlags,
                                     PCSZ pcszTitle, ULONG flClientStyle,
