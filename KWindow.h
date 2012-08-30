@@ -44,6 +44,12 @@ public :
     virtual MRESULT SendMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
     {   return WinSendMsg( _hwnd, ulMsg, mp1, mp2 ); }
     virtual HAB QueryAnchorBlock() { return WinQueryAnchorBlock( _hwnd ); }
+    virtual ULONG QueryTaskSizePos( PSWP pswp )
+    { return WinQueryTaskSizePos( QueryAnchorBlock(), 0, pswp ); }
+    virtual bool SetWindowPos( KWindow* pkwndRel, LONG x, LONG y,
+                               LONG cx, LONG cy, ULONG fl )
+    { return WinSetWindowPos( _hwnd, pkwnd2hwnd( pkwndRel ),
+                              x, y, cx, cy, fl ); }
 
     HWND GetHWND() const { return _hwnd; }
     PCSZ GetClassName() const { return _pcszClassName; }

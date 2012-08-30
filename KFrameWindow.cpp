@@ -48,9 +48,9 @@ bool KFrameWindow::CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
     if( *pflCreateFlags & FCF_SHELLPOSITION )
     {
         SWP swp;
-        WinQueryTaskSizePos( QueryAnchorBlock(), 0, &swp );
-        WinSetWindowPos( _hwnd, HWND_TOP, swp.x, swp.y, swp.cx, swp.cy,
-                         SWP_MOVE | SWP_SIZE );
+        QueryTaskSizePos( &swp );
+        SetWindowPos( KWND_TOP, swp.x, swp.y, swp.cx, swp.cy,
+                      SWP_MOVE | SWP_SIZE );
     }
 
     return true;
