@@ -17,10 +17,8 @@ public :
     KWindow();
     virtual ~KWindow();
 
-    virtual void SetHWND( HWND hwnd );
     virtual bool RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
                                 ULONG cbWindowData );
-    virtual void SetClassName( PCSZ pcszClassName );
     virtual bool CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
@@ -52,7 +50,10 @@ public :
                               x, y, cx, cy, fl ); }
 
     HWND GetHWND() const { return _hwnd; }
+    virtual void SetHWND( HWND hwnd );
+
     PCSZ GetClassName() const { return _pcszClassName; }
+    virtual void SetClassName( PCSZ pcszClassName );
 
 protected :
     HWND     _hwnd;
