@@ -49,8 +49,6 @@ public :
     PCSZ GetClassName() const { return _pcszClassName; }
 
 protected :
-    KWindow* _pkwndP;
-    KWindow* _pkwndO;
     HWND     _hwnd;
     PCSZ     _pcszClassName;
 

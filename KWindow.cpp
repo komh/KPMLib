@@ -25,8 +25,6 @@ HWND pkwnd2hwnd( const KWindow* kwnd )
 
 KWindow::KWindow()
 {
-    _pkwndP        = 0;
-    _pkwndO        = 0;
     _hwnd          = 0;
     _pcszClassName = 0;
     _pfnwpOldProc  = 0;
@@ -35,12 +33,7 @@ KWindow::KWindow()
 KWindow::~KWindow()
 {
     if( _pfnwpOldProc )
-    {
         WinSubclassWindow( _hwnd, _pfnwpOldProc );
-
-        delete _pkwndP;
-        delete _pkwndO;
-    }
 
     if( HIUSHORT( _pcszClassName ) != 0xFFFF )
         free( reinterpret_cast< void * >( const_cast< PSZ >
@@ -60,12 +53,6 @@ void KWindow::SetHWND( HWND hwnd )
 
         _pfnwpOldProc = WinSubclassWindow( hwnd, WndProc );
     }
-
-    _pkwndP = new KWindow;
-    _pkwndP->SetHWND( WinQueryWindow( hwnd, QW_PARENT ));
-
-    _pkwndO = new KWindow;
-    _pkwndO->SetHWND( WinQueryWindow( hwnd, QW_OWNER ));
 
     UCHAR szClassName[ 512 ];
     WinQueryClassName( hwnd, sizeof( szClassName ), szClassName );
@@ -101,9 +88,6 @@ bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                             const KWindow* pkwndO, const KWindow* pkwndS,
                             ULONG id, PVOID pCtlData, PVOID pPresParams )
 {
-    _pkwndP = const_cast< KWindow* >( pkwndP );
-    _pkwndO = const_cast< KWindow* >( pkwndO );
-
     HWND hwndP = pkwnd2hwnd( pkwndP );
     HWND hwndO = pkwnd2hwnd( pkwndO );
     HWND hwndS = pkwnd2hwnd( pkwndS );
