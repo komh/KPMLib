@@ -17,4 +17,3 @@ bool KButton::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                                   pkwndO, pkwndS, id, pCtlData, pPresParams );
 }
 
-

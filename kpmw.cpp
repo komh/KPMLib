@@ -130,10 +130,10 @@ void KMyPMApp::Run()
 #ifdef USE_FRAMEWINDOW
     KFrameWindow    kframe;
     KMyClientWindow kclient;
-    KButton         kbtnPush;
-    KButton         kbtnRadio;
-    KButton         kbtnCheckBox;
-    KButton         kbtn3State;
+    KPushButton     kbtnPush;
+    KRadioButton    kbtnRadio;
+    KCheckBox       kbtnCheckBox;
+    K3State         kbtn3State;
 
     kclient.RegisterClass( _hab, PMLITERAL( WC_KPMW ), CS_SIZEREDRAW,
                            sizeof( PVOID ));
@@ -153,22 +153,22 @@ void KMyPMApp::Run()
 
 
     kbtnPush.CreateWindow( &kclient, PMLITERAL("My Push"),
-                           WS_VISIBLE | BS_PUSHBUTTON,
+                           WS_VISIBLE,
                            10, 10, 100, 100, &kclient, KWND_TOP,
                            IDB_MYPUSH );
 
     kbtnRadio.CreateWindow( &kclient, PMLITERAL("My Radio"),
-                            WS_VISIBLE | BS_RADIOBUTTON,
+                            WS_VISIBLE,
                             110, 10, 100, 100, &kclient, KWND_TOP,
                             IDB_MYRADIO );
 
     kbtnCheckBox.CreateWindow( &kclient, PMLITERAL("My CheckBox"),
-                            WS_VISIBLE | BS_CHECKBOX,
+                            WS_VISIBLE,
                             210, 10, 100, 100, &kclient, KWND_TOP,
                             IDB_MYCHECKBOX );
 
     kbtn3State.CreateWindow( &kclient, PMLITERAL("My 3-State"),
-                             WS_VISIBLE | BS_3STATE,
+                             WS_VISIBLE,
                              310, 10, 100, 100, &kclient, KWND_TOP,
                              IDB_MY3STATE );
 
