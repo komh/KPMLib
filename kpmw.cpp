@@ -123,9 +123,11 @@ public :
     virtual void Run();
 };
 
+#define USE_FRAMEWINDOW
+
 void KMyPMApp::Run()
 {
-#if 1
+#ifdef USE_FRAMEWINDOW
     KFrameWindow    kframe;
     KMyClientWindow kclient;
     KButton         kbtnPush;
