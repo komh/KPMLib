@@ -1,21 +1,23 @@
 #define INCL_WIN
 #include <os2.h>
 
-#include "KButton.h"
+#include "K3State.h"
 
-bool KButton::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
+bool K3State::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                             ULONG flWindowStyle, ULONG flButtonStyle,
                             LONG x, LONG y, LONG cx, LONG cy,
                             const KWindow* pkwndO, const KWindow* pkwndS,
                             ULONG id, PVOID pCtlData, PVOID pPresParams )
 {
-    SetClassName( PMLITERAL( WC_BUTTON ));
+    ULONG flPrimaryStyle = flButtonStyle & BS_PRIMARYSTYLES;
 
-    if( ! flButtonStyle )
-        flButtonStyle = BS_PUSHBUTTON;
+    if( flPrimaryStyle != BS_3STATE && flPrimaryStyle != BS_AUTO3STATE )
+        flPrimaryStyle = BS_3STATE;
 
-    flWindowStyle |= flButtonStyle;
-    return KWindow::CreateWindow( pkwndP, pcszName, flWindowStyle,
+    flButtonStyle |= ( flButtonStyle & ~BS_PRIMARYSTYLES ) | flPrimaryStyle;
+
+    return KButton::CreateWindow( pkwndP, pcszName,
+                                  flWindowStyle, flButtonStyle,
                                   x, y, cx, cy, pkwndO, pkwndS, id,
                                   pCtlData, pPresParams );
 }

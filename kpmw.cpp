@@ -151,24 +151,23 @@ void KMyPMApp::Run()
                             kclient                 // client window handle
                           );
 
-
     kbtnPush.CreateWindow( &kclient, PMLITERAL("My Push"),
-                           WS_VISIBLE,
+                           WS_VISIBLE, 0,
                            10, 10, 100, 100, &kclient, KWND_TOP,
                            IDB_MYPUSH );
 
     kbtnRadio.CreateWindow( &kclient, PMLITERAL("My Radio"),
-                            WS_VISIBLE,
+                            WS_VISIBLE, 0,
                             110, 10, 100, 100, &kclient, KWND_TOP,
                             IDB_MYRADIO );
 
     kbtnCheckBox.CreateWindow( &kclient, PMLITERAL("My CheckBox"),
-                            WS_VISIBLE,
+                            WS_VISIBLE, 0,
                             210, 10, 100, 100, &kclient, KWND_TOP,
                             IDB_MYCHECKBOX );
 
     kbtn3State.CreateWindow( &kclient, PMLITERAL("My 3-State"),
-                             WS_VISIBLE,
+                             WS_VISIBLE, BS_AUTO3STATE,
                              310, 10, 100, 100, &kclient, KWND_TOP,
                              IDB_MY3STATE );
 
