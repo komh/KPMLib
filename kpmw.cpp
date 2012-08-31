@@ -228,9 +228,9 @@ void KMyPMApp::Run()
                             IDB_MYRADIO );
 
     kbtnCheckBox.CreateWindow( &kclient, PMLITERAL("My CheckBox"),
-                            WS_VISIBLE | BS_CHECKBOX,
-                            210, 10, 100, 100, &kclient, KWND_TOP,
-                            IDB_MYCHECKBOX );
+                               WS_VISIBLE | BS_CHECKBOX,
+                               210, 10, 100, 100, &kclient, KWND_TOP,
+                               IDB_MYCHECKBOX );
 
     kbtn3State.CreateWindow( &kclient, PMLITERAL("My 3-State"),
                              WS_VISIBLE | BS_3STATE,
