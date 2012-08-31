@@ -81,6 +81,12 @@ protected :
     virtual MRESULT BnDblClicked( USHORT id ) { return 0; }
     virtual MRESULT BnPaint( USHORT id, ULONG ulControlSpec ) { return 0; }
 
+    virtual MRESULT OnHScroll( ULONG id, LONG lSlider, ULONG ulCmd )
+    { return 0; }
+
+    virtual MRESULT OnVScroll( ULONG id, LONG lSlider, ULONG ulCmd )
+    { return 0; }
+
 private :
     PFNWP _pfnwpOldProc;
 

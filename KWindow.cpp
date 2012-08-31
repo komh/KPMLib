@@ -147,6 +147,12 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
         case WM_CONTROL : return OnControl( SHORT1FROMMP( mp1 ),
                                             SHORT2FROMMP( mp1 ),
                                             LONGFROMMP( mp2 ));
+        case WM_HSCROLL : return OnHScroll( SHORT1FROMMP( mp1 ),
+                                            SHORT1FROMMP( mp2 ),
+                                            SHORT2FROMMP( mp2 ));
+        case WM_VSCROLL : return OnVScroll( SHORT1FROMMP( mp1 ),
+                                            SHORT1FROMMP( mp2 ),
+                                            SHORT2FROMMP( mp2 ));
     }
 
     return KDefWndProc( msg, mp1, mp2 );
