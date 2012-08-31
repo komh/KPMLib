@@ -70,16 +70,16 @@ protected :
 
     virtual MRESULT KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 );
     virtual MRESULT OnPaint() { return KDefWndProc( WM_PAINT, 0, 0 ); }
-    virtual MRESULT OnCommand( USHORT usCmd, USHORT usSource,
-                               USHORT usPointer );
-    virtual MRESULT CmdSrcPushButton( USHORT usCmd, USHORT usPointer )
+    virtual MRESULT OnCommand( ULONG ulCmd, ULONG ulSource,
+                               ULONG ulPointer );
+    virtual MRESULT CmdSrcPushButton( ULONG ulCmd, ULONG ulPointer )
     { return 0; }
 
-    virtual MRESULT OnControl( USHORT id, USHORT usNotifyCode,
-                                ULONG ulControlSpec );
-    virtual MRESULT BnClicked( USHORT id ) { return 0; }
-    virtual MRESULT BnDblClicked( USHORT id ) { return 0; }
-    virtual MRESULT BnPaint( USHORT id, ULONG ulControlSpec ) { return 0; }
+    virtual MRESULT OnControl( ULONG id, ULONG ulNotifyCode,
+                               ULONG ulControlSpec );
+    virtual MRESULT BnClicked( ULONG id ) { return 0; }
+    virtual MRESULT BnDblClicked( ULONG id ) { return 0; }
+    virtual MRESULT BnPaint( ULONG id, ULONG ulControlSpec ) { return 0; }
 
     virtual MRESULT OnHScroll( ULONG id, LONG lSlider, ULONG ulCmd )
     { return 0; }

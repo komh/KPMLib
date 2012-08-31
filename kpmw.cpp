@@ -17,8 +17,8 @@ class KMyClientWindow : public KWindow
 {
 public :
     virtual MRESULT OnPaint();
-    virtual MRESULT CmdSrcPushButton( USHORT usCmd, USHORT usPointer );
-    virtual MRESULT BnClicked( USHORT id );
+    virtual MRESULT CmdSrcPushButton( ULONG ulCmd, ULONG ulPointer );
+    virtual MRESULT BnClicked( ULONG id );
 };
 
 MRESULT KMyClientWindow::OnPaint()
@@ -47,10 +47,10 @@ MRESULT KMyClientWindow::OnPaint()
     return 0;
 }
 
-MRESULT KMyClientWindow::CmdSrcPushButton( USHORT usCmd,
-                                                  USHORT usPointer )
+MRESULT KMyClientWindow::CmdSrcPushButton( ULONG ulCmd,
+                                                  ULONG ulPointer )
 {
-    switch( usCmd )
+    switch( ulCmd )
     {
         case IDB_MYPUSH :
             MessageBox( PMLITERAL("My Push button clicked"),
@@ -66,7 +66,7 @@ MRESULT KMyClientWindow::CmdSrcPushButton( USHORT usCmd,
     return 0;
 }
 
-MRESULT KMyClientWindow::BnClicked( USHORT id )
+MRESULT KMyClientWindow::BnClicked( ULONG id )
 {
     switch( id )
     {

@@ -158,20 +158,20 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     return KDefWndProc( msg, mp1, mp2 );
 }
 
-MRESULT KWindow::OnCommand( USHORT usCmd, USHORT usSource, USHORT usPointer )
+MRESULT KWindow::OnCommand( ULONG ulCmd, ULONG ulSource, ULONG ulPointer )
 {
-    switch( usSource )
+    switch( ulSource )
     {
-        case CMDSRC_PUSHBUTTON : return CmdSrcPushButton( usCmd, usPointer );
+        case CMDSRC_PUSHBUTTON : return CmdSrcPushButton( ulCmd, ulPointer );
     }
 
     return 0;
 }
 
-MRESULT KWindow::OnControl( USHORT id, USHORT usNotifyCode,
+MRESULT KWindow::OnControl( ULONG id, ULONG ulNotifyCode,
                             ULONG ulControlSpec )
 {
-    switch( usNotifyCode )
+    switch( ulNotifyCode )
     {
         case BN_CLICKED    : return BnClicked( id );
         case BN_DBLCLICKED : return BnDblClicked( id );

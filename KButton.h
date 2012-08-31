@@ -35,7 +35,7 @@ public :
                     ( LONGFROMMR( SendMsg( BM_QUERYCHECK, 0, 0 )));
     }
 
-    virtual int QueryCheckIndex()
+    virtual LONG QueryCheckIndex()
     { return LONGFROMMR( SendMsg( BM_QUERYCHECKINDEX, 0, 0 )); }
 
     virtual bool QueryHilite() { return SendMsg( BM_QUERYHILITE, 0, 0 ); }
