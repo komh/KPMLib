@@ -48,7 +48,7 @@ MRESULT KMyClientWindow::OnPaint()
 }
 
 MRESULT KMyClientWindow::CmdSrcPushButton( ULONG ulCmd,
-                                                  ULONG ulPointer )
+                                           ULONG ulPointer )
 {
     switch( ulCmd )
     {

@@ -46,7 +46,10 @@ public :
                                            MPFROMLONG( bcsNew ), 0 )));
     }
 
-    virtual bool SetDefault( bool fDefault ) { return SendMsg( BM_SETDEFAULT, MPFROMLONG( fDefault ), 0 ); }
-    virtual bool SetHilite( bool fHilite ) { return SendMsg( BM_SETHILITE, MPFROMLONG( fHilite ), 0 ); }
+    virtual bool SetDefault( bool fDefault )
+    { return SendMsg( BM_SETDEFAULT, MPFROMLONG( fDefault ), 0 ); }
+
+    virtual bool SetHilite( bool fHilite )
+    { return SendMsg( BM_SETHILITE, MPFROMLONG( fHilite ), 0 ); }
 };
 #endif
