@@ -81,11 +81,23 @@ protected :
     virtual MRESULT BnDblClicked( ULONG id ) { return 0; }
     virtual MRESULT BnPaint( ULONG id, ULONG ulControlSpec ) { return 0; }
 
-    virtual MRESULT OnHScroll( ULONG id, LONG lSlider, ULONG ulCmd )
-    { return 0; }
+    virtual MRESULT OnHScroll( ULONG id, LONG lSlider, ULONG ulCmd );
+    virtual MRESULT HSbLineLeft( ULONG id, LONG lSlider ) { return 0; }
+    virtual MRESULT HSbLineRight( ULONG id, LONG lSlider ) { return 0; }
+    virtual MRESULT HSbPageLeft( ULONG id, LONG lSlider ) { return 0; }
+    virtual MRESULT HSbPageRight( ULONG id, LONG lSlider ) { return 0; }
+    virtual MRESULT HSbSliderPosition( ULONG id, LONG lSlider ) { return 0; }
+    virtual MRESULT HSbSliderTrack( ULONG id, LONG lSlider ) { return 0; }
+    virtual MRESULT HSbEndScroll( ULONG id, LONG lSlider ) { return 0; }
 
-    virtual MRESULT OnVScroll( ULONG id, LONG lSlider, ULONG ulCmd )
-    { return 0; }
+    virtual MRESULT OnVScroll( ULONG id, LONG lSlider, ULONG ulCmd );
+    virtual MRESULT VSbLineUp( ULONG id, LONG lSlider ) { return 0; }
+    virtual MRESULT VSbLineDown( ULONG id, LONG lSlider ) { return 0; }
+    virtual MRESULT VSbPageUp( ULONG id, LONG lSlider ) { return 0; }
+    virtual MRESULT VSbPageDown( ULONG id, LONG lSlider ) { return 0; }
+    virtual MRESULT VSbSliderPosition( ULONG id, LONG lSlider ) { return 0; }
+    virtual MRESULT VSbSliderTrack( ULONG id, LONG lSlider ) { return 0; }
+    virtual MRESULT VSbEndScroll( ULONG id, LONG lSlider ) { return 0; }
 
 private :
     PFNWP _pfnwpOldProc;

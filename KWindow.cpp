@@ -181,3 +181,36 @@ MRESULT KWindow::OnControl( ULONG id, ULONG ulNotifyCode,
     return 0;
 }
 
+MRESULT KWindow::OnHScroll( ULONG id, LONG lSlider, ULONG ulCmd )
+{
+    switch( ulCmd )
+    {
+        case SB_LINELEFT       : return HSbLineLeft( id, lSlider );
+        case SB_LINERIGHT      : return HSbLineRight( id, lSlider );
+        case SB_PAGELEFT       : return HSbPageLeft( id, lSlider );
+        case SB_PAGERIGHT      : return HSbPageRight( id, lSlider );
+        case SB_SLIDERPOSITION : return HSbSliderPosition( id, lSlider );
+        case SB_SLIDERTRACK    : return HSbSliderTrack( id, lSlider );
+        case SB_ENDSCROLL      : return HSbEndScroll( id, lSlider );
+    }
+
+    return 0;
+
+}
+
+MRESULT KWindow::OnVScroll( ULONG id, LONG lSlider, ULONG ulCmd )
+{
+    switch( ulCmd )
+    {
+        case SB_LINEUP         : return VSbLineUp( id, lSlider );
+        case SB_LINEDOWN       : return VSbLineDown( id, lSlider );
+        case SB_PAGEUP         : return VSbPageUp( id, lSlider );
+        case SB_PAGEDOWN       : return VSbPageDown( id, lSlider );
+        case SB_SLIDERPOSITION : return VSbSliderPosition( id, lSlider );
+        case SB_SLIDERTRACK    : return VSbSliderTrack( id, lSlider );
+        case SB_ENDSCROLL      : return VSbEndScroll( id, lSlider );
+    }
+
+    return 0;
+}
+

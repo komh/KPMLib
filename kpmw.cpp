@@ -19,6 +19,14 @@ public :
     virtual MRESULT OnPaint();
     virtual MRESULT CmdSrcPushButton( ULONG ulCmd, ULONG ulPointer );
     virtual MRESULT BnClicked( ULONG id );
+    virtual MRESULT HSbLineLeft( ULONG id, LONG lSlider );
+    virtual MRESULT HSbLineRight( ULONG id, LONG lSlider );
+    virtual MRESULT HSbPageLeft( ULONG id, LONG lSlider );
+    virtual MRESULT HSbPageRight( ULONG id, LONG lSlider );
+    virtual MRESULT VSbLineUp( ULONG id, LONG lSlider );
+    virtual MRESULT VSbLineDown( ULONG id, LONG lSlider );
+    virtual MRESULT VSbPagUp( ULONG id, LONG lSlider );
+    virtual MRESULT VSbPageDown( ULONG id, LONG lSlider );
 };
 
 MRESULT KMyClientWindow::OnPaint()
@@ -96,6 +104,62 @@ MRESULT KMyClientWindow::BnClicked( ULONG id )
     return 0;
 }
 
+MRESULT KMyClientWindow::HSbLineLeft( ULONG id, LONG lSlider )
+{
+    MessageBox( PMLITERAL("SB_LINELEFT"), PMLITERAL("OnHScroll()"), MB_OK );
+
+    return 0;
+}
+
+MRESULT KMyClientWindow::HSbLineRight( ULONG id, LONG lSlider )
+{
+    MessageBox( PMLITERAL("SB_LINERIGHT"), PMLITERAL("OnHScroll()"), MB_OK );
+
+    return 0;
+}
+
+MRESULT KMyClientWindow::HSbPageLeft( ULONG id, LONG lSlider )
+{
+    MessageBox( PMLITERAL("SB_PAGELEFT"), PMLITERAL("OnHScroll()"), MB_OK );
+
+    return 0;
+}
+
+MRESULT KMyClientWindow::HSbPageRight( ULONG id, LONG lSlider )
+{
+    MessageBox( PMLITERAL("SB_PAGERIGHT"), PMLITERAL("OnHScroll()"), MB_OK );
+
+    return 0;
+}
+
+MRESULT KMyClientWindow::VSbLineUp( ULONG id, LONG lSlider )
+{
+    MessageBox( PMLITERAL("SB_LINEUP"), PMLITERAL("OnVScroll()"), MB_OK );
+
+    return 0;
+}
+
+MRESULT KMyClientWindow::VSbLineDown( ULONG id, LONG lSlider )
+{
+    MessageBox( PMLITERAL("SB_LINEDOWN"), PMLITERAL("OnVScroll()"), MB_OK );
+
+    return 0;
+}
+
+MRESULT KMyClientWindow::VSbPagUp( ULONG id, LONG lSlider )
+{
+    MessageBox( PMLITERAL("SB_PAGEUP"), PMLITERAL("OnVScroll()"), MB_OK );
+
+    return 0;
+}
+
+MRESULT KMyClientWindow::VSbPageDown( ULONG id, LONG lSlider )
+{
+    MessageBox( PMLITERAL("SB_PAGEDOWN"), PMLITERAL("OnVScroll()"), MB_OK );
+
+    return 0;
+}
+
 class KMyDialog : public KDialog
 {
 public :
@@ -134,6 +198,8 @@ void KMyPMApp::Run()
     KButton         kbtnRadio;
     KButton         kbtnCheckBox;
     KButton         kbtn3State;
+    KScrollBar      ksbHScroll;
+    KScrollBar      ksbVScroll;
 
     kclient.RegisterClass( _hab, PMLITERAL( WC_KPMW ), CS_SIZEREDRAW,
                            sizeof( PVOID ));
@@ -170,6 +236,18 @@ void KMyPMApp::Run()
                              WS_VISIBLE | BS_3STATE,
                              310, 10, 100, 100, &kclient, KWND_TOP,
                              IDB_MY3STATE );
+
+    ksbHScroll.CreateWindow( &kclient, PMLITERAL("HScrollBar"),
+                             WS_VISIBLE | SBS_HORZ,
+                             100, 150, 200, 30, &kclient, KWND_TOP,
+                             FID_HORZSCROLL );
+    ksbHScroll.SetScrollBar( 50, 0, 100 );
+
+    ksbVScroll.CreateWindow( &kclient, PMLITERAL("VScrollBar"),
+                             WS_VISIBLE | SBS_VERT,
+                             400, 150, 30, 200, &kclient, KWND_TOP,
+                             FID_HORZSCROLL );
+    ksbVScroll.SetScrollBar( 50, 0, 100 );
 
     KPMApp::Run();
 
