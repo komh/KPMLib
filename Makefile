@@ -30,8 +30,7 @@ OBJ_EXT = .o
 
 CSRCS   =
 CXXSRCS = kpmw.cpp KPMApp.cpp KWindow.cpp KFrameWindow.cpp KDialog.cpp \
-          KStaticText.cpp KButton.cpp KScrollBar.cpp KMenu.cpp KTitleBar.cpp \
-          KPushButton.cpp KRadioButton.cpp KCheckBox.cpp K3State.cpp
+          KStaticText.cpp KButton.cpp KScrollBar.cpp KMenu.cpp KTitleBar.cpp
 
 include Makefile.common
 
