@@ -186,7 +186,7 @@ MRESULT KMyClientWindow::VSbPageDown( ULONG id, LONG lSlider )
 class KMyDialog : public KDialog
 {
 public :
-    MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate );
+    virtual MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate );
 
 private :
     KStaticText _kstStatus;
