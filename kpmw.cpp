@@ -25,7 +25,7 @@ public :
     virtual MRESULT HSbPageRight( ULONG id, LONG lSlider );
     virtual MRESULT VSbLineUp( ULONG id, LONG lSlider );
     virtual MRESULT VSbLineDown( ULONG id, LONG lSlider );
-    virtual MRESULT VSbPagUp( ULONG id, LONG lSlider );
+    virtual MRESULT VSbPageUp( ULONG id, LONG lSlider );
     virtual MRESULT VSbPageDown( ULONG id, LONG lSlider );
 };
 
@@ -146,7 +146,7 @@ MRESULT KMyClientWindow::VSbLineDown( ULONG id, LONG lSlider )
     return 0;
 }
 
-MRESULT KMyClientWindow::VSbPagUp( ULONG id, LONG lSlider )
+MRESULT KMyClientWindow::VSbPageUp( ULONG id, LONG lSlider )
 {
     MessageBox( PMLITERAL("SB_PAGEUP"), PMLITERAL("OnVScroll()"), MB_OK );
 
