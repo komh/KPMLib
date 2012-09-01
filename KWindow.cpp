@@ -109,7 +109,6 @@ bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
     return _hwnd;
 }
 
-
 bool KWindow::WindowFromID( ULONG id, KWindow& kwnd )
 {
     HWND     hwnd;
@@ -213,7 +212,6 @@ MRESULT KWindow::OnHScroll( ULONG id, LONG lSlider, ULONG ulCmd )
     }
 
     return 0;
-
 }
 
 MRESULT KWindow::OnVScroll( ULONG id, LONG lSlider, ULONG ulCmd )
