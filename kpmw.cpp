@@ -22,7 +22,7 @@ class KMyClientWindow : public KWindow
 {
 public :
     virtual MRESULT OnPaint();
-    virtual MRESULT CmdSrcPushButton( ULONG ulCmd, ULONG ulPointer );
+    virtual MRESULT CmdSrcPushButton( ULONG ulCmd, bool fPointer );
     virtual MRESULT BnClicked( ULONG id );
     virtual MRESULT HSbLineLeft( ULONG id, LONG lSlider );
     virtual MRESULT HSbLineRight( ULONG id, LONG lSlider );
@@ -55,7 +55,7 @@ MRESULT KMyClientWindow::OnPaint()
 }
 
 MRESULT KMyClientWindow::CmdSrcPushButton( ULONG ulCmd,
-                                           ULONG ulPointer )
+                                           bool fPointer )
 {
     switch( ulCmd )
     {
@@ -187,7 +187,7 @@ class KMyDialog : public KDialog
 {
 public :
     virtual MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate );
-    virtual MRESULT CmdSrcPushButton( ULONG ulCmd, ULONG ulPointer );
+    virtual MRESULT CmdSrcPushButton( ULONG ulCmd, bool fPointer );
 
 private :
     KStaticText _kstStatus;
@@ -205,7 +205,7 @@ MRESULT KMyDialog::OnInitDlg( HWND hwndFocus, PVOID pCreate )
     return FALSE;
 }
 
-MRESULT KMyDialog::CmdSrcPushButton( ULONG ulCmd, ULONG ulPointer )
+MRESULT KMyDialog::CmdSrcPushButton( ULONG ulCmd, bool fPointer )
 {
     if( ulCmd == DID_CANCEL )
         DismissDlg( DID_CANCEL );

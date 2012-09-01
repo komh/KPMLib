@@ -99,8 +99,8 @@ protected :
     virtual MRESULT OnDestroy() { return KDefWndProc( WM_DESTROY, 0, 0 ); }
     virtual MRESULT OnPaint() { return KDefWndProc( WM_PAINT, 0, 0 ); }
     virtual MRESULT OnCommand( ULONG ulCmd, ULONG ulSource,
-                               ULONG ulPointer );
-    virtual MRESULT CmdSrcPushButton( ULONG ulCmd, ULONG ulPointer )
+                               bool fPointer );
+    virtual MRESULT CmdSrcPushButton( ULONG ulCmd, bool fPointer )
     { return 0; }
 
     virtual MRESULT OnControl( ULONG id, ULONG ulNotifyCode,

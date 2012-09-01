@@ -158,11 +158,11 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     return KDefWndProc( msg, mp1, mp2 );
 }
 
-MRESULT KWindow::OnCommand( ULONG ulCmd, ULONG ulSource, ULONG ulPointer )
+MRESULT KWindow::OnCommand( ULONG ulCmd, ULONG ulSource, bool fPointer )
 {
     switch( ulSource )
     {
-        case CMDSRC_PUSHBUTTON : return CmdSrcPushButton( ulCmd, ulPointer );
+        case CMDSRC_PUSHBUTTON : return CmdSrcPushButton( ulCmd, fPointer );
     }
 
     return 0;
