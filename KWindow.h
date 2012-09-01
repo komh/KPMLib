@@ -176,6 +176,16 @@ protected :
 
     virtual MRESULT HelpCmdSrcUser( ULONG ulCmd, bool fPointer ) { return 0; }
 
+    virtual MRESULT OnChar( ULONG flFlags, ULONG ulRepeat, ULONG ulScanCode,
+                            ULONG ulCh, ULONG ulVk )
+    {
+        return KDefWndProc( WM_CHAR,
+                            MPFROMSH2CH( flFlags, ulRepeat, ulScanCode ),
+                            MPFROM2SHORT( ulCh, ulVk ));
+    }
+
+    virtual MRESULT OnClose() { return KDefWndProc( WM_CLOSE, 0, 0 ); }
+
 private :
     PFNWP _pfnwpOldProc;
 

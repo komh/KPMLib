@@ -165,6 +165,13 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
                                             SHORT1FROMMP( mp2 ),
                                             SHORT2FROMMP( mp2 ));
         case WM_TRACKFRAME : return OnTrackFrame( SHORT1FROMMP( mp1 ));
+        case WM_CHAR       : return OnChar( SHORT1FROMMP( mp1 ),
+                                            CHAR3FROMMP( mp1 ),
+                                            CHAR4FROMMP( mp1 ),
+                                            SHORT1FROMMP( mp2 ),
+                                            SHORT2FROMMP( mp2 ));
+        case WM_CLOSE      : return OnClose();
+
     }
 
     return KDefWndProc( msg, mp1, mp2 );
