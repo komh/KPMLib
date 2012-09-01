@@ -224,21 +224,14 @@ public :
 void KMyPMApp::Run()
 {
 #ifdef USE_FRAMEWINDOW
-    KFrameWindow    kframe;
     KMyClientWindow kclient;
-    KButton         kbtnPush;
-    KButton         kbtnRadio;
-    KButton         kbtnCheckBox;
-    KButton         kbtn3State;
-    KScrollBar      ksbHScroll;
-    KScrollBar      ksbVScroll;
-
     kclient.RegisterClass( _hab, PMLITERAL( WC_KPMW ), CS_SIZEREDRAW,
                            sizeof( PVOID ));
 
     ULONG flFrameFlags = FCF_SYSMENU | FCF_TITLEBAR | FCF_MINMAX |
                          FCF_SIZEBORDER | FCF_SHELLPOSITION | FCF_TASKLIST;
 
+    KFrameWindow kframe;
     kframe.CreateStdWindow( KWND_DESKTOP,           // parent window handle
                             WS_VISIBLE,             // frame window style
                             &flFrameFlags,          // window style
@@ -249,32 +242,38 @@ void KMyPMApp::Run()
                             kclient                 // client window handle
                           );
 
+    KButton kbtnPush;
     kbtnPush.CreateWindow( &kclient, PMLITERAL("My Push"),
                            WS_VISIBLE | BS_PUSHBUTTON,
                            10, 10, 100, 100, &kclient, KWND_TOP,
                            IDB_MYPUSH );
 
+    KButton kbtnRadio;
     kbtnRadio.CreateWindow( &kclient, PMLITERAL("My Radio"),
                             WS_VISIBLE | BS_RADIOBUTTON,
                             110, 10, 100, 100, &kclient, KWND_TOP,
                             IDB_MYRADIO );
 
+    KButton kbtnCheckBox;
     kbtnCheckBox.CreateWindow( &kclient, PMLITERAL("My CheckBox"),
                                WS_VISIBLE | BS_CHECKBOX,
                                210, 10, 100, 100, &kclient, KWND_TOP,
                                IDB_MYCHECKBOX );
 
+    KButton kbtn3State;
     kbtn3State.CreateWindow( &kclient, PMLITERAL("My 3-State"),
                              WS_VISIBLE | BS_3STATE,
                              310, 10, 100, 100, &kclient, KWND_TOP,
                              IDB_MY3STATE );
 
+    KScrollBar ksbHScroll;
     ksbHScroll.CreateWindow( &kclient, PMLITERAL("HScrollBar"),
                              WS_VISIBLE | SBS_HORZ,
                              100, 150, 200, 30, &kclient, KWND_TOP,
                              IDSB_MYHORZ );
     ksbHScroll.SetScrollBar( 50, 0, 100 );
 
+    KScrollBar ksbVScroll;
     ksbVScroll.CreateWindow( &kclient, PMLITERAL("VScrollBar"),
                              WS_VISIBLE | SBS_VERT,
                              400, 150, 30, 200, &kclient, KWND_TOP,
