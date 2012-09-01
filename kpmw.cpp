@@ -13,6 +13,9 @@
 #define IDB_MYCHECKBOX      102
 #define IDB_MY3STATE        103
 
+#define IDSB_MYHORZ 200
+#define IDSB_MYVERT 201
+
 class KMyClientWindow : public KWindow
 {
 public :
@@ -240,13 +243,13 @@ void KMyPMApp::Run()
     ksbHScroll.CreateWindow( &kclient, PMLITERAL("HScrollBar"),
                              WS_VISIBLE | SBS_HORZ,
                              100, 150, 200, 30, &kclient, KWND_TOP,
-                             FID_HORZSCROLL );
+                             IDSB_MYHORZ );
     ksbHScroll.SetScrollBar( 50, 0, 100 );
 
     ksbVScroll.CreateWindow( &kclient, PMLITERAL("VScrollBar"),
                              WS_VISIBLE | SBS_VERT,
                              400, 150, 30, 200, &kclient, KWND_TOP,
-                             FID_HORZSCROLL );
+                             IDSB_MYVERT );
     ksbVScroll.SetScrollBar( 50, 0, 100 );
 
     KPMApp::Run();
