@@ -187,6 +187,7 @@ class KMyDialog : public KDialog
 {
 public :
     virtual MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate );
+    virtual MRESULT CmdSrcPushButton( ULONG ulCmd, ULONG ulPointer );
 
 private :
     KStaticText _kstStatus;
@@ -202,6 +203,14 @@ MRESULT KMyDialog::OnInitDlg( HWND hwndFocus, PVOID pCreate )
     _kbtCancel.SetWindowText( PMLITERAL("Exit"));
 
     return FALSE;
+}
+
+MRESULT KMyDialog::CmdSrcPushButton( ULONG ulCmd, ULONG ulPointer )
+{
+    if( ulCmd == DID_CANCEL )
+        DismissDlg( DID_CANCEL );
+
+    return 0;
 }
 
 class KMyPMApp : public KPMApp
