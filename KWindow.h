@@ -93,6 +93,10 @@ protected :
                                      MPARAM mp2 );
 
     virtual MRESULT KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 );
+    virtual MRESULT OnCreate( PVOID pCtrlData, PCREATESTRUCT pcs )
+    { return KDefWndProc( WM_CREATE, MPFROMP( pCtrlData ), MPFROMP( pcs )); }
+
+    virtual MRESULT OnDestroy() { return KDefWndProc( WM_DESTROY, 0, 0 ); }
     virtual MRESULT OnPaint() { return KDefWndProc( WM_PAINT, 0, 0 ); }
     virtual MRESULT OnCommand( ULONG ulCmd, ULONG ulSource,
                                ULONG ulPointer );
