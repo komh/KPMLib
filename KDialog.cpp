@@ -87,6 +87,12 @@ MRESULT KDialog::KDlgProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
         case WM_CONTROL : return OnControl( SHORT1FROMMP( mp1 ),
                                             SHORT2FROMMP( mp1 ),
                                             LONGFROMMP( mp2 ));
+        case WM_CHAR    : return OnChar( SHORT1FROMMP( mp1 ),
+                                         CHAR3FROMMP( mp1 ),
+                                         CHAR4FROMMP( mp1 ),
+                                         SHORT1FROMMP( mp2 ),
+                                         SHORT2FROMMP( mp2 ));
+        case WM_CLOSE   : return OnClose();
     }
 
     return KDefDlgProc( msg, mp1, mp2 );

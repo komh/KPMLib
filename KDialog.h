@@ -36,6 +36,16 @@ protected :
                             MPFROMP( pCreate ));
     }
 
+    virtual MRESULT OnChar( ULONG flFlags, ULONG ulRepeat, ULONG ulScanCode,
+                            ULONG ulCh, ULONG ulVk )
+    {
+        return KDefDlgProc( WM_CHAR,
+                            MPFROMSH2CH( flFlags, ulRepeat, ulScanCode ),
+                            MPFROM2SHORT( ulCh, ulVk ));
+    }
+
+    virtual MRESULT OnClose() { return KDefDlgProc( WM_CLOSE, 0, 0 ); }
+
 private :
     MRESULT KDefDlgProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     { return WinDefDlgProc( _hwnd, msg, mp1, mp2 ); }
