@@ -39,23 +39,17 @@ MRESULT KMyClientWindow::OnPaint()
     HPS   hps;
     RECTL rcl;
 
-    hps = WinBeginPaint( _hwnd, 0, &rcl);
+    hps = BeginPaint( 0, &rcl);
 
-    WinFillRect( hps, &rcl, SYSCLR_WINDOW );
+    FillRect( hps, &rcl, SYSCLR_WINDOW );
 
-    WinQueryWindowRect( _hwnd, &rcl );
+    QueryWindowRect( &rcl );
 
-    WinDrawText(
-        hps,
-        -1,
-        PMLITERAL("This is KPMApp test program !!!"),
-        &rcl,
-        SYSCLR_WINDOWTEXT,
-        SYSCLR_WINDOW,
-        DT_CENTER | DT_VCENTER
-    );
+    DrawText( hps, -1, PMLITERAL("This is KPMApp test program !!!"),
+              &rcl, SYSCLR_WINDOWTEXT, SYSCLR_WINDOW,
+              DT_CENTER | DT_VCENTER );
 
-    WinEndPaint( hps );
+    EndPaint( hps );
 
     return 0;
 }

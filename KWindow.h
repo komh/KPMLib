@@ -48,6 +48,9 @@ public :
     virtual MRESULT SendMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
     { return WinSendMsg( _hwnd, ulMsg, mp1, mp2 ); }
 
+    virtual bool PostMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
+    { return WinPostMsg( _hwnd, ulMsg, mp1, mp2 ); }
+
     virtual HAB QueryAnchorBlock() { return WinQueryAnchorBlock( _hwnd ); }
     virtual ULONG QueryTaskSizePos( PSWP pswp )
     { return WinQueryTaskSizePos( QueryAnchorBlock(), 0, pswp ); }
@@ -57,6 +60,21 @@ public :
     {
         return WinSetWindowPos( _hwnd, pkwnd2hwnd( pkwndRel ),
                                 x, y, cx, cy, fl );
+    }
+
+    virtual HPS BeginPaint( HPS hps, PRECTL prcl )
+    { return WinBeginPaint( _hwnd, hps, prcl); }
+
+    virtual bool EndPaint( HPS hps ) { return WinEndPaint( hps ); }
+    virtual bool FillRect( HPS hps, PRECTL prcl, LONG lColor )
+    { return WinFillRect( hps, prcl, lColor ); }
+    virtual bool QueryWindowRect( PRECTL prcl )
+    { return WinQueryWindowRect( _hwnd, prcl ); }
+    virtual LONG DrawText( HPS hps, LONG cchText, PCCH lpchText, PRECTL prcl,
+                           LONG clrFore, LONG clrBack, ULONG flCmd )
+    {
+        return WinDrawText( hps, cchText, lpchText, prcl, clrFore, clrBack,
+                            flCmd );
     }
 
     HWND GetHWND() const { return _hwnd; }
