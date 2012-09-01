@@ -16,6 +16,8 @@
 #define IDSB_MYHORZ 200
 #define IDSB_MYVERT 201
 
+#define IDST_MYSTATIC   300
+
 class KMyClientWindow : public KWindow
 {
 public :
@@ -109,56 +111,80 @@ MRESULT KMyClientWindow::BnClicked( ULONG id )
 
 MRESULT KMyClientWindow::HSbLineLeft( ULONG id, LONG lSlider )
 {
-    MessageBox( PMLITERAL("SB_LINELEFT"), PMLITERAL("OnHScroll()"), MB_OK );
+    KStaticText kst;
+
+    WindowFromID( IDST_MYSTATIC, kst );
+    kst.SetWindowText( PMLITERAL("SB_LINELEFT by OnHScroll()"));
 
     return 0;
 }
 
 MRESULT KMyClientWindow::HSbLineRight( ULONG id, LONG lSlider )
 {
-    MessageBox( PMLITERAL("SB_LINERIGHT"), PMLITERAL("OnHScroll()"), MB_OK );
+    KStaticText kst;
+
+    WindowFromID( IDST_MYSTATIC, kst );
+    kst.SetWindowText( PMLITERAL("SB_LINERIGHT by OnHScroll()"));
 
     return 0;
 }
 
 MRESULT KMyClientWindow::HSbPageLeft( ULONG id, LONG lSlider )
 {
-    MessageBox( PMLITERAL("SB_PAGELEFT"), PMLITERAL("OnHScroll()"), MB_OK );
+    KStaticText kst;
+
+    WindowFromID( IDST_MYSTATIC, kst );
+    kst.SetWindowText(PMLITERAL("SB_PAGELEFT by OnHScroll()"));
 
     return 0;
 }
 
 MRESULT KMyClientWindow::HSbPageRight( ULONG id, LONG lSlider )
 {
-    MessageBox( PMLITERAL("SB_PAGERIGHT"), PMLITERAL("OnHScroll()"), MB_OK );
+    KStaticText kst;
+
+    WindowFromID( IDST_MYSTATIC, kst );
+    kst.SetWindowText(PMLITERAL("SB_PAGERIGHT by OnHScroll()"));
 
     return 0;
 }
 
 MRESULT KMyClientWindow::VSbLineUp( ULONG id, LONG lSlider )
 {
-    MessageBox( PMLITERAL("SB_LINEUP"), PMLITERAL("OnVScroll()"), MB_OK );
+    KStaticText kst;
+
+    WindowFromID( IDST_MYSTATIC, kst );
+    kst.SetWindowText(PMLITERAL("SB_LINEUP by OnVScroll()"));
 
     return 0;
 }
 
 MRESULT KMyClientWindow::VSbLineDown( ULONG id, LONG lSlider )
 {
-    MessageBox( PMLITERAL("SB_LINEDOWN"), PMLITERAL("OnVScroll()"), MB_OK );
+    KStaticText kst;
+
+    WindowFromID( IDST_MYSTATIC, kst );
+    kst.SetWindowText(PMLITERAL("SB_LINEDOWN by OnVScroll()"));
 
     return 0;
 }
 
 MRESULT KMyClientWindow::VSbPageUp( ULONG id, LONG lSlider )
 {
-    MessageBox( PMLITERAL("SB_PAGEUP"), PMLITERAL("OnVScroll()"), MB_OK );
+    KStaticText kst;
+
+    WindowFromID( IDST_MYSTATIC, kst );
+    kst.SetWindowText(PMLITERAL("SB_PAGEUP by OnVScroll()"));
 
     return 0;
 }
 
 MRESULT KMyClientWindow::VSbPageDown( ULONG id, LONG lSlider )
 {
-    MessageBox( PMLITERAL("SB_PAGEDOWN"), PMLITERAL("OnVScroll()"), MB_OK );
+    KStaticText kst;
+
+    WindowFromID( IDST_MYSTATIC, kst );
+    kst.SetWindowText(PMLITERAL("SB_PAGEDOWN by OnVScroll()"));
 
     return 0;
 }
@@ -251,6 +277,11 @@ void KMyPMApp::Run()
                              400, 150, 30, 200, &kclient, KWND_TOP,
                              IDSB_MYVERT );
     ksbVScroll.SetScrollBar( 50, 0, 100 );
+
+    KStaticText kst;
+    kst.CreateWindow( &kclient, PMLITERAL("My Static Text"),
+                      WS_VISIBLE | SS_TEXT | SS_AUTOSIZE,
+                      0, 300, 400, -1, &kclient, KWND_TOP, IDST_MYSTATIC );
 
     KPMApp::Run();
 
