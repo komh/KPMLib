@@ -175,10 +175,15 @@ MRESULT KWindow::OnCommand( ULONG ulCmd, ULONG ulSource, bool fPointer )
 {
     switch( ulSource )
     {
-        case CMDSRC_PUSHBUTTON : return CmdSrcPushButton( ulCmd, fPointer );
+        case CMDSRC_PUSHBUTTON  : return CmdSrcPushButton( ulCmd, fPointer );
+        case CMDSRC_MENU        : return CmdSrcMenu( ulCmd, fPointer );
+        case CMDSRC_ACCELERATOR : return CmdSrcAccelerator( ulCmd, fPointer );
+        case CMDSRC_FONTDLG     : return CmdSrcFontDlg( ulCmd, fPointer );
+        case CMDSRC_FILEDLG     : return CmdSrcFileDlg( ulCmd, fPointer );
+        case CMDSRC_OTHER       : return CmdSrcOther( ulCmd, fPointer );
     }
 
-    return 0;
+    return CmdSrcUser( ulCmd, fPointer );
 }
 
 MRESULT KWindow::OnControl( ULONG id, ULONG ulNotifyCode,
@@ -231,9 +236,51 @@ MRESULT KWindow::OnSysCommand( ULONG ulCmd, ULONG ulSource, bool fPointer )
 {
     switch( ulSource )
     {
-        case CMDSRC_OTHER : return SysCmdSrcOther( ulCmd, fPointer );
+        case CMDSRC_PUSHBUTTON  :
+            return SysCmdSrcPushButton( ulCmd, fPointer );
+
+        case CMDSRC_MENU        :
+            return SysCmdSrcMenu( ulCmd, fPointer );
+
+        case CMDSRC_ACCELERATOR :
+            return SysCmdSrcAccelerator( ulCmd, fPointer );
+
+        case CMDSRC_FONTDLG     :
+            return SysCmdSrcFontDlg( ulCmd, fPointer );
+
+        case CMDSRC_FILEDLG     :
+            return SysCmdSrcFileDlg( ulCmd, fPointer );
+
+        case CMDSRC_OTHER       :
+            return SysCmdSrcOther( ulCmd, fPointer );
     }
 
-    return 0;
+    return SysCmdSrcUser( ulCmd, fPointer );
+}
+
+MRESULT KWindow::OnHelp( ULONG ulCmd, ULONG ulSource, bool fPointer )
+{
+    switch( ulSource )
+    {
+        case CMDSRC_PUSHBUTTON  :
+            return HelpCmdSrcPushButton( ulCmd, fPointer );
+
+        case CMDSRC_MENU        :
+            return HelpCmdSrcMenu( ulCmd, fPointer );
+
+        case CMDSRC_ACCELERATOR :
+            return HelpCmdSrcAccelerator( ulCmd, fPointer );
+
+        case CMDSRC_FONTDLG     :
+            return HelpCmdSrcFontDlg( ulCmd, fPointer );
+
+        case CMDSRC_FILEDLG     :
+            return HelpCmdSrcFileDlg( ulCmd, fPointer );
+
+        case CMDSRC_OTHER       :
+            return HelpCmdSrcOther( ulCmd, fPointer );
+    }
+
+    return HelpCmdSrcUser( ulCmd, fPointer );
 }
 

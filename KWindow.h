@@ -103,6 +103,15 @@ protected :
     virtual MRESULT CmdSrcPushButton( ULONG ulCmd, bool fPointer )
     { return 0; }
 
+    virtual MRESULT CmdSrcMenu( ULONG ulCmd, bool fPointer ) { return 0; }
+    virtual MRESULT CmdSrcAccelerator( ULONG ulCmd, bool fPointer )
+    { return 0; }
+
+    virtual MRESULT CmdSrcFontDlg( ULONG ulCmd, bool fPointer ) { return 0; }
+    virtual MRESULT CmdSrcFileDlg( ULONG ulCmd, bool fPointer ) { return 0; }
+    virtual MRESULT CmdSrcOther( ULONG ulCmd, bool fPointer ) { return 0; }
+    virtual MRESULT CmdSrcUser( ULONG ulCmd, bool fPointer ) { return 0; }
+
     virtual MRESULT OnControl( ULONG id, ULONG ulNotifyCode,
                                ULONG ulControlSpec );
     virtual MRESULT BnClicked( ULONG id ) { return 0; }
@@ -129,10 +138,43 @@ protected :
 
     virtual MRESULT OnSysCommand( ULONG ulCmd, ULONG ulSource,
                                   bool fPointer );
+    virtual MRESULT SysCmdSrcPushButton( ULONG ulCmd, bool fPointer )
+    { return 0; }
+
+    virtual MRESULT SysCmdSrcMenu( ULONG ulCmd, bool fPointer ) { return 0; }
+    virtual MRESULT SysCmdSrcAccelerator( ULONG ulCmd, bool fPointer )
+    { return 0; }
+
+    virtual MRESULT SysCmdSrcFontDlg( ULONG ulCmd, bool fPointer )
+    { return 0; }
+
+    virtual MRESULT SysCmdSrcFileDlg( ULONG ulCmd, bool fPointer )
+    { return 0; }
+
     virtual MRESULT SysCmdSrcOther( ULONG ulCmd, bool fPointer ) { return 0; }
+    virtual MRESULT SysCmdSrcUser( ULONG ulCmd, bool fPointer ) { return 0; }
 
     virtual MRESULT OnTrackFrame( ULONG flTrackFlags )
     { return KDefWndProc( WM_TRACKFRAME, MPFROMLONG( flTrackFlags ), 0 ); }
+
+    virtual MRESULT OnHelp( ULONG ulCmd, ULONG ulSource, bool fPointer );
+    virtual MRESULT HelpCmdSrcPushButton( ULONG ulCmd, bool fPointer )
+    { return 0; }
+
+    virtual MRESULT HelpCmdSrcMenu( ULONG ulCmd, bool fPointer ) { return 0; }
+    virtual MRESULT HelpCmdSrcAccelerator( ULONG ulCmd, bool fPointer )
+    { return 0; }
+
+    virtual MRESULT HelpCmdSrcFontDlg( ULONG ulCmd, bool fPointer )
+    { return 0; }
+
+    virtual MRESULT HelpCmdSrcFileDlg( ULONG ulCmd, bool fPointer )
+    { return 0; }
+
+    virtual MRESULT HelpCmdSrcOther( ULONG ulCmd, bool fPointer )
+    { return 0; }
+
+    virtual MRESULT HelpCmdSrcUser( ULONG ulCmd, bool fPointer ) { return 0; }
 
 private :
     PFNWP _pfnwpOldProc;
