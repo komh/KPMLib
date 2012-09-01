@@ -98,6 +98,14 @@ bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                              x, y, cx, cy, hwndO, hwndS,
                              id, pCtlData, &cp );
 
+    // For pre-registered class
+    if( !WinQueryWindowPtr( _hwnd, 0 ))
+    {
+        WinSetWindowPtr( _hwnd, 0, this );
+
+        _pfnwpOldProc = WinSubclassWindow( _hwnd, WndProc );
+    }
+
     return _hwnd;
 }
 
