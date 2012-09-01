@@ -190,8 +190,10 @@ private :
     PFNWP _pfnwpOldProc;
 
     MRESULT KDefWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
-    { return _pfnwpOldProc ? _pfnwpOldProc( _hwnd, msg, mp1, mp2 ) :
-                             WinDefWindowProc( _hwnd, msg, mp1, mp2 ); }
+    {
+        return _pfnwpOldProc ? _pfnwpOldProc( _hwnd, msg, mp1, mp2 ) :
+                               WinDefWindowProc( _hwnd, msg, mp1, mp2 );
+    }
 };
 #endif
 
