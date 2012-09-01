@@ -148,6 +148,10 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
 {
     switch( msg )
     {
+        case WM_CREATE  : return OnCreate( PVOIDFROMMP( mp1 ),
+                                           reinterpret_cast< PCREATESTRUCT >
+                                                ( PVOIDFROMMP( mp2 )));
+        case WM_DESTROY : return OnDestroy();
         case WM_PAINT   : return OnPaint();
         case WM_COMMAND : return OnCommand( SHORT1FROMMP( mp1 ),
                                             SHORT1FROMMP( mp2 ),
