@@ -14,5 +14,9 @@ public :
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
+
+    virtual bool QueryHilite() { return SendMsg( TBM_QUERYHILITE ); }
+    virtual bool SetHilite( bool fHighlighted )
+    { return SendMsg( TBM_SETHILITE, MPFROMLONG( fHighlighted )); }
 };
 #endif

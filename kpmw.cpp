@@ -18,6 +18,8 @@
 
 #define IDST_MYSTATIC   300
 
+#define IDTB_MYTITLE    400
+
 class KMyClientWindow : public KWindow
 {
 public :
@@ -32,6 +34,7 @@ public :
     virtual MRESULT VSbLineDown( ULONG id, LONG lSlider );
     virtual MRESULT VSbPageUp( ULONG id, LONG lSlider );
     virtual MRESULT VSbPageDown( ULONG id, LONG lSlider );
+    virtual MRESULT OnTrackFrame( ULONG flTrackFlags );
 };
 
 MRESULT KMyClientWindow::OnPaint()
@@ -183,6 +186,16 @@ MRESULT KMyClientWindow::VSbPageDown( ULONG id, LONG lSlider )
     return 0;
 }
 
+MRESULT KMyClientWindow::OnTrackFrame( ULONG ulTrackFlags )
+{
+    KStaticText kst;
+
+    WindowFromID( IDST_MYSTATIC, kst );
+    kst.SetWindowText( PMLITERAL("Client: OnTrackFrame() called"));
+
+    return KWindow::OnTrackFrame( ulTrackFlags );
+}
+
 class KMyDialog : public KDialog
 {
 public :
@@ -284,6 +297,12 @@ void KMyPMApp::Run()
     kst.CreateWindow( &kclient, PMLITERAL("My Static Text"),
                       WS_VISIBLE | SS_TEXT | SS_AUTOSIZE,
                       0, 300, 400, -1, &kclient, KWND_TOP, IDST_MYSTATIC );
+
+    KTitleBar ktb;
+    ktb.CreateWindow( &kclient, PMLITERAL("My Title Bar"),
+                      WS_VISIBLE,
+                      100, 200, 200, 20, &kclient, KWND_TOP, IDTB_MYTITLE );
+    ktb.SetHilite( true );
 
     KPMApp::Run();
 

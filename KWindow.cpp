@@ -165,6 +165,7 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
         case WM_VSCROLL : return OnVScroll( SHORT1FROMMP( mp1 ),
                                             SHORT1FROMMP( mp2 ),
                                             SHORT2FROMMP( mp2 ));
+        case WM_TRACKFRAME : return OnTrackFrame( SHORT1FROMMP( mp1 ));
     }
 
     return KDefWndProc( msg, mp1, mp2 );
@@ -221,6 +222,16 @@ MRESULT KWindow::OnVScroll( ULONG id, LONG lSlider, ULONG ulCmd )
         case SB_SLIDERPOSITION : return VSbSliderPosition( id, lSlider );
         case SB_SLIDERTRACK    : return VSbSliderTrack( id, lSlider );
         case SB_ENDSCROLL      : return VSbEndScroll( id, lSlider );
+    }
+
+    return 0;
+}
+
+MRESULT KWindow::OnSysCommand( ULONG ulCmd, ULONG ulSource, bool fPointer )
+{
+    switch( ulSource )
+    {
+        case CMDSRC_OTHER : return SysCmdSrcOther( ulCmd, fPointer );
     }
 
     return 0;

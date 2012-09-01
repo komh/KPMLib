@@ -127,6 +127,13 @@ protected :
     virtual MRESULT VSbSliderTrack( ULONG id, LONG lSlider ) { return 0; }
     virtual MRESULT VSbEndScroll( ULONG id, LONG lSlider ) { return 0; }
 
+    virtual MRESULT OnSysCommand( ULONG ulCmd, ULONG ulSource,
+                                  bool fPointer );
+    virtual MRESULT SysCmdSrcOther( ULONG ulCmd, bool fPointer ) { return 0; }
+
+    virtual MRESULT OnTrackFrame( ULONG flTrackFlags )
+    { return KDefWndProc( WM_TRACKFRAME, MPFROMLONG( flTrackFlags ), 0 ); }
+
 private :
     PFNWP _pfnwpOldProc;
 
