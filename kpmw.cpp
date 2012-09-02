@@ -29,6 +29,8 @@ public :
     virtual MRESULT OnPaint();
     virtual MRESULT CmdSrcPushButton( USHORT usCmd, bool fPointer );
     virtual MRESULT CmdSrcMenu( USHORT usCmd, bool fPointer );
+    virtual MRESULT OnControl( USHORT id, USHORT usNotifyCode,
+                               ULONG ulControlSpec );
     virtual MRESULT BnClicked( USHORT id );
     virtual MRESULT HSbLineLeft( USHORT id, SHORT sSlider );
     virtual MRESULT HSbLineRight( USHORT id, SHORT sSlider );
@@ -91,6 +93,22 @@ MRESULT KMyClientWindow::CmdSrcMenu( USHORT usCmd, bool fPointer )
     }
 
     return KWindow::CmdSrcMenu( usCmd, fPointer );
+}
+
+MRESULT KMyClientWindow::OnControl( USHORT id, USHORT usNotifyCode,
+                                    ULONG ulControlSpec )
+{
+    switch( id )
+    {
+        case IDB_MYRADIO :
+        case IDB_MYCHECKBOX :
+        case IDB_MY3STATE :
+            if( usNotifyCode == BN_CLICKED )
+                return BnClicked( id );
+            break;
+    }
+
+    return 0;
 }
 
 MRESULT KMyClientWindow::BnClicked( USHORT id )

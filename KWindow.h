@@ -151,18 +151,8 @@ protected :
     }
 
     virtual MRESULT OnControl( USHORT id, USHORT usNotifyCode,
-                               ULONG ulControlSpec );
-    virtual MRESULT BnClicked( USHORT id )
-    { return KDefWndProc( WM_CONTROL, MPFROM2SHORT( id, BN_CLICKED ), 0 ); }
-
-    virtual MRESULT BnDblClicked( USHORT id )
-    { return KDefWndProc( WM_CONTROL, MPFROM2SHORT( id, BN_DBLCLICKED ), 0 ); }
-
-    virtual MRESULT BnPaint( USHORT id, ULONG ulControlSpec )
-    {
-        return KDefWndProc( WM_CONTROL, MPFROM2SHORT( id, BN_PAINT ),
-                            MPFROMLONG( ulControlSpec ));
-    }
+                               ULONG ulControlSpec )
+    { return KDefWndProc( WM_CONTROL, MPFROM2SHORT( id, usNotifyCode ), 0 ); }
 
     virtual MRESULT OnCreate( PVOID pCtrlData, PCREATESTRUCT pcs )
     { return KDefWndProc( WM_CREATE, MPFROMP( pCtrlData ), MPFROMP( pcs )); }

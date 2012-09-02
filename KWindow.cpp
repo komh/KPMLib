@@ -254,19 +254,6 @@ MRESULT KWindow::OnCommand( USHORT usCmd, USHORT usSource, bool fPointer )
     return CmdSrcUser( usCmd, usSource, fPointer );
 }
 
-MRESULT KWindow::OnControl( USHORT id, USHORT usNotifyCode,
-                            ULONG ulControlSpec )
-{
-    switch( usNotifyCode )
-    {
-        case BN_CLICKED    : return BnClicked( id );
-        case BN_DBLCLICKED : return BnDblClicked( id );
-        case BN_PAINT      : return BnPaint( id, ulControlSpec );
-    }
-
-    return 0;
-}
-
 MRESULT KWindow::OnHelp( USHORT usCmd, USHORT usSource, bool fPointer )
 {
     switch( usSource )
