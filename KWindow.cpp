@@ -194,7 +194,7 @@ MRESULT KWindow::OnCommand( ULONG ulCmd, ULONG ulSource, bool fPointer )
         case CMDSRC_OTHER       : return CmdSrcOther( ulCmd, fPointer );
     }
 
-    return CmdSrcUser( ulCmd, fPointer );
+    return CmdSrcUser( ulCmd, ulSource, fPointer );
 }
 
 MRESULT KWindow::OnControl( ULONG id, ULONG ulNotifyCode,
@@ -265,7 +265,7 @@ MRESULT KWindow::OnSysCommand( ULONG ulCmd, ULONG ulSource, bool fPointer )
             return SysCmdSrcOther( ulCmd, fPointer );
     }
 
-    return SysCmdSrcUser( ulCmd, fPointer );
+    return SysCmdSrcUser( ulCmd, ulSource, fPointer );
 }
 
 MRESULT KWindow::OnHelp( ULONG ulCmd, ULONG ulSource, bool fPointer )
@@ -291,6 +291,6 @@ MRESULT KWindow::OnHelp( ULONG ulCmd, ULONG ulSource, bool fPointer )
             return HelpCmdSrcOther( ulCmd, fPointer );
     }
 
-    return HelpCmdSrcUser( ulCmd, fPointer );
+    return HelpCmdSrcUser( ulCmd, ulSource, fPointer );
 }
 
