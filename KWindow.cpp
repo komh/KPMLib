@@ -239,25 +239,25 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     return KDefWndProc( msg, mp1, mp2 );
 }
 
-MRESULT KWindow::OnCommand( ULONG ulCmd, ULONG ulSource, bool fPointer )
+MRESULT KWindow::OnCommand( USHORT usCmd, USHORT usSource, bool fPointer )
 {
-    switch( ulSource )
+    switch( usSource )
     {
-        case CMDSRC_PUSHBUTTON  : return CmdSrcPushButton( ulCmd, fPointer );
-        case CMDSRC_MENU        : return CmdSrcMenu( ulCmd, fPointer );
-        case CMDSRC_ACCELERATOR : return CmdSrcAccelerator( ulCmd, fPointer );
-        case CMDSRC_FONTDLG     : return CmdSrcFontDlg( ulCmd, fPointer );
-        case CMDSRC_FILEDLG     : return CmdSrcFileDlg( ulCmd, fPointer );
-        case CMDSRC_OTHER       : return CmdSrcOther( ulCmd, fPointer );
+        case CMDSRC_PUSHBUTTON  : return CmdSrcPushButton( usCmd, fPointer );
+        case CMDSRC_MENU        : return CmdSrcMenu( usCmd, fPointer );
+        case CMDSRC_ACCELERATOR : return CmdSrcAccelerator( usCmd, fPointer );
+        case CMDSRC_FONTDLG     : return CmdSrcFontDlg( usCmd, fPointer );
+        case CMDSRC_FILEDLG     : return CmdSrcFileDlg( usCmd, fPointer );
+        case CMDSRC_OTHER       : return CmdSrcOther( usCmd, fPointer );
     }
 
-    return CmdSrcUser( ulCmd, ulSource, fPointer );
+    return CmdSrcUser( usCmd, usSource, fPointer );
 }
 
-MRESULT KWindow::OnControl( ULONG id, ULONG ulNotifyCode,
+MRESULT KWindow::OnControl( USHORT id, USHORT usNotifyCode,
                             ULONG ulControlSpec )
 {
-    switch( ulNotifyCode )
+    switch( usNotifyCode )
     {
         case BN_CLICKED    : return BnClicked( id );
         case BN_DBLCLICKED : return BnDblClicked( id );
@@ -267,85 +267,85 @@ MRESULT KWindow::OnControl( ULONG id, ULONG ulNotifyCode,
     return 0;
 }
 
-MRESULT KWindow::OnHelp( ULONG ulCmd, ULONG ulSource, bool fPointer )
+MRESULT KWindow::OnHelp( USHORT usCmd, USHORT usSource, bool fPointer )
 {
-    switch( ulSource )
+    switch( usSource )
     {
         case CMDSRC_PUSHBUTTON  :
-            return HelpCmdSrcPushButton( ulCmd, fPointer );
+            return HelpCmdSrcPushButton( usCmd, fPointer );
 
         case CMDSRC_MENU        :
-            return HelpCmdSrcMenu( ulCmd, fPointer );
+            return HelpCmdSrcMenu( usCmd, fPointer );
 
         case CMDSRC_ACCELERATOR :
-            return HelpCmdSrcAccelerator( ulCmd, fPointer );
+            return HelpCmdSrcAccelerator( usCmd, fPointer );
 
         case CMDSRC_FONTDLG     :
-            return HelpCmdSrcFontDlg( ulCmd, fPointer );
+            return HelpCmdSrcFontDlg( usCmd, fPointer );
 
         case CMDSRC_FILEDLG     :
-            return HelpCmdSrcFileDlg( ulCmd, fPointer );
+            return HelpCmdSrcFileDlg( usCmd, fPointer );
 
         case CMDSRC_OTHER       :
-            return HelpCmdSrcOther( ulCmd, fPointer );
+            return HelpCmdSrcOther( usCmd, fPointer );
     }
 
-    return HelpCmdSrcUser( ulCmd, ulSource, fPointer );
+    return HelpCmdSrcUser( usCmd, usSource, fPointer );
 }
 
-MRESULT KWindow::OnHScroll( ULONG id, LONG lSlider, ULONG ulCmd )
+MRESULT KWindow::OnHScroll( USHORT id, SHORT sSlider, USHORT usCmd )
 {
-    switch( ulCmd )
+    switch( usCmd )
     {
-        case SB_LINELEFT       : return HSbLineLeft( id, lSlider );
-        case SB_LINERIGHT      : return HSbLineRight( id, lSlider );
-        case SB_PAGELEFT       : return HSbPageLeft( id, lSlider );
-        case SB_PAGERIGHT      : return HSbPageRight( id, lSlider );
-        case SB_SLIDERPOSITION : return HSbSliderPosition( id, lSlider );
-        case SB_SLIDERTRACK    : return HSbSliderTrack( id, lSlider );
-        case SB_ENDSCROLL      : return HSbEndScroll( id, lSlider );
+        case SB_LINELEFT       : return HSbLineLeft( id, sSlider );
+        case SB_LINERIGHT      : return HSbLineRight( id, sSlider );
+        case SB_PAGELEFT       : return HSbPageLeft( id, sSlider );
+        case SB_PAGERIGHT      : return HSbPageRight( id, sSlider );
+        case SB_SLIDERPOSITION : return HSbSliderPosition( id, sSlider );
+        case SB_SLIDERTRACK    : return HSbSliderTrack( id, sSlider );
+        case SB_ENDSCROLL      : return HSbEndScroll( id, sSlider );
     }
 
     return 0;
 }
 
-MRESULT KWindow::OnSysCommand( ULONG ulCmd, ULONG ulSource, bool fPointer )
+MRESULT KWindow::OnSysCommand( USHORT usCmd, USHORT usSource, bool fPointer )
 {
-    switch( ulSource )
+    switch( usSource )
     {
         case CMDSRC_PUSHBUTTON  :
-            return SysCmdSrcPushButton( ulCmd, fPointer );
+            return SysCmdSrcPushButton( usCmd, fPointer );
 
         case CMDSRC_MENU        :
-            return SysCmdSrcMenu( ulCmd, fPointer );
+            return SysCmdSrcMenu( usCmd, fPointer );
 
         case CMDSRC_ACCELERATOR :
-            return SysCmdSrcAccelerator( ulCmd, fPointer );
+            return SysCmdSrcAccelerator( usCmd, fPointer );
 
         case CMDSRC_FONTDLG     :
-            return SysCmdSrcFontDlg( ulCmd, fPointer );
+            return SysCmdSrcFontDlg( usCmd, fPointer );
 
         case CMDSRC_FILEDLG     :
-            return SysCmdSrcFileDlg( ulCmd, fPointer );
+            return SysCmdSrcFileDlg( usCmd, fPointer );
 
         case CMDSRC_OTHER       :
-            return SysCmdSrcOther( ulCmd, fPointer );
+            return SysCmdSrcOther( usCmd, fPointer );
     }
 
-    return SysCmdSrcUser( ulCmd, ulSource, fPointer );
+    return SysCmdSrcUser( usCmd, usSource, fPointer );
 }
 
-MRESULT KWindow::OnVScroll( ULONG id, LONG lSlider, ULONG ulCmd )
+MRESULT KWindow::OnVScroll( USHORT id, SHORT sSlider, USHORT usCmd )
 {
-    switch( ulCmd )
+    switch( usCmd )
     {
-        case SB_LINEUP         : return VSbLineUp( id, lSlider );
-        case SB_LINEDOWN       : return VSbLineDown( id, lSlider );
-        case SB_PAGEUP         : return VSbPageUp( id, lSlider );
-        case SB_PAGEDOWN       : return VSbPageDown( id, lSlider );
-        case SB_SLIDERPOSITION : return VSbSliderPosition( id, lSlider );
-        case SB_SLIDERTRACK    : return VSbSliderTrack( id, lSlider );
-        case SB_ENDSCROLL      : return VSbEndScroll( id, lSlider );
+        case SB_LINEUP         : return VSbLineUp( id, sSlider );
+        case SB_LINEDOWN       : return VSbLineDown( id, sSlider );
+        case SB_PAGEUP         : return VSbPageUp( id, sSlider );
+        case SB_PAGEDOWN       : return VSbPageDown( id, sSlider );
+        case SB_SLIDERPOSITION : return VSbSliderPosition( id, sSlider );
+        case SB_SLIDERTRACK    : return VSbSliderTrack( id, sSlider );
+        case SB_ENDSCROLL      : return VSbEndScroll( id, sSlider );
     }
 
     return 0;

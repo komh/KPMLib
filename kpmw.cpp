@@ -27,18 +27,18 @@ class KMyClientWindow : public KWindow
 {
 public :
     virtual MRESULT OnPaint();
-    virtual MRESULT CmdSrcPushButton( ULONG ulCmd, bool fPointer );
-    virtual MRESULT CmdSrcMenu( ULONG ulCmd, bool fPointer );
-    virtual MRESULT BnClicked( ULONG id );
-    virtual MRESULT HSbLineLeft( ULONG id, LONG lSlider );
-    virtual MRESULT HSbLineRight( ULONG id, LONG lSlider );
-    virtual MRESULT HSbPageLeft( ULONG id, LONG lSlider );
-    virtual MRESULT HSbPageRight( ULONG id, LONG lSlider );
-    virtual MRESULT VSbLineUp( ULONG id, LONG lSlider );
-    virtual MRESULT VSbLineDown( ULONG id, LONG lSlider );
-    virtual MRESULT VSbPageUp( ULONG id, LONG lSlider );
-    virtual MRESULT VSbPageDown( ULONG id, LONG lSlider );
-    virtual MRESULT OnTrackFrame( ULONG flTrackFlags );
+    virtual MRESULT CmdSrcPushButton( USHORT usCmd, bool fPointer );
+    virtual MRESULT CmdSrcMenu( USHORT usCmd, bool fPointer );
+    virtual MRESULT BnClicked( USHORT id );
+    virtual MRESULT HSbLineLeft( USHORT id, SHORT sSlider );
+    virtual MRESULT HSbLineRight( USHORT id, SHORT sSlider );
+    virtual MRESULT HSbPageLeft( USHORT id, SHORT sSlider );
+    virtual MRESULT HSbPageRight( USHORT id, SHORT sSlider );
+    virtual MRESULT VSbLineUp( USHORT id, SHORT sSlider );
+    virtual MRESULT VSbLineDown( USHORT id, SHORT sSlider );
+    virtual MRESULT VSbPageUp( USHORT id, SHORT sSlider );
+    virtual MRESULT VSbPageDown( USHORT id, SHORT sSlider );
+    virtual MRESULT OnTrackFrame( USHORT flTrackFlags );
 };
 
 MRESULT KMyClientWindow::OnPaint()
@@ -61,10 +61,10 @@ MRESULT KMyClientWindow::OnPaint()
     return 0;
 }
 
-MRESULT KMyClientWindow::CmdSrcPushButton( ULONG ulCmd,
+MRESULT KMyClientWindow::CmdSrcPushButton( USHORT usCmd,
                                            bool fPointer )
 {
-    switch( ulCmd )
+    switch( usCmd )
     {
         case IDB_MYPUSH :
             MessageBox( PMLITERAL("My Push button clicked"),
@@ -80,9 +80,9 @@ MRESULT KMyClientWindow::CmdSrcPushButton( ULONG ulCmd,
     return 0;
 }
 
-MRESULT KMyClientWindow::CmdSrcMenu( ULONG ulCmd, bool fPointer )
+MRESULT KMyClientWindow::CmdSrcMenu( USHORT usCmd, bool fPointer )
 {
-    if( ulCmd == IDM_MYMENU2 )
+    if( usCmd == IDM_MYMENU2 )
     {
         MessageBox( PMLITERAL("My menu item 2 selected"),
                     PMLITERAL("Client:CmdSrcMenu()"), MB_OK );
@@ -90,10 +90,10 @@ MRESULT KMyClientWindow::CmdSrcMenu( ULONG ulCmd, bool fPointer )
         return 0;
     }
 
-    return KWindow::CmdSrcMenu( ulCmd, fPointer );
+    return KWindow::CmdSrcMenu( usCmd, fPointer );
 }
 
-MRESULT KMyClientWindow::BnClicked( ULONG id )
+MRESULT KMyClientWindow::BnClicked( USHORT id )
 {
     switch( id )
     {
@@ -122,7 +122,7 @@ MRESULT KMyClientWindow::BnClicked( ULONG id )
     return 0;
 }
 
-MRESULT KMyClientWindow::HSbLineLeft( ULONG id, LONG lSlider )
+MRESULT KMyClientWindow::HSbLineLeft( USHORT id, SHORT sSlider )
 {
     KStaticText kst;
 
@@ -132,7 +132,7 @@ MRESULT KMyClientWindow::HSbLineLeft( ULONG id, LONG lSlider )
     return 0;
 }
 
-MRESULT KMyClientWindow::HSbLineRight( ULONG id, LONG lSlider )
+MRESULT KMyClientWindow::HSbLineRight( USHORT id, SHORT sSlider )
 {
     KStaticText kst;
 
@@ -142,7 +142,7 @@ MRESULT KMyClientWindow::HSbLineRight( ULONG id, LONG lSlider )
     return 0;
 }
 
-MRESULT KMyClientWindow::HSbPageLeft( ULONG id, LONG lSlider )
+MRESULT KMyClientWindow::HSbPageLeft( USHORT id, SHORT sSlider )
 {
     KStaticText kst;
 
@@ -152,7 +152,7 @@ MRESULT KMyClientWindow::HSbPageLeft( ULONG id, LONG lSlider )
     return 0;
 }
 
-MRESULT KMyClientWindow::HSbPageRight( ULONG id, LONG lSlider )
+MRESULT KMyClientWindow::HSbPageRight( USHORT id, SHORT sSlider )
 {
     KStaticText kst;
 
@@ -162,7 +162,7 @@ MRESULT KMyClientWindow::HSbPageRight( ULONG id, LONG lSlider )
     return 0;
 }
 
-MRESULT KMyClientWindow::VSbLineUp( ULONG id, LONG lSlider )
+MRESULT KMyClientWindow::VSbLineUp( USHORT id, SHORT sSlider )
 {
     KStaticText kst;
 
@@ -172,7 +172,7 @@ MRESULT KMyClientWindow::VSbLineUp( ULONG id, LONG lSlider )
     return 0;
 }
 
-MRESULT KMyClientWindow::VSbLineDown( ULONG id, LONG lSlider )
+MRESULT KMyClientWindow::VSbLineDown( USHORT id, SHORT sSlider )
 {
     KStaticText kst;
 
@@ -182,7 +182,7 @@ MRESULT KMyClientWindow::VSbLineDown( ULONG id, LONG lSlider )
     return 0;
 }
 
-MRESULT KMyClientWindow::VSbPageUp( ULONG id, LONG lSlider )
+MRESULT KMyClientWindow::VSbPageUp( USHORT id, SHORT sSlider )
 {
     KStaticText kst;
 
@@ -192,7 +192,7 @@ MRESULT KMyClientWindow::VSbPageUp( ULONG id, LONG lSlider )
     return 0;
 }
 
-MRESULT KMyClientWindow::VSbPageDown( ULONG id, LONG lSlider )
+MRESULT KMyClientWindow::VSbPageDown( USHORT id, SHORT sSlider )
 {
     KStaticText kst;
 
@@ -202,25 +202,25 @@ MRESULT KMyClientWindow::VSbPageDown( ULONG id, LONG lSlider )
     return 0;
 }
 
-MRESULT KMyClientWindow::OnTrackFrame( ULONG ulTrackFlags )
+MRESULT KMyClientWindow::OnTrackFrame( USHORT usTrackFlags )
 {
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
     kst.SetWindowText( PMLITERAL("Client: OnTrackFrame() called"));
 
-    return KWindow::OnTrackFrame( ulTrackFlags );
+    return KWindow::OnTrackFrame( usTrackFlags );
 }
 
 class KMyFrameWindow : public KFrameWindow
 {
 public :
-    virtual MRESULT SysCmdSrcMenu( ULONG ulCmd, bool fPointer );
+    virtual MRESULT SysCmdSrcMenu( USHORT usCmd, bool fPointer );
 };
 
-MRESULT KMyFrameWindow::SysCmdSrcMenu( ULONG ulCmd, bool fPointer )
+MRESULT KMyFrameWindow::SysCmdSrcMenu( USHORT usCmd, bool fPointer )
 {
-    if( ulCmd == IDM_MYMENU1 )
+    if( usCmd == IDM_MYMENU1 )
     {
         MessageBox( PMLITERAL("My menu item 1 selected"),
                     PMLITERAL("Frame: SysCmdSrcMenu()"), MB_OK );
@@ -229,14 +229,14 @@ MRESULT KMyFrameWindow::SysCmdSrcMenu( ULONG ulCmd, bool fPointer )
     }
 
     // Must call this, otherwise other SYSCOMMANDs do not work
-    return KFrameWindow::SysCmdSrcMenu( ulCmd, fPointer );
+    return KFrameWindow::SysCmdSrcMenu( usCmd, fPointer );
 }
 
 class KMyDialog : public KDialog
 {
 public :
     virtual MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate );
-    virtual MRESULT CmdSrcPushButton( ULONG ulCmd, bool fPointer );
+    virtual MRESULT CmdSrcPushButton( USHORT usCmd, bool fPointer );
 
 private :
     KStaticText _kstStatus;
@@ -254,9 +254,9 @@ MRESULT KMyDialog::OnInitDlg( HWND hwndFocus, PVOID pCreate )
     return FALSE;
 }
 
-MRESULT KMyDialog::CmdSrcPushButton( ULONG ulCmd, bool fPointer )
+MRESULT KMyDialog::CmdSrcPushButton( USHORT usCmd, bool fPointer )
 {
-    if( ulCmd == DID_CANCEL )
+    if( usCmd == DID_CANCEL )
         DismissDlg( DID_CANCEL );
 
     return 0;
@@ -268,7 +268,7 @@ public :
     virtual void Run();
 };
 
-#define USE_FRAMEWINDOW
+//#define USE_FRAMEWINDOW
 
 void KMyPMApp::Run()
 {

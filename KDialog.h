@@ -32,12 +32,12 @@ protected :
                                      MPARAM mp2 );
 
     virtual MRESULT KDlgProc( ULONG msg, MPARAM mp1, MPARAM mp2 );
-    virtual MRESULT OnChar( ULONG flFlags, ULONG ulRepeat, ULONG ulScanCode,
-                            ULONG ulCh, ULONG ulVk )
+    virtual MRESULT OnChar( USHORT fsFlags, UCHAR ucRepeat, UCHAR ucScanCode,
+                            USHORT usCh, USHORT usVk )
     {
         return KDefDlgProc( WM_CHAR,
-                            MPFROMSH2CH( flFlags, ulRepeat, ulScanCode ),
-                            MPFROM2SHORT( ulCh, ulVk ));
+                            MPFROMSH2CH( fsFlags, ucRepeat, ucScanCode ),
+                            MPFROM2SHORT( usCh, usVk ));
     }
 
     virtual MRESULT OnClose() { return KDefDlgProc( WM_CLOSE, 0, 0 ); }
@@ -47,8 +47,8 @@ protected :
                             MPFROMP( pCreate ));
     }
 
-    virtual MRESULT OnMatchMnemonic( ULONG ulMatch )
-    { return KDefDlgProc( WM_MATCHMNEMONIC, MPFROMLONG( ulMatch ), 0 ); }
+    virtual MRESULT OnMatchMnemonic( USHORT usMatch )
+    { return KDefDlgProc( WM_MATCHMNEMONIC, MPFROMSHORT( usMatch ), 0 ); }
 
     virtual MRESULT OnQueryDlgCode( PQMSG pQmsg )
     { return KDefDlgProc( WM_QUERYDLGCODE, MPFROMP( pQmsg ), 0 ); }

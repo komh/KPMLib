@@ -15,89 +15,90 @@ public :
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
 
-    virtual LONG DeleteItem( ULONG ulItem, bool fIncSub )
+    virtual SHORT DeleteItem( USHORT usItem, bool fIncSub )
     {
-        return LONGFROMMR( SendMsg( MM_DELETEITEM,
-                                    MPFROM2SHORT( ulItem, fIncSub )));
+        return SHORT1FROMMR( SendMsg( MM_DELETEITEM,
+                                      MPFROM2SHORT( usItem, fIncSub )));
     }
 
     virtual void EndMenuMode( bool fDismiss )
     { SendMsg( MM_ENDMENUMODE, MPFROMLONG( fDismiss )); }
 
-    virtual LONG InsertItem( PMENUITEM pmi, PCSZ pcszText )
+    virtual SHORT InsertItem( PMENUITEM pmi, PCSZ pcszText )
     {
-        return LONGFROMMR( SendMsg( MM_INSERTITEM, MPFROMP( pmi ),
-                                    MPFROMP( pcszText )));
+        return SHORT1FROMMR( SendMsg( MM_INSERTITEM, MPFROMP( pmi ),
+                                      MPFROMP( pcszText )));
     }
 
-    virtual bool IsItemValid( ULONG ulItem, BOOL fIncSub )
-    { return SendMsg( MM_ISITEMVALID, MPFROM2SHORT( ulItem, fIncSub )); }
+    virtual bool IsItemValid( USHORT usItem, BOOL fIncSub )
+    { return SendMsg( MM_ISITEMVALID, MPFROM2SHORT( usItem, fIncSub )); }
 
-    virtual LONG ItemIDFromPosition( LONG lItemIndex )
+    virtual SHORT ItemIDFromPosition( SHORT sItemIndex )
     {
-        return LONGFROMMR( SendMsg( MM_ITEMIDFROMPOSITION,
-                                    MPFROMLONG( lItemIndex )));
+        return SHORT1FROMMR( SendMsg( MM_ITEMIDFROMPOSITION,
+                                      MPFROMSHORT( sItemIndex )));
     }
 
-    virtual LONG ItemPositionFromID( ULONG ulItem, bool fIncSub )
+    virtual SHORT ItemPositionFromID( USHORT usItem, bool fIncSub )
     {
-        return LONGFROMMR( SendMsg( MM_ITEMPOSITIONFROMID,
-                                    MPFROM2SHORT( ulItem, fIncSub )));
+        return SHORT1FROMMR( SendMsg( MM_ITEMPOSITIONFROMID,
+                                      MPFROM2SHORT( usItem, fIncSub )));
     }
 
     virtual ULONG QueryDefaultItemID()
     { return LONGFROMMR( SendMsg( MM_QUERYDEFAULTITEMID )); }
 
-    virtual bool QueryItem( ULONG ulItem, bool fIncSub, PMENUITEM pmi )
+    virtual bool QueryItem( USHORT usItem, bool fIncSub, PMENUITEM pmi )
     {
-        return SendMsg( MM_QUERYITEM, MPFROM2SHORT( ulItem, fIncSub ),
+        return SendMsg( MM_QUERYITEM, MPFROM2SHORT( usItem, fIncSub ),
                         MPFROMP( pmi ));
     }
 
-    virtual ULONG QueryItemAttr( ULONG ulItem, bool fIncSub, ULONG ulMask )
+    virtual USHORT QueryItemAttr( USHORT usItem, bool fIncSub, USHORT usMask )
     {
-        return LONGFROMMR( SendMsg( MM_QUERYITEMATTR,
-                                    MPFROM2SHORT( ulItem, fIncSub ),
-                                    MPFROMLONG( ulMask )));
+        return SHORT1FROMMR( SendMsg( MM_QUERYITEMATTR,
+                                      MPFROM2SHORT( usItem, fIncSub ),
+                                      MPFROMSHORT( usMask )));
     }
 
-    virtual LONG QueryItemCount()
-    { return LONGFROMMR( SendMsg( MM_QUERYITEMCOUNT )); }
+    virtual SHORT QueryItemCount()
+    { return SHORT1FROMMR( SendMsg( MM_QUERYITEMCOUNT )); }
 
-    virtual bool QueryItemRect( ULONG ulItem, bool fIncSub, PRECTL prcl )
+    virtual bool QueryItemRect( USHORT usItem, bool fIncSub, PRECTL prcl )
     {
-        return SendMsg( MM_QUERYITEMRECT, MPFROM2SHORT( ulItem, fIncSub ),
+        return SendMsg( MM_QUERYITEMRECT, MPFROM2SHORT( usItem, fIncSub ),
                         MPFROMP( prcl ));
     }
 
-    virtual LONG QueryItemText( ULONG ulItem, LONG lMaxCount, PCSZ pcszText )
+    virtual SHORT QueryItemText( USHORT usItem, SHORT sMaxCount,
+                                 PCSZ pcszText )
     {
-        return LONGFROMMR( SendMsg( MM_QUERYITEMTEXT,
-                                    MPFROM2SHORT( ulItem, lMaxCount ),
-                                    MPFROMP( pcszText )));
+        return SHORT1FROMMR( SendMsg( MM_QUERYITEMTEXT,
+                                      MPFROM2SHORT( usItem, sMaxCount ),
+                                      MPFROMP( pcszText )));
     }
 
-    virtual LONG QueryItemTextLength( ULONG ulItem )
+    virtual SHORT QueryItemTextLength( USHORT usItem )
     {
-        return LONGFROMMR( SendMsg( MM_QUERYITEMTEXTLENGTH,
-                                    MPFROMLONG( ulItem )));
+        return SHORT1FROMMR( SendMsg( MM_QUERYITEMTEXTLENGTH,
+                                      MPFROMSHORT( usItem )));
     }
 
-    virtual LONG QuerySelItemID( bool fIncSub )
+    virtual SHORT QuerySelItemID( bool fIncSub )
     {
-        return LONGFROMMR( SendMsg( MM_QUERYSELITEMID,
-                                    MPFROM2SHORT( 0, fIncSub )));
+        return SHORT1FROMMR( SendMsg( MM_QUERYSELITEMID,
+                                      MPFROM2SHORT( 0, fIncSub )));
     }
 
-    virtual LONG RemoveItem( ULONG ulItem, bool fIncSub )
+    virtual SHORT RemoveItem( USHORT usItem, bool fIncSub )
     {
-        return LONGFROMMR( SendMsg( MM_REMOVEITEM,
-                                    MPFROM2SHORT( ulItem, fIncSub )));
+        return SHORT1FROMMR( SendMsg( MM_REMOVEITEM,
+                                      MPFROM2SHORT( usItem, fIncSub )));
     }
 
-    virtual bool SelectItem( LONG lItem, bool fIncSub, bool fDismiss )
+    virtual bool SelectItem( SHORT sItem, bool fIncSub, bool fDismiss )
     {
-        return SendMsg( MM_SELECTITEM, MPFROM2SHORT( lItem, fIncSub ),
+        return SendMsg( MM_SELECTITEM, MPFROM2SHORT( sItem, fIncSub ),
                         MPFROM2SHORT( 0, fDismiss ));
     }
 
@@ -110,22 +111,22 @@ public :
                         MPFROMP( pmi ));
     }
 
-    virtual bool SetItemAttr( ULONG ulItem, bool fIncSub,
-                              ULONG ulMask, ULONG ulData )
+    virtual bool SetItemAttr( USHORT usItem, bool fIncSub,
+                              USHORT usMask, USHORT usData )
     {
-        return SendMsg( MM_SETITEMATTR, MPFROM2SHORT( ulItem, fIncSub ),
-                        MPFROM2SHORT( ulMask, ulData ));
+        return SendMsg( MM_SETITEMATTR, MPFROM2SHORT( usItem, fIncSub ),
+                        MPFROM2SHORT( usMask, usData ));
     }
 
-    virtual bool SetItemHandle( ULONG ulItem, ULONG ulHandle )
+    virtual bool SetItemHandle( USHORT usItem, ULONG ulHandle )
     {
-        return SendMsg( MM_SETITEMHANDLE, MPFROMLONG( ulItem ),
+        return SendMsg( MM_SETITEMHANDLE, MPFROMSHORT( usItem ),
                         MPFROMLONG( ulHandle ));
     }
 
-    virtual bool SetItemText( ULONG ulItem, PCSZ pcszText )
+    virtual bool SetItemText( USHORT usItem, PCSZ pcszText )
     {
-        return SendMsg( MM_SETITEMTEXT, MPFROMLONG( ulItem ),
+        return SendMsg( MM_SETITEMTEXT, MPFROMSHORT( usItem ),
                         MPFROMP( pcszText ));
     }
 
