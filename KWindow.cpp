@@ -177,6 +177,19 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
         case WM_HELP       : return OnHelp( SHORT1FROMMP( mp1 ),
                                             SHORT1FROMMP( mp2 ),
                                             SHORT2FROMMP( mp2 ));
+        case WM_DRAWITEM   : return OnDrawItem( SHORT1FROMMP( mp1 ),
+                                                LONGFROMMP( mp2 ));
+        case WM_INITMENU   : return OnInitMenu( SHORT1FROMMP( mp1 ),
+                                                HWNDFROMMP( mp2 ));
+        case WM_MEASUREITEM : return OnMeasureItem( SHORT1FROMMP( mp1 ),
+                                                    LONGFROMMP( mp2 ));
+        case WM_MENUEND : return OnMenuEnd( SHORT1FROMMP( mp1 ),
+                                            HWNDFROMMP( mp2 ));
+        case WM_MENUSELECT : return OnMenuSelect( SHORT1FROMMP( mp1 ),
+                                                  SHORT2FROMMP( mp1 ),
+                                                  HWNDFROMMP( mp2 ));
+        case WM_NEXTMENU : return OnNextMenu( HWNDFROMMP( mp1 ),
+                                              SHORT1FROMMP( mp2 ));
     }
 
     return KDefWndProc( msg, mp1, mp2 );

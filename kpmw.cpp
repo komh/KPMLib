@@ -20,11 +20,15 @@
 
 #define IDTB_MYTITLE    400
 
+#define IDM_MYMENU1 500
+#define IDM_MYMENU2 501
+
 class KMyClientWindow : public KWindow
 {
 public :
     virtual MRESULT OnPaint();
     virtual MRESULT CmdSrcPushButton( ULONG ulCmd, bool fPointer );
+    virtual MRESULT CmdSrcMenu( ULONG ulCmd, bool fPointer );
     virtual MRESULT BnClicked( ULONG id );
     virtual MRESULT HSbLineLeft( ULONG id, LONG lSlider );
     virtual MRESULT HSbLineRight( ULONG id, LONG lSlider );
@@ -74,6 +78,19 @@ MRESULT KMyClientWindow::CmdSrcPushButton( ULONG ulCmd,
     }
 
     return 0;
+}
+
+MRESULT KMyClientWindow::CmdSrcMenu( ULONG ulCmd, bool fPointer )
+{
+    if( ulCmd == IDM_MYMENU2 )
+    {
+        MessageBox( PMLITERAL("My menu item 2 selected"),
+                    PMLITERAL("Client:CmdSrcMenu()"), MB_OK );
+
+        return 0;
+    }
+
+    return KWindow::CmdSrcMenu( ulCmd, fPointer );
 }
 
 MRESULT KMyClientWindow::BnClicked( ULONG id )
@@ -195,6 +212,25 @@ MRESULT KMyClientWindow::OnTrackFrame( ULONG ulTrackFlags )
     return KWindow::OnTrackFrame( ulTrackFlags );
 }
 
+class KMyFrameWindow : public KFrameWindow
+{
+public :
+    virtual MRESULT SysCmdSrcMenu( ULONG ulCmd, bool fPointer );
+};
+
+MRESULT KMyFrameWindow::SysCmdSrcMenu( ULONG ulCmd, bool fPointer )
+{
+    if( ulCmd == IDM_MYMENU1 )
+    {
+        MessageBox( PMLITERAL("My menu item 1 selected"),
+                    PMLITERAL("Frame: SysCmdSrcMenu()"), MB_OK );
+
+        return 0;
+    }
+
+    return KFrameWindow::SysCmdSrcMenu( ulCmd, fPointer );
+}
+
 class KMyDialog : public KDialog
 {
 public :
@@ -243,7 +279,7 @@ void KMyPMApp::Run()
     ULONG flFrameFlags = FCF_SYSMENU | FCF_TITLEBAR | FCF_MINMAX |
                          FCF_SIZEBORDER | FCF_SHELLPOSITION | FCF_TASKLIST;
 
-    KFrameWindow kframe;
+    KMyFrameWindow kframe;
     kframe.CreateStdWindow( KWND_DESKTOP,           // parent window handle
                             WS_VISIBLE,             // frame window style
                             &flFrameFlags,          // window style
@@ -302,6 +338,37 @@ void KMyPMApp::Run()
                       WS_VISIBLE,
                       100, 200, 200, 20, &kclient, KWND_TOP, IDTB_MYTITLE );
     ktb.SetHilite( true );
+
+    MENUITEM mi;
+    kframe.GetSysMenu().QueryItem( SC_SYSMENU, false, &mi );
+
+    KMenu kmSys;
+    kmSys.SetHWND( mi.hwndSubMenu );
+    kmSys.QueryItem( SC_CLOSE, false, &mi );
+
+    mi.iPosition   += 2;
+    mi.afStyle     = MIS_TEXT | MIS_SYSCOMMAND;
+    mi.afAttribute = 0;
+    mi.id          = IDM_MYMENU1;
+    mi.hwndSubMenu = 0;
+    mi.hItem       = 0;
+    kmSys.InsertItem( &mi, PMLITERAL("My item1"));
+
+    mi.iPosition++;
+    mi.afStyle     = MIS_TEXT;
+    mi.afAttribute = 0;
+    mi.id          = IDM_MYMENU2;
+    mi.hwndSubMenu = 0;
+    mi.hItem       = 0;
+    kmSys.InsertItem( &mi, PMLITERAL("My item2"));
+
+    mi.iPosition++;
+    mi.afStyle = MIS_SEPARATOR;
+    mi.afAttribute = 0;
+    mi.id = 0;
+    mi.hwndSubMenu = NULLHANDLE;
+    mi.hItem = 0;
+    kmSys.InsertItem( &mi, 0 );
 
     KPMApp::Run();
 

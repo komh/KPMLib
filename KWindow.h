@@ -352,6 +352,42 @@ protected :
 
     virtual MRESULT OnClose() { return KDefWndProc( WM_CLOSE, 0, 0 ); }
 
+    virtual MRESULT OnDrawItem( ULONG idMenu, ULONG ulControlSpec )
+    {
+        return KDefWndProc( WM_DRAWITEM, MPFROMLONG( idMenu ),
+                            MPFROMLONG( ulControlSpec ));
+    }
+
+    virtual MRESULT OnInitMenu( ULONG ulMenuID, HWND hwnd )
+    {
+        return KDefWndProc( WM_INITMENU, MPFROMLONG( ulMenuID ),
+                            MPFROMHWND( hwnd ));
+    }
+
+    virtual MRESULT OnMeasureItem( ULONG ulID, ULONG ulControlSpec )
+    {
+        return KDefWndProc( WM_MEASUREITEM, MPFROMLONG ( ulID ),
+                            MPFROMLONG( ulControlSpec ));
+    }
+
+    virtual MRESULT OnMenuEnd( ULONG ulID, HWND hwnd )
+    {
+        return KDefWndProc( WM_MENUEND, MPFROMLONG( ulID ),
+                            MPFROMHWND( hwnd ));
+    }
+
+    virtual MRESULT OnMenuSelect( ULONG ulItem, bool fPost, HWND hwnd )
+    {
+        return KDefWndProc( WM_MENUSELECT, MPFROM2SHORT( ulItem, fPost ),
+                            MPFROMHWND( hwnd ));
+    }
+
+    virtual MRESULT OnNextMenu( HWND hwndMenu, ULONG ulPrev )
+    {
+        return KDefWndProc( WM_NEXTMENU, MPFROMHWND( hwndMenu ),
+                            MPFROMLONG( ulPrev ));
+    }
+
 private :
     PFNWP _pfnwpOldProc;
 
