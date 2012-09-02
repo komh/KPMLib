@@ -41,6 +41,50 @@ protected :
     }
 
     virtual MRESULT OnClose() { return KDefDlgProc( WM_CLOSE, 0, 0 ); }
+    virtual MRESULT OnCommand( USHORT usCmd, USHORT ulSource,
+                               bool fPointer );
+    virtual MRESULT CmdSrcPushButton( USHORT usCmd, bool fPointer )
+    {
+        return KDefDlgProc( WM_COMMAND, MPFROMSHORT( usCmd ),
+                            MPFROM2SHORT( CMDSRC_PUSHBUTTON, fPointer ));
+    }
+
+    virtual MRESULT CmdSrcMenu( USHORT usCmd, bool fPointer )
+    {
+        return KDefDlgProc( WM_COMMAND, MPFROMSHORT( usCmd ),
+                            MPFROM2SHORT( CMDSRC_MENU, fPointer ));
+    }
+
+    virtual MRESULT CmdSrcAccelerator( USHORT usCmd, bool fPointer )
+    {
+        return KDefDlgProc( WM_COMMAND, MPFROMSHORT( usCmd ),
+                            MPFROM2SHORT( CMDSRC_ACCELERATOR, fPointer ));
+    }
+
+    virtual MRESULT CmdSrcFontDlg( USHORT usCmd, bool fPointer )
+    {
+        return KDefDlgProc( WM_COMMAND, MPFROMSHORT( usCmd ),
+                            MPFROM2SHORT( CMDSRC_FONTDLG, fPointer ));
+    }
+
+    virtual MRESULT CmdSrcFileDlg( USHORT usCmd, bool fPointer )
+    {
+        return KDefDlgProc( WM_COMMAND, MPFROMSHORT( usCmd ),
+                            MPFROM2SHORT( CMDSRC_FILEDLG, fPointer ));
+    }
+
+    virtual MRESULT CmdSrcOther( USHORT usCmd, bool fPointer )
+    {
+        return KDefDlgProc( WM_COMMAND, MPFROMSHORT( usCmd ),
+                            MPFROM2SHORT( CMDSRC_OTHER, fPointer ));
+    }
+
+    virtual MRESULT CmdSrcUser( USHORT usCmd, USHORT usSource, bool fPointer )
+    {
+        return KDefDlgProc( WM_COMMAND, MPFROMSHORT( usCmd ),
+                            MPFROM2SHORT( usSource, fPointer ));
+    }
+
     virtual MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate )
     {
         return KDefDlgProc( WM_INITDLG, MPFROMHWND( hwndFocus ),
