@@ -87,8 +87,7 @@ MRESULT KMyClientWindow::BnClicked( ULONG id )
 
             KButton kbtnRadio;
             WindowFromID( id, kbtnRadio );
-            kbtnRadio.SetCheck( static_cast< KButton::CheckState >
-                                    ( !kbtnRadio.QueryCheck()));
+            kbtnRadio.SetCheck( !kbtnRadio.QueryCheck());
             break;
         }
 

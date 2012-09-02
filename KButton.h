@@ -29,22 +29,15 @@ public :
     virtual void Click( bool fUp )
     { SendMsg( BM_CLICK, MPFROMLONG( fUp ), 0 ); }
 
-    virtual CheckState QueryCheck()
-    {
-        return static_cast< CheckState >
-                    ( LONGFROMMR( SendMsg( BM_QUERYCHECK, 0, 0 )));
-    }
+    virtual ULONG QueryCheck()
+    { return LONGFROMMR( SendMsg( BM_QUERYCHECK, 0, 0 )); }
 
     virtual LONG QueryCheckIndex()
     { return LONGFROMMR( SendMsg( BM_QUERYCHECKINDEX, 0, 0 )); }
 
     virtual bool QueryHilite() { return SendMsg( BM_QUERYHILITE, 0, 0 ); }
-    virtual CheckState SetCheck( CheckState bcsNew )
-    {
-        return static_cast< CheckState >
-                    ( LONGFROMMR( SendMsg( BM_SETCHECK,
-                                           MPFROMLONG( bcsNew ), 0 )));
-    }
+    virtual ULONG SetCheck( ULONG ulCheck )
+    { return LONGFROMMR( SendMsg( BM_SETCHECK, MPFROMLONG( ulCheck ), 0 )); }
 
     virtual bool SetDefault( bool fDefault )
     { return SendMsg( BM_SETDEFAULT, MPFROMLONG( fDefault ), 0 ); }
