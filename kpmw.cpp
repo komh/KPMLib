@@ -23,6 +23,40 @@
 #define IDM_MYMENU1 500
 #define IDM_MYMENU2 501
 
+class KMyDialog : public KDialog
+{
+public :
+    virtual MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate );
+    virtual MRESULT CmdSrcPushButton( USHORT usCmd, bool fPointer );
+
+private :
+    KStaticText _kstStatus;
+    KStaticText _kstSpeed;
+    KButton     _kbtCancel;
+};
+
+MRESULT KMyDialog::OnInitDlg( HWND hwndFocus, PVOID pCreate )
+{
+    WindowFromID( IDT_KPMW_STATUS, _kstStatus );
+    _kstStatus.SetWindowText( PMLITERAL("I'm fine"));
+
+    WindowFromID( IDT_KPMW_SPEED, _kstSpeed );
+    _kstSpeed.SetWindowText( PMLITERAL("Very fast"));
+
+    WindowFromID( DID_CANCEL, _kbtCancel );
+    _kbtCancel.SetWindowText( PMLITERAL("Exit"));
+
+    return FALSE;
+}
+
+MRESULT KMyDialog::CmdSrcPushButton( USHORT usCmd, bool fPointer )
+{
+    if( usCmd == DID_CANCEL )
+        DismissDlg( DID_CANCEL );
+
+    return 0;
+}
+
 class KMyClientWindow : public KWindow
 {
 public :
@@ -69,14 +103,12 @@ MRESULT KMyClientWindow::CmdSrcPushButton( USHORT usCmd,
     switch( usCmd )
     {
         case IDB_MYPUSH :
-            MessageBox( PMLITERAL("My Push button clicked"),
-                        PMLITERAL("CmdSrcPushButton()"), MB_OK );
-            return 0;
-
-        case IDB_MY3STATE :
-            MessageBox( PMLITERAL("My 3State CheckBox clicked"),
-                        PMLITERAL("CmdSrcPushButton()"), MB_OK );
-            return 0;
+        {
+            KMyDialog kdlg;
+            kdlg.LoadDlg( KWND_DESKTOP, this, 0, ID_KPMW, 0 );
+            kdlg.ProcessDlg();
+            kdlg.DestroyWindow();
+        }
     }
 
     return 0;
@@ -250,47 +282,14 @@ MRESULT KMyFrameWindow::SysCmdSrcMenu( USHORT usCmd, bool fPointer )
     return KFrameWindow::SysCmdSrcMenu( usCmd, fPointer );
 }
 
-class KMyDialog : public KDialog
-{
-public :
-    virtual MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate );
-    virtual MRESULT CmdSrcPushButton( USHORT usCmd, bool fPointer );
-
-private :
-    KStaticText _kstStatus;
-    KButton     _kbtCancel;
-};
-
-MRESULT KMyDialog::OnInitDlg( HWND hwndFocus, PVOID pCreate )
-{
-    WindowFromID( IDT_KPMW_STATUS, _kstStatus );
-    _kstStatus.SetWindowText( PMLITERAL("I'm fine"));
-
-    WindowFromID( DID_CANCEL, _kbtCancel );
-    _kbtCancel.SetWindowText( PMLITERAL("Exit"));
-
-    return FALSE;
-}
-
-MRESULT KMyDialog::CmdSrcPushButton( USHORT usCmd, bool fPointer )
-{
-    if( usCmd == DID_CANCEL )
-        DismissDlg( DID_CANCEL );
-
-    return 0;
-}
-
 class KMyPMApp : public KPMApp
 {
 public :
     virtual void Run();
 };
 
-//#define USE_FRAMEWINDOW
-
 void KMyPMApp::Run()
 {
-#ifdef USE_FRAMEWINDOW
     KMyClientWindow kclient;
     kclient.RegisterClass( _hab, PMLITERAL( WC_KPMW ), CS_SIZEREDRAW,
                            sizeof( PVOID ));
@@ -392,15 +391,6 @@ void KMyPMApp::Run()
     KPMApp::Run();
 
     kframe.DestroyWindow();
-#else
-    KMyDialog kdlg;
-
-    kdlg.LoadDlg( KWND_DESKTOP, 0, 0, ID_KPMW, 0 );
-
-    kdlg.ProcessDlg();
-
-    kdlg.DestroyWindow();
-#endif
 }
 
 int main()
