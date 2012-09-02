@@ -54,6 +54,10 @@ void KWindow::SetHWND( HWND hwnd )
         _pfnwpOldProc = WinSubclassWindow( hwnd, WndProc );
     }
 
+    // Already allocated ?
+    if( _pcszClassName )
+        return;
+
     UCHAR szClassName[ 512 ];
     WinQueryClassName( hwnd, sizeof( szClassName ), szClassName );
     _pcszClassName = reinterpret_cast< PCSZ >
@@ -91,22 +95,17 @@ bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
     HWND hwndP = pkwnd2hwnd( pkwndP );
     HWND hwndO = pkwnd2hwnd( pkwndO );
     HWND hwndS = pkwnd2hwnd( pkwndS );
+    HWND hwnd;
 
     CreateParams cp = { pPresParams, this };
 
-    _hwnd = WinCreateWindow( hwndP, _pcszClassName, pcszName,flStyle,
-                             x, y, cx, cy, hwndO, hwndS,
-                             id, pCtlData, &cp );
+    hwnd = WinCreateWindow( hwndP, _pcszClassName, pcszName,flStyle,
+                            x, y, cx, cy, hwndO, hwndS,
+                            id, pCtlData, &cp );
 
-    // For pre-registered class
-    if( !WinQueryWindowPtr( _hwnd, 0 ))
-    {
-        WinSetWindowPtr( _hwnd, 0, this );
+    SetHWND( hwnd );
 
-        _pfnwpOldProc = WinSubclassWindow( _hwnd, WndProc );
-    }
-
-    return _hwnd;
+    return hwnd;
 }
 
 bool KWindow::WindowFromID( ULONG id, KWindow& kwnd )
