@@ -197,7 +197,7 @@ MRESULT KMyClientWindow::HSbPageLeft( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText(PMLITERAL("SB_PAGELEFT by OnHScroll()"));
+    kst.SetWindowText( PMLITERAL("SB_PAGELEFT by OnHScroll()"));
 
     return 0;
 }
@@ -207,7 +207,7 @@ MRESULT KMyClientWindow::HSbPageRight( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText(PMLITERAL("SB_PAGERIGHT by OnHScroll()"));
+    kst.SetWindowText( PMLITERAL("SB_PAGERIGHT by OnHScroll()"));
 
     return 0;
 }
@@ -217,7 +217,7 @@ MRESULT KMyClientWindow::VSbLineUp( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText(PMLITERAL("SB_LINEUP by OnVScroll()"));
+    kst.SetWindowText( PMLITERAL("SB_LINEUP by OnVScroll()"));
 
     return 0;
 }
@@ -227,7 +227,7 @@ MRESULT KMyClientWindow::VSbLineDown( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText(PMLITERAL("SB_LINEDOWN by OnVScroll()"));
+    kst.SetWindowText( PMLITERAL("SB_LINEDOWN by OnVScroll()"));
 
     return 0;
 }
@@ -237,7 +237,7 @@ MRESULT KMyClientWindow::VSbPageUp( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText(PMLITERAL("SB_PAGEUP by OnVScroll()"));
+    kst.SetWindowText( PMLITERAL("SB_PAGEUP by OnVScroll()"));
 
     return 0;
 }
@@ -247,7 +247,7 @@ MRESULT KMyClientWindow::VSbPageDown( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText(PMLITERAL("SB_PAGEDOWN by OnVScroll()"));
+    kst.SetWindowText( PMLITERAL("SB_PAGEDOWN by OnVScroll()"));
 
     return 0;
 }
