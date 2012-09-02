@@ -210,6 +210,12 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
 
         case WM_NEXTMENU :
             return OnNextMenu( HWNDFROMMP( mp1 ), SHORT1FROMMP( mp2 ));
+
+        case WM_MATCHMNEMONIC :
+            return OnMatchMnemonic( SHORT1FROMMP( mp1 ));
+
+        case WM_QUERYDLGCODE :
+            return OnQueryDlgCode( reinterpret_cast< PQMSG >( mp1 ));
     }
 
     return KDefWndProc( msg, mp1, mp2 );

@@ -388,6 +388,12 @@ protected :
                             MPFROMLONG( ulPrev ));
     }
 
+    virtual MRESULT OnMatchMnemonic( ULONG ulMatch )
+    { return KDefWndProc( WM_MATCHMNEMONIC, MPFROMLONG( ulMatch ), 0 ); }
+
+    virtual MRESULT OnQueryDlgCode( PQMSG pQmsg )
+    { return KDefWndProc( WM_QUERYDLGCODE, MPFROMP( pQmsg ), 0 ); }
+
 private :
     PFNWP _pfnwpOldProc;
 

@@ -99,6 +99,12 @@ MRESULT KDialog::KDlgProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
 
         case WM_CLOSE :
             return OnClose();
+
+        case WM_MATCHMNEMONIC :
+            return OnMatchMnemonic( SHORT1FROMMP( mp1 ));
+
+        case WM_QUERYDLGCODE :
+            return OnQueryDlgCode( reinterpret_cast< PQMSG >( mp1 ));
     }
 
     return KDefDlgProc( msg, mp1, mp2 );

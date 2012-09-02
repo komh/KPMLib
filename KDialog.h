@@ -46,6 +46,12 @@ protected :
 
     virtual MRESULT OnClose() { return KDefDlgProc( WM_CLOSE, 0, 0 ); }
 
+    virtual MRESULT OnMatchMnemonic( ULONG ulMatch )
+    { return KDefDlgProc( WM_MATCHMNEMONIC, MPFROMLONG( ulMatch ), 0 ); }
+
+    virtual MRESULT OnQueryDlgCode( PQMSG pQmsg )
+    { return KDefDlgProc( WM_QUERYDLGCODE, MPFROMP( pQmsg ), 0 ); }
+
 private :
     MRESULT KDefDlgProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     { return WinDefDlgProc( _hwnd, msg, mp1, mp2 ); }
