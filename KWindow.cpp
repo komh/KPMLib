@@ -108,6 +108,24 @@ bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
     return hwnd;
 }
 
+bool KWindow::DestroyWindow()
+{
+    if( WinDestroyWindow( _hwnd ))
+    {
+        _hwnd = 0;
+
+        if( HIUSHORT( _pcszClassName ) != 0xFFFF )
+            free( reinterpret_cast< void * >( const_cast< PSZ >
+                                                ( _pcszClassName )));
+        _pcszClassName = 0;
+        _pfnwpOldProc  = 0;
+
+        return true;
+    }
+
+    return false;
+}
+
 bool KWindow::WindowFromID( ULONG id, KWindow& kwnd )
 {
     HWND     hwnd;
