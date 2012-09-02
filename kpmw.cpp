@@ -228,6 +228,7 @@ MRESULT KMyFrameWindow::SysCmdSrcMenu( ULONG ulCmd, bool fPointer )
         return 0;
     }
 
+    // Must call this, otherwise other SYSCOMMANDs do not work
     return KFrameWindow::SysCmdSrcMenu( ulCmd, fPointer );
 }
 
