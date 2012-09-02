@@ -147,49 +147,69 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
 {
     switch( msg )
     {
-        case WM_CREATE  : return OnCreate( PVOIDFROMMP( mp1 ),
-                                           reinterpret_cast< PCREATESTRUCT >
-                                                ( PVOIDFROMMP( mp2 )));
-        case WM_DESTROY : return OnDestroy();
-        case WM_PAINT   : return OnPaint();
-        case WM_COMMAND : return OnCommand( SHORT1FROMMP( mp1 ),
-                                            SHORT1FROMMP( mp2 ),
-                                            SHORT2FROMMP( mp2 ));
-        case WM_CONTROL : return OnControl( SHORT1FROMMP( mp1 ),
-                                            SHORT2FROMMP( mp1 ),
-                                            LONGFROMMP( mp2 ));
-        case WM_HSCROLL : return OnHScroll( SHORT1FROMMP( mp1 ),
-                                            SHORT1FROMMP( mp2 ),
-                                            SHORT2FROMMP( mp2 ));
-        case WM_VSCROLL : return OnVScroll( SHORT1FROMMP( mp1 ),
-                                            SHORT1FROMMP( mp2 ),
-                                            SHORT2FROMMP( mp2 ));
-        case WM_TRACKFRAME : return OnTrackFrame( SHORT1FROMMP( mp1 ));
-        case WM_CHAR       : return OnChar( SHORT1FROMMP( mp1 ),
-                                            CHAR3FROMMP( mp1 ),
-                                            CHAR4FROMMP( mp1 ),
-                                            SHORT1FROMMP( mp2 ),
-                                            SHORT2FROMMP( mp2 ));
-        case WM_CLOSE      : return OnClose();
-        case WM_SYSCOMMAND : return OnSysCommand( SHORT1FROMMP( mp1 ),
-                                                  SHORT1FROMMP( mp2 ),
-                                                  SHORT2FROMMP( mp2 ));
-        case WM_HELP       : return OnHelp( SHORT1FROMMP( mp1 ),
-                                            SHORT1FROMMP( mp2 ),
-                                            SHORT2FROMMP( mp2 ));
-        case WM_DRAWITEM   : return OnDrawItem( SHORT1FROMMP( mp1 ),
-                                                LONGFROMMP( mp2 ));
-        case WM_INITMENU   : return OnInitMenu( SHORT1FROMMP( mp1 ),
-                                                HWNDFROMMP( mp2 ));
-        case WM_MEASUREITEM : return OnMeasureItem( SHORT1FROMMP( mp1 ),
-                                                    LONGFROMMP( mp2 ));
-        case WM_MENUEND : return OnMenuEnd( SHORT1FROMMP( mp1 ),
-                                            HWNDFROMMP( mp2 ));
-        case WM_MENUSELECT : return OnMenuSelect( SHORT1FROMMP( mp1 ),
-                                                  SHORT2FROMMP( mp1 ),
-                                                  HWNDFROMMP( mp2 ));
-        case WM_NEXTMENU : return OnNextMenu( HWNDFROMMP( mp1 ),
-                                              SHORT1FROMMP( mp2 ));
+        case WM_CREATE :
+            return OnCreate( PVOIDFROMMP( mp1 ),
+                             reinterpret_cast< PCREATESTRUCT >
+                                 ( PVOIDFROMMP( mp2 )));
+        case WM_DESTROY :
+            return OnDestroy();
+
+        case WM_PAINT :
+            return OnPaint();
+
+        case WM_COMMAND :
+            return OnCommand( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
+                              SHORT2FROMMP( mp2 ));
+
+        case WM_CONTROL :
+            return OnControl( SHORT1FROMMP( mp1 ), SHORT2FROMMP( mp1 ),
+                              LONGFROMMP( mp2 ));
+
+        case WM_HSCROLL :
+            return OnHScroll( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
+                              SHORT2FROMMP( mp2 ));
+
+        case WM_VSCROLL :
+            return OnVScroll( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
+                              SHORT2FROMMP( mp2 ));
+
+        case WM_TRACKFRAME :
+            return OnTrackFrame( SHORT1FROMMP( mp1 ));
+
+        case WM_CHAR :
+            return OnChar( SHORT1FROMMP( mp1 ), CHAR3FROMMP( mp1 ),
+                           CHAR4FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
+                           SHORT2FROMMP( mp2 ));
+
+        case WM_CLOSE :
+            return OnClose();
+
+        case WM_SYSCOMMAND :
+            return OnSysCommand( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
+                                 SHORT2FROMMP( mp2 ));
+
+        case WM_HELP :
+            return OnHelp( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
+                           SHORT2FROMMP( mp2 ));
+
+        case WM_DRAWITEM :
+            return OnDrawItem( SHORT1FROMMP( mp1 ), LONGFROMMP( mp2 ));
+
+        case WM_INITMENU :
+            return OnInitMenu( SHORT1FROMMP( mp1 ), HWNDFROMMP( mp2 ));
+
+        case WM_MEASUREITEM :
+            return OnMeasureItem( SHORT1FROMMP( mp1 ), LONGFROMMP( mp2 ));
+
+        case WM_MENUEND :
+            return OnMenuEnd( SHORT1FROMMP( mp1 ), HWNDFROMMP( mp2 ));
+
+        case WM_MENUSELECT :
+            return OnMenuSelect( SHORT1FROMMP( mp1 ), SHORT2FROMMP( mp1 ),
+                                 HWNDFROMMP( mp2 ));
+
+        case WM_NEXTMENU :
+            return OnNextMenu( HWNDFROMMP( mp1 ), SHORT1FROMMP( mp2 ));
     }
 
     return KDefWndProc( msg, mp1, mp2 );
