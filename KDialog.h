@@ -85,6 +85,11 @@ protected :
                             MPFROM2SHORT( usSource, fPointer ));
     }
 
+    virtual MRESULT OnControl( USHORT id, USHORT usNotifyCode,
+                               ULONG ulControlSpec )
+    { return KDefDlgProc( WM_CONTROL, MPFROM2SHORT( id, usNotifyCode ), 0 ); }
+
+    virtual MRESULT OnDestroy() { return KDefDlgProc( WM_DESTROY, 0, 0 ); }
     virtual MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate )
     {
         return KDefDlgProc( WM_INITDLG, MPFROMHWND( hwndFocus ),
