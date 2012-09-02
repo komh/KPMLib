@@ -40,53 +40,6 @@ KWindow::~KWindow()
                                             ( _pcszClassName )));
 }
 
-void KWindow::SetHWND( HWND hwnd )
-{
-    _hwnd = hwnd;
-
-    if( !hwnd )
-        return;
-
-    if( !WinQueryWindowPtr( hwnd, 0 ))
-    {
-        WinSetWindowPtr( hwnd, 0, this );
-
-        _pfnwpOldProc = WinSubclassWindow( hwnd, WndProc );
-    }
-
-    // Already allocated ?
-    if( _pcszClassName )
-        return;
-
-    UCHAR szClassName[ 512 ];
-    WinQueryClassName( hwnd, sizeof( szClassName ), szClassName );
-    _pcszClassName = reinterpret_cast< PCSZ >
-                            ( strdup( reinterpret_cast< const char * >
-                                        ( szClassName )));
-}
-
-bool KWindow::RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
-                             ULONG cbWindowData )
-{
-    _pcszClassName = reinterpret_cast< PCSZ >(
-                        strdup( reinterpret_cast< const char * >
-                                    ( pcszClassName )));
-
-    return WinRegisterClass( hab, pcszClassName, WndProc, flStyle,
-                             sizeof( PVOID ) + cbWindowData );
-}
-
-void KWindow::SetClassName( PCSZ pcszClassName )
-{
-    // pre-defined class such as WC_FRAME ?
-    if( HIUSHORT( pcszClassName ) == 0xFFFF )
-        _pcszClassName = pcszClassName;
-    else
-        _pcszClassName = reinterpret_cast< PCSZ >(
-                            strdup( reinterpret_cast< const char * >
-                                        ( pcszClassName )));
-}
-
 bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                             ULONG flStyle, LONG x, LONG y, LONG cx, LONG cy,
                             const KWindow* pkwndO, const KWindow* pkwndS,
@@ -126,6 +79,17 @@ bool KWindow::DestroyWindow()
     return false;
 }
 
+bool KWindow::RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
+                             ULONG cbWindowData )
+{
+    _pcszClassName = reinterpret_cast< PCSZ >(
+                        strdup( reinterpret_cast< const char * >
+                                    ( pcszClassName )));
+
+    return WinRegisterClass( hab, pcszClassName, WndProc, flStyle,
+                             sizeof( PVOID ) + cbWindowData );
+}
+
 bool KWindow::WindowFromID( ULONG id, KWindow& kwnd )
 {
     HWND     hwnd;
@@ -137,6 +101,42 @@ bool KWindow::WindowFromID( ULONG id, KWindow& kwnd )
     kwnd.SetHWND( hwnd );
 
     return true;
+}
+
+void KWindow::SetHWND( HWND hwnd )
+{
+    _hwnd = hwnd;
+
+    if( !hwnd )
+        return;
+
+    if( !WinQueryWindowPtr( hwnd, 0 ))
+    {
+        WinSetWindowPtr( hwnd, 0, this );
+
+        _pfnwpOldProc = WinSubclassWindow( hwnd, WndProc );
+    }
+
+    // Already allocated ?
+    if( _pcszClassName )
+        return;
+
+    UCHAR szClassName[ 512 ];
+    WinQueryClassName( hwnd, sizeof( szClassName ), szClassName );
+    _pcszClassName = reinterpret_cast< PCSZ >
+                            ( strdup( reinterpret_cast< const char * >
+                                        ( szClassName )));
+}
+
+void KWindow::SetClassName( PCSZ pcszClassName )
+{
+    // pre-defined class such as WC_FRAME ?
+    if( HIUSHORT( pcszClassName ) == 0xFFFF )
+        _pcszClassName = pcszClassName;
+    else
+        _pcszClassName = reinterpret_cast< PCSZ >(
+                            strdup( reinterpret_cast< const char * >
+                                        ( pcszClassName )));
 }
 
 MRESULT EXPENTRY KWindow::WndProc( HWND hwnd, ULONG msg, MPARAM mp1,
@@ -164,15 +164,13 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
 {
     switch( msg )
     {
-        case WM_CREATE :
-            return OnCreate( PVOIDFROMMP( mp1 ),
-                             reinterpret_cast< PCREATESTRUCT >
-                                 ( PVOIDFROMMP( mp2 )));
-        case WM_DESTROY :
-            return OnDestroy();
+        case WM_CHAR :
+            return OnChar( SHORT1FROMMP( mp1 ), CHAR3FROMMP( mp1 ),
+                           CHAR4FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
+                           SHORT2FROMMP( mp2 ));
 
-        case WM_PAINT :
-            return OnPaint();
+        case WM_CLOSE :
+            return OnClose();
 
         case WM_COMMAND :
             return OnCommand( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
@@ -182,38 +180,30 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
             return OnControl( SHORT1FROMMP( mp1 ), SHORT2FROMMP( mp1 ),
                               LONGFROMMP( mp2 ));
 
-        case WM_HSCROLL :
-            return OnHScroll( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
-                              SHORT2FROMMP( mp2 ));
+        case WM_CREATE :
+            return OnCreate( PVOIDFROMMP( mp1 ),
+                             reinterpret_cast< PCREATESTRUCT >
+                                 ( PVOIDFROMMP( mp2 )));
 
-        case WM_VSCROLL :
-            return OnVScroll( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
-                              SHORT2FROMMP( mp2 ));
+        case WM_DESTROY :
+            return OnDestroy();
 
-        case WM_TRACKFRAME :
-            return OnTrackFrame( SHORT1FROMMP( mp1 ));
-
-        case WM_CHAR :
-            return OnChar( SHORT1FROMMP( mp1 ), CHAR3FROMMP( mp1 ),
-                           CHAR4FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
-                           SHORT2FROMMP( mp2 ));
-
-        case WM_CLOSE :
-            return OnClose();
-
-        case WM_SYSCOMMAND :
-            return OnSysCommand( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
-                                 SHORT2FROMMP( mp2 ));
+        case WM_DRAWITEM :
+            return OnDrawItem( SHORT1FROMMP( mp1 ), LONGFROMMP( mp2 ));
 
         case WM_HELP :
             return OnHelp( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
                            SHORT2FROMMP( mp2 ));
 
-        case WM_DRAWITEM :
-            return OnDrawItem( SHORT1FROMMP( mp1 ), LONGFROMMP( mp2 ));
+        case WM_HSCROLL :
+            return OnHScroll( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
+                              SHORT2FROMMP( mp2 ));
 
         case WM_INITMENU :
             return OnInitMenu( SHORT1FROMMP( mp1 ), HWNDFROMMP( mp2 ));
+
+        case WM_MATCHMNEMONIC :
+            return OnMatchMnemonic( SHORT1FROMMP( mp1 ));
 
         case WM_MEASUREITEM :
             return OnMeasureItem( SHORT1FROMMP( mp1 ), LONGFROMMP( mp2 ));
@@ -228,11 +218,22 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
         case WM_NEXTMENU :
             return OnNextMenu( HWNDFROMMP( mp1 ), SHORT1FROMMP( mp2 ));
 
-        case WM_MATCHMNEMONIC :
-            return OnMatchMnemonic( SHORT1FROMMP( mp1 ));
+        case WM_PAINT :
+            return OnPaint();
 
         case WM_QUERYDLGCODE :
             return OnQueryDlgCode( reinterpret_cast< PQMSG >( mp1 ));
+
+        case WM_SYSCOMMAND :
+            return OnSysCommand( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
+                                 SHORT2FROMMP( mp2 ));
+
+        case WM_TRACKFRAME :
+            return OnTrackFrame( SHORT1FROMMP( mp1 ));
+
+        case WM_VSCROLL :
+            return OnVScroll( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
+                              SHORT2FROMMP( mp2 ));
     }
 
     return KDefWndProc( msg, mp1, mp2 );
@@ -266,6 +267,32 @@ MRESULT KWindow::OnControl( ULONG id, ULONG ulNotifyCode,
     return 0;
 }
 
+MRESULT KWindow::OnHelp( ULONG ulCmd, ULONG ulSource, bool fPointer )
+{
+    switch( ulSource )
+    {
+        case CMDSRC_PUSHBUTTON  :
+            return HelpCmdSrcPushButton( ulCmd, fPointer );
+
+        case CMDSRC_MENU        :
+            return HelpCmdSrcMenu( ulCmd, fPointer );
+
+        case CMDSRC_ACCELERATOR :
+            return HelpCmdSrcAccelerator( ulCmd, fPointer );
+
+        case CMDSRC_FONTDLG     :
+            return HelpCmdSrcFontDlg( ulCmd, fPointer );
+
+        case CMDSRC_FILEDLG     :
+            return HelpCmdSrcFileDlg( ulCmd, fPointer );
+
+        case CMDSRC_OTHER       :
+            return HelpCmdSrcOther( ulCmd, fPointer );
+    }
+
+    return HelpCmdSrcUser( ulCmd, ulSource, fPointer );
+}
+
 MRESULT KWindow::OnHScroll( ULONG id, LONG lSlider, ULONG ulCmd )
 {
     switch( ulCmd )
@@ -277,22 +304,6 @@ MRESULT KWindow::OnHScroll( ULONG id, LONG lSlider, ULONG ulCmd )
         case SB_SLIDERPOSITION : return HSbSliderPosition( id, lSlider );
         case SB_SLIDERTRACK    : return HSbSliderTrack( id, lSlider );
         case SB_ENDSCROLL      : return HSbEndScroll( id, lSlider );
-    }
-
-    return 0;
-}
-
-MRESULT KWindow::OnVScroll( ULONG id, LONG lSlider, ULONG ulCmd )
-{
-    switch( ulCmd )
-    {
-        case SB_LINEUP         : return VSbLineUp( id, lSlider );
-        case SB_LINEDOWN       : return VSbLineDown( id, lSlider );
-        case SB_PAGEUP         : return VSbPageUp( id, lSlider );
-        case SB_PAGEDOWN       : return VSbPageDown( id, lSlider );
-        case SB_SLIDERPOSITION : return VSbSliderPosition( id, lSlider );
-        case SB_SLIDERTRACK    : return VSbSliderTrack( id, lSlider );
-        case SB_ENDSCROLL      : return VSbEndScroll( id, lSlider );
     }
 
     return 0;
@@ -324,29 +335,19 @@ MRESULT KWindow::OnSysCommand( ULONG ulCmd, ULONG ulSource, bool fPointer )
     return SysCmdSrcUser( ulCmd, ulSource, fPointer );
 }
 
-MRESULT KWindow::OnHelp( ULONG ulCmd, ULONG ulSource, bool fPointer )
+MRESULT KWindow::OnVScroll( ULONG id, LONG lSlider, ULONG ulCmd )
 {
-    switch( ulSource )
+    switch( ulCmd )
     {
-        case CMDSRC_PUSHBUTTON  :
-            return HelpCmdSrcPushButton( ulCmd, fPointer );
-
-        case CMDSRC_MENU        :
-            return HelpCmdSrcMenu( ulCmd, fPointer );
-
-        case CMDSRC_ACCELERATOR :
-            return HelpCmdSrcAccelerator( ulCmd, fPointer );
-
-        case CMDSRC_FONTDLG     :
-            return HelpCmdSrcFontDlg( ulCmd, fPointer );
-
-        case CMDSRC_FILEDLG     :
-            return HelpCmdSrcFileDlg( ulCmd, fPointer );
-
-        case CMDSRC_OTHER       :
-            return HelpCmdSrcOther( ulCmd, fPointer );
+        case SB_LINEUP         : return VSbLineUp( id, lSlider );
+        case SB_LINEDOWN       : return VSbLineDown( id, lSlider );
+        case SB_PAGEUP         : return VSbPageUp( id, lSlider );
+        case SB_PAGEDOWN       : return VSbPageDown( id, lSlider );
+        case SB_SLIDERPOSITION : return VSbSliderPosition( id, lSlider );
+        case SB_SLIDERTRACK    : return VSbSliderTrack( id, lSlider );
+        case SB_ENDSCROLL      : return VSbEndScroll( id, lSlider );
     }
 
-    return HelpCmdSrcUser( ulCmd, ulSource, fPointer );
+    return 0;
 }
 

@@ -17,20 +17,25 @@ public :
     KWindow();
     virtual ~KWindow();
 
-    virtual bool RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
-                                ULONG cbWindowData );
+    virtual HPS BeginPaint( HPS hps, PRECTL prcl )
+    { return WinBeginPaint( _hwnd, hps, prcl); }
+
     virtual bool CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
     virtual bool DestroyWindow();
-    virtual bool SetWindowText( PCSZ pcszString )
-    { return WinSetWindowText( _hwnd, pcszString ); }
+    virtual LONG DrawText( HPS hps, LONG cchText, PCCH lpchText, PRECTL prcl,
+                           LONG clrFore, LONG clrBack, ULONG flCmd )
+    {
+        return WinDrawText( hps, cchText, lpchText, prcl, clrFore, clrBack,
+                            flCmd );
+    }
 
-    virtual bool WindowFromID( ULONG id, KWindow& kwnd );
-    virtual bool ShowWindow( BOOL fNewVisibility )
-    { return WinShowWindow( _hwnd, fNewVisibility ); }
+    virtual bool EndPaint( HPS hps ) { return WinEndPaint( hps ); }
+    virtual bool FillRect( HPS hps, PRECTL prcl, LONG lColor )
+    { return WinFillRect( hps, prcl, lColor ); }
 
     virtual ULONG MessageBox( PCSZ pcszText, PCSZ pcszCaption, ULONG flStyle )
     {
@@ -45,15 +50,20 @@ public :
                               id, flStyle );
     }
 
-    virtual MRESULT SendMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
-    { return WinSendMsg( _hwnd, ulMsg, mp1, mp2 ); }
-
     virtual bool PostMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
     { return WinPostMsg( _hwnd, ulMsg, mp1, mp2 ); }
 
     virtual HAB QueryAnchorBlock() { return WinQueryAnchorBlock( _hwnd ); }
     virtual ULONG QueryTaskSizePos( PSWP pswp )
     { return WinQueryTaskSizePos( QueryAnchorBlock(), 0, pswp ); }
+
+    virtual bool QueryWindowRect( PRECTL prcl )
+    { return WinQueryWindowRect( _hwnd, prcl ); }
+
+    virtual bool RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
+                                ULONG cbWindowData );
+    virtual MRESULT SendMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
+    { return WinSendMsg( _hwnd, ulMsg, mp1, mp2 ); }
 
     virtual bool SetWindowPos( KWindow* pkwndRel, LONG x, LONG y,
                                LONG cx, LONG cy, ULONG fl )
@@ -62,20 +72,13 @@ public :
                                 x, y, cx, cy, fl );
     }
 
-    virtual HPS BeginPaint( HPS hps, PRECTL prcl )
-    { return WinBeginPaint( _hwnd, hps, prcl); }
+    virtual bool SetWindowText( PCSZ pcszString )
+    { return WinSetWindowText( _hwnd, pcszString ); }
 
-    virtual bool EndPaint( HPS hps ) { return WinEndPaint( hps ); }
-    virtual bool FillRect( HPS hps, PRECTL prcl, LONG lColor )
-    { return WinFillRect( hps, prcl, lColor ); }
-    virtual bool QueryWindowRect( PRECTL prcl )
-    { return WinQueryWindowRect( _hwnd, prcl ); }
-    virtual LONG DrawText( HPS hps, LONG cchText, PCCH lpchText, PRECTL prcl,
-                           LONG clrFore, LONG clrBack, ULONG flCmd )
-    {
-        return WinDrawText( hps, cchText, lpchText, prcl, clrFore, clrBack,
-                            flCmd );
-    }
+    virtual bool ShowWindow( BOOL fNewVisibility )
+    { return WinShowWindow( _hwnd, fNewVisibility ); }
+
+    virtual bool WindowFromID( ULONG id, KWindow& kwnd );
 
     HWND GetHWND() const { return _hwnd; }
     virtual void SetHWND( HWND hwnd );
@@ -93,11 +96,16 @@ protected :
                                      MPARAM mp2 );
 
     virtual MRESULT KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 );
-    virtual MRESULT OnCreate( PVOID pCtrlData, PCREATESTRUCT pcs )
-    { return KDefWndProc( WM_CREATE, MPFROMP( pCtrlData ), MPFROMP( pcs )); }
+    virtual MRESULT OnChar( ULONG flFlags, ULONG ulRepeat, ULONG ulScanCode,
+                            ULONG ulCh, ULONG ulVk )
+    {
+        return KDefWndProc( WM_CHAR,
+                            MPFROMSH2CH( flFlags, ulRepeat, ulScanCode ),
+                            MPFROM2SHORT( ulCh, ulVk ));
+    }
 
-    virtual MRESULT OnDestroy() { return KDefWndProc( WM_DESTROY, 0, 0 ); }
-    virtual MRESULT OnPaint() { return KDefWndProc( WM_PAINT, 0, 0 ); }
+    virtual MRESULT OnClose() { return KDefWndProc( WM_CLOSE, 0, 0 ); }
+
     virtual MRESULT OnCommand( ULONG ulCmd, ULONG ulSource,
                                bool fPointer );
     virtual MRESULT CmdSrcPushButton( ULONG ulCmd, bool fPointer )
@@ -156,6 +164,60 @@ protected :
                             MPFROMLONG( ulControlSpec ));
     }
 
+    virtual MRESULT OnCreate( PVOID pCtrlData, PCREATESTRUCT pcs )
+    { return KDefWndProc( WM_CREATE, MPFROMP( pCtrlData ), MPFROMP( pcs )); }
+
+    virtual MRESULT OnDestroy() { return KDefWndProc( WM_DESTROY, 0, 0 ); }
+    virtual MRESULT OnDrawItem( ULONG idMenu, ULONG ulControlSpec )
+    {
+        return KDefWndProc( WM_DRAWITEM, MPFROMLONG( idMenu ),
+                            MPFROMLONG( ulControlSpec ));
+    }
+
+    virtual MRESULT OnHelp( ULONG ulCmd, ULONG ulSource, bool fPointer );
+    virtual MRESULT HelpCmdSrcPushButton( ULONG ulCmd, bool fPointer )
+    {
+        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
+                            MPFROM2SHORT( CMDSRC_PUSHBUTTON, fPointer ));
+    }
+
+    virtual MRESULT HelpCmdSrcMenu( ULONG ulCmd, bool fPointer )
+    {
+        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
+                            MPFROM2SHORT( CMDSRC_PUSHBUTTON, fPointer ));
+    }
+
+    virtual MRESULT HelpCmdSrcAccelerator( ULONG ulCmd, bool fPointer )
+    {
+        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
+                            MPFROM2SHORT( CMDSRC_ACCELERATOR, fPointer ));
+    }
+
+    virtual MRESULT HelpCmdSrcFontDlg( ULONG ulCmd, bool fPointer )
+    {
+        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
+                            MPFROM2SHORT( CMDSRC_FONTDLG, fPointer ));
+    }
+
+    virtual MRESULT HelpCmdSrcFileDlg( ULONG ulCmd, bool fPointer )
+    {
+        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
+                            MPFROM2SHORT( CMDSRC_FILEDLG, fPointer ));
+    }
+
+    virtual MRESULT HelpCmdSrcOther( ULONG ulCmd, bool fPointer )
+    {
+        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
+                            MPFROM2SHORT( CMDSRC_OTHER, fPointer ));
+    }
+
+    virtual MRESULT HelpCmdSrcUser( ULONG ulCmd, ULONG ulSource,
+                                    bool fPointer )
+    {
+        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
+                            MPFROM2SHORT( ulSource, fPointer ));
+    }
+
     virtual MRESULT OnHScroll( ULONG id, LONG lSlider, ULONG ulCmd );
     virtual MRESULT HSbLineLeft( ULONG id, LONG lSlider )
     {
@@ -199,50 +261,43 @@ protected :
                             MPFROM2SHORT( lSlider, SB_ENDSCROLL ));
     }
 
-
-    virtual MRESULT OnVScroll( ULONG id, LONG lSlider, ULONG ulCmd );
-    virtual MRESULT VSbLineUp( ULONG id, LONG lSlider )
+    virtual MRESULT OnInitMenu( ULONG ulMenuID, HWND hwnd )
     {
-        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
-                            MPFROM2SHORT( lSlider, SB_LINEUP ));
+        return KDefWndProc( WM_INITMENU, MPFROMLONG( ulMenuID ),
+                            MPFROMHWND( hwnd ));
     }
 
-    virtual MRESULT VSbLineDown( ULONG id, LONG lSlider )
+    virtual MRESULT OnMatchMnemonic( ULONG ulMatch )
+    { return KDefWndProc( WM_MATCHMNEMONIC, MPFROMLONG( ulMatch ), 0 ); }
+
+    virtual MRESULT OnMeasureItem( ULONG ulID, ULONG ulControlSpec )
     {
-        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
-                            MPFROM2SHORT( lSlider, SB_LINEDOWN ));
+        return KDefWndProc( WM_MEASUREITEM, MPFROMLONG ( ulID ),
+                            MPFROMLONG( ulControlSpec ));
     }
 
-    virtual MRESULT VSbPageUp( ULONG id, LONG lSlider )
+    virtual MRESULT OnMenuEnd( ULONG ulID, HWND hwnd )
     {
-        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
-                            MPFROM2SHORT( lSlider, SB_PAGEUP ));
+        return KDefWndProc( WM_MENUEND, MPFROMLONG( ulID ),
+                            MPFROMHWND( hwnd ));
     }
 
-    virtual MRESULT VSbPageDown( ULONG id, LONG lSlider )
+    virtual MRESULT OnMenuSelect( ULONG ulItem, bool fPost, HWND hwnd )
     {
-        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
-                            MPFROM2SHORT( lSlider, SB_PAGEDOWN ));
+        return KDefWndProc( WM_MENUSELECT, MPFROM2SHORT( ulItem, fPost ),
+                            MPFROMHWND( hwnd ));
     }
 
-    virtual MRESULT VSbSliderPosition( ULONG id, LONG lSlider )
+    virtual MRESULT OnNextMenu( HWND hwndMenu, ULONG ulPrev )
     {
-        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
-                            MPFROM2SHORT( lSlider, SB_SLIDERPOSITION ));
+        return KDefWndProc( WM_NEXTMENU, MPFROMHWND( hwndMenu ),
+                            MPFROMLONG( ulPrev ));
     }
 
-    virtual MRESULT VSbSliderTrack( ULONG id, LONG lSlider )
-    {
-        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
-                            MPFROM2SHORT( lSlider, SB_SLIDERTRACK ));
-    }
+    virtual MRESULT OnPaint() { return KDefWndProc( WM_PAINT, 0, 0 ); }
 
-    virtual MRESULT VSbEndScroll( ULONG id, LONG lSlider )
-    {
-        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
-                            MPFROM2SHORT( lSlider, SB_ENDSCROLL ));
-    }
-
+    virtual MRESULT OnQueryDlgCode( PQMSG pQmsg )
+    { return KDefWndProc( WM_QUERYDLGCODE, MPFROMP( pQmsg ), 0 ); }
 
     virtual MRESULT OnSysCommand( ULONG ulCmd, ULONG ulSource,
                                   bool fPointer );
@@ -298,101 +353,48 @@ protected :
     virtual MRESULT OnTrackFrame( ULONG flTrackFlags )
     { return KDefWndProc( WM_TRACKFRAME, MPFROMLONG( flTrackFlags ), 0 ); }
 
-    virtual MRESULT OnHelp( ULONG ulCmd, ULONG ulSource, bool fPointer );
-    virtual MRESULT HelpCmdSrcPushButton( ULONG ulCmd, bool fPointer )
+    virtual MRESULT OnVScroll( ULONG id, LONG lSlider, ULONG ulCmd );
+    virtual MRESULT VSbLineUp( ULONG id, LONG lSlider )
     {
-        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
-                            MPFROM2SHORT( CMDSRC_PUSHBUTTON, fPointer ));
+        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
+                            MPFROM2SHORT( lSlider, SB_LINEUP ));
     }
 
-    virtual MRESULT HelpCmdSrcMenu( ULONG ulCmd, bool fPointer )
+    virtual MRESULT VSbLineDown( ULONG id, LONG lSlider )
     {
-        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
-                            MPFROM2SHORT( CMDSRC_PUSHBUTTON, fPointer ));
+        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
+                            MPFROM2SHORT( lSlider, SB_LINEDOWN ));
     }
 
-    virtual MRESULT HelpCmdSrcAccelerator( ULONG ulCmd, bool fPointer )
+    virtual MRESULT VSbPageUp( ULONG id, LONG lSlider )
     {
-        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
-                            MPFROM2SHORT( CMDSRC_ACCELERATOR, fPointer ));
+        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
+                            MPFROM2SHORT( lSlider, SB_PAGEUP ));
     }
 
-    virtual MRESULT HelpCmdSrcFontDlg( ULONG ulCmd, bool fPointer )
+    virtual MRESULT VSbPageDown( ULONG id, LONG lSlider )
     {
-        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
-                            MPFROM2SHORT( CMDSRC_FONTDLG, fPointer ));
+        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
+                            MPFROM2SHORT( lSlider, SB_PAGEDOWN ));
     }
 
-    virtual MRESULT HelpCmdSrcFileDlg( ULONG ulCmd, bool fPointer )
+    virtual MRESULT VSbSliderPosition( ULONG id, LONG lSlider )
     {
-        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
-                            MPFROM2SHORT( CMDSRC_FILEDLG, fPointer ));
+        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
+                            MPFROM2SHORT( lSlider, SB_SLIDERPOSITION ));
     }
 
-    virtual MRESULT HelpCmdSrcOther( ULONG ulCmd, bool fPointer )
+    virtual MRESULT VSbSliderTrack( ULONG id, LONG lSlider )
     {
-        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
-                            MPFROM2SHORT( CMDSRC_OTHER, fPointer ));
+        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
+                            MPFROM2SHORT( lSlider, SB_SLIDERTRACK ));
     }
 
-    virtual MRESULT HelpCmdSrcUser( ULONG ulCmd, ULONG ulSource,
-                                    bool fPointer )
+    virtual MRESULT VSbEndScroll( ULONG id, LONG lSlider )
     {
-        return KDefWndProc( WM_HELP, MPFROMLONG( ulCmd ),
-                            MPFROM2SHORT( ulSource, fPointer ));
+        return KDefWndProc( WM_VSCROLL, MPFROMLONG( id ),
+                            MPFROM2SHORT( lSlider, SB_ENDSCROLL ));
     }
-
-    virtual MRESULT OnChar( ULONG flFlags, ULONG ulRepeat, ULONG ulScanCode,
-                            ULONG ulCh, ULONG ulVk )
-    {
-        return KDefWndProc( WM_CHAR,
-                            MPFROMSH2CH( flFlags, ulRepeat, ulScanCode ),
-                            MPFROM2SHORT( ulCh, ulVk ));
-    }
-
-    virtual MRESULT OnClose() { return KDefWndProc( WM_CLOSE, 0, 0 ); }
-
-    virtual MRESULT OnDrawItem( ULONG idMenu, ULONG ulControlSpec )
-    {
-        return KDefWndProc( WM_DRAWITEM, MPFROMLONG( idMenu ),
-                            MPFROMLONG( ulControlSpec ));
-    }
-
-    virtual MRESULT OnInitMenu( ULONG ulMenuID, HWND hwnd )
-    {
-        return KDefWndProc( WM_INITMENU, MPFROMLONG( ulMenuID ),
-                            MPFROMHWND( hwnd ));
-    }
-
-    virtual MRESULT OnMeasureItem( ULONG ulID, ULONG ulControlSpec )
-    {
-        return KDefWndProc( WM_MEASUREITEM, MPFROMLONG ( ulID ),
-                            MPFROMLONG( ulControlSpec ));
-    }
-
-    virtual MRESULT OnMenuEnd( ULONG ulID, HWND hwnd )
-    {
-        return KDefWndProc( WM_MENUEND, MPFROMLONG( ulID ),
-                            MPFROMHWND( hwnd ));
-    }
-
-    virtual MRESULT OnMenuSelect( ULONG ulItem, bool fPost, HWND hwnd )
-    {
-        return KDefWndProc( WM_MENUSELECT, MPFROM2SHORT( ulItem, fPost ),
-                            MPFROMHWND( hwnd ));
-    }
-
-    virtual MRESULT OnNextMenu( HWND hwndMenu, ULONG ulPrev )
-    {
-        return KDefWndProc( WM_NEXTMENU, MPFROMHWND( hwndMenu ),
-                            MPFROMLONG( ulPrev ));
-    }
-
-    virtual MRESULT OnMatchMnemonic( ULONG ulMatch )
-    { return KDefWndProc( WM_MATCHMNEMONIC, MPFROMLONG( ulMatch ), 0 ); }
-
-    virtual MRESULT OnQueryDlgCode( PQMSG pQmsg )
-    { return KDefWndProc( WM_QUERYDLGCODE, MPFROMP( pQmsg ), 0 ); }
 
 private :
     PFNWP _pfnwpOldProc;

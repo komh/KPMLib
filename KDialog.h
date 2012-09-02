@@ -12,14 +12,16 @@ public :
     KDialog();
     virtual ~KDialog();
 
-    virtual void SetHWND( HWND hwndDlg );
-    virtual bool LoadDlg( KWindow* pkwndP, KWindow* pkwndO, HMODULE hmod,
-                          ULONG idDlg, PVOID pCreateParams );
-    virtual void DlgBox( KWindow* pkwndP, KWindow* pkwndO, HMODULE hmod,
-                         ULONG idDlg, PVOID pCreateParams );
-    virtual void ProcessDlg() { _ulResult = WinProcessDlg( _hwnd ); }
     virtual bool DismissDlg( ULONG ulResult )
     { return WinDismissDlg( _hwnd, ulResult ); }
+
+    virtual void DlgBox( KWindow* pkwndP, KWindow* pkwndO, HMODULE hmod,
+                         ULONG idDlg, PVOID pCreateParams );
+    virtual bool LoadDlg( KWindow* pkwndP, KWindow* pkwndO, HMODULE hmod,
+                          ULONG idDlg, PVOID pCreateParams );
+    virtual void ProcessDlg() { _ulResult = WinProcessDlg( _hwnd ); }
+
+    virtual void SetHWND( HWND hwndDlg );
 
     ULONG GetResult() const { return _ulResult; }
 
@@ -30,12 +32,6 @@ protected :
                                      MPARAM mp2 );
 
     virtual MRESULT KDlgProc( ULONG msg, MPARAM mp1, MPARAM mp2 );
-    virtual MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate )
-    {
-        return KDefDlgProc( WM_INITDLG, MPFROMHWND( hwndFocus ),
-                            MPFROMP( pCreate ));
-    }
-
     virtual MRESULT OnChar( ULONG flFlags, ULONG ulRepeat, ULONG ulScanCode,
                             ULONG ulCh, ULONG ulVk )
     {
@@ -45,6 +41,11 @@ protected :
     }
 
     virtual MRESULT OnClose() { return KDefDlgProc( WM_CLOSE, 0, 0 ); }
+    virtual MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate )
+    {
+        return KDefDlgProc( WM_INITDLG, MPFROMHWND( hwndFocus ),
+                            MPFROMP( pCreate ));
+    }
 
     virtual MRESULT OnMatchMnemonic( ULONG ulMatch )
     { return KDefDlgProc( WM_MATCHMNEMONIC, MPFROMLONG( ulMatch ), 0 ); }
