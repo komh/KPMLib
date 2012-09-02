@@ -25,24 +25,23 @@ public :
 
     enum CheckState { kUncheck = 0, kCheck, kIndeterminate };
 
-    virtual bool AutoSize() { return SendMsg( BM_AUTOSIZE, 0, 0 ); }
-    virtual void Click( bool fUp )
-    { SendMsg( BM_CLICK, MPFROMLONG( fUp ), 0 ); }
+    virtual bool AutoSize() { return SendMsg( BM_AUTOSIZE ); }
+    virtual void Click( bool fUp ) { SendMsg( BM_CLICK, MPFROMLONG( fUp )); }
 
     virtual ULONG QueryCheck()
-    { return LONGFROMMR( SendMsg( BM_QUERYCHECK, 0, 0 )); }
+    { return LONGFROMMR( SendMsg( BM_QUERYCHECK )); }
 
     virtual LONG QueryCheckIndex()
-    { return LONGFROMMR( SendMsg( BM_QUERYCHECKINDEX, 0, 0 )); }
+    { return LONGFROMMR( SendMsg( BM_QUERYCHECKINDEX )); }
 
-    virtual bool QueryHilite() { return SendMsg( BM_QUERYHILITE, 0, 0 ); }
+    virtual bool QueryHilite() { return SendMsg( BM_QUERYHILITE ); }
     virtual ULONG SetCheck( ULONG ulCheck )
-    { return LONGFROMMR( SendMsg( BM_SETCHECK, MPFROMLONG( ulCheck ), 0 )); }
+    { return LONGFROMMR( SendMsg( BM_SETCHECK, MPFROMLONG( ulCheck ))); }
 
     virtual bool SetDefault( bool fDefault )
-    { return SendMsg( BM_SETDEFAULT, MPFROMLONG( fDefault ), 0 ); }
+    { return SendMsg( BM_SETDEFAULT, MPFROMLONG( fDefault )); }
 
     virtual bool SetHilite( bool fHilite )
-    { return SendMsg( BM_SETHILITE, MPFROMLONG( fHilite ), 0 ); }
+    { return SendMsg( BM_SETHILITE, MPFROMLONG( fHilite )); }
 };
 #endif
