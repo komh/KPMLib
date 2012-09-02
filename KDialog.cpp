@@ -107,21 +107,6 @@ MRESULT KDialog::KDlgProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
             return OnQueryDlgCode( reinterpret_cast< PQMSG >( mp1 ));
     }
 
-    return KDefDlgProc( msg, mp1, mp2 );
-}
-
-MRESULT KDialog::OnCommand( USHORT usCmd, USHORT usSource, bool fPointer )
-{
-    switch( usSource )
-    {
-        case CMDSRC_PUSHBUTTON  : return CmdSrcPushButton( usCmd, fPointer );
-        case CMDSRC_MENU        : return CmdSrcMenu( usCmd, fPointer );
-        case CMDSRC_ACCELERATOR : return CmdSrcAccelerator( usCmd, fPointer );
-        case CMDSRC_FONTDLG     : return CmdSrcFontDlg( usCmd, fPointer );
-        case CMDSRC_FILEDLG     : return CmdSrcFileDlg( usCmd, fPointer );
-        case CMDSRC_OTHER       : return CmdSrcOther( usCmd, fPointer );
-    }
-
-    return CmdSrcUser( usCmd, usSource, fPointer );
+    return KDefWndProc( msg, mp1, mp2 );
 }
 

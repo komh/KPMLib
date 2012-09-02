@@ -95,6 +95,12 @@ protected :
     static MRESULT EXPENTRY WndProc( HWND hwnd, ULONG msg, MPARAM mp1,
                                      MPARAM mp2 );
 
+    virtual MRESULT KDefWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
+    {
+        return _pfnwpOldProc ? _pfnwpOldProc( _hwnd, msg, mp1, mp2 ) :
+                               WinDefWindowProc( _hwnd, msg, mp1, mp2 );
+    }
+
     virtual MRESULT KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 );
     virtual MRESULT OnChar( USHORT fsFlags, UCHAR ucRepeat, UCHAR ucScanCode,
                             USHORT usCh, USHORT usVk )
@@ -251,6 +257,12 @@ protected :
                             MPFROM2SHORT( sSlider, SB_ENDSCROLL ));
     }
 
+    virtual MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate )
+    {
+        return KDefWndProc( WM_INITDLG, MPFROMHWND( hwndFocus ),
+                            MPFROMP( pCreate ));
+    }
+
     virtual MRESULT OnInitMenu( SHORT sMenuID, HWND hwnd )
     {
         return KDefWndProc( WM_INITMENU, MPFROMSHORT( sMenuID ),
@@ -389,12 +401,6 @@ protected :
 
 private :
     PFNWP _pfnwpOldProc;
-
-    MRESULT KDefWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
-    {
-        return _pfnwpOldProc ? _pfnwpOldProc( _hwnd, msg, mp1, mp2 ) :
-                               WinDefWindowProc( _hwnd, msg, mp1, mp2 );
-    }
 };
 #endif
 

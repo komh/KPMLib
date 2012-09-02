@@ -199,6 +199,9 @@ MRESULT KWindow::KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
             return OnHScroll( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
                               SHORT2FROMMP( mp2 ));
 
+        case WM_INITDLG :
+            return OnInitDlg( HWNDFROMMP( mp1 ), PVOIDFROMMP( mp2 ));
+
         case WM_INITMENU :
             return OnInitMenu( SHORT1FROMMP( mp1 ), HWNDFROMMP( mp2 ));
 
