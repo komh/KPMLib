@@ -21,8 +21,6 @@ public :
                           ULONG idDlg, PVOID pCreateParams = 0 );
     virtual void ProcessDlg() { _ulResult = WinProcessDlg( _hwnd ); }
 
-    virtual void SetHWND( HWND hwndDlg );
-
     ULONG GetResult() const { return _ulResult; }
 
 protected :
@@ -33,7 +31,5 @@ protected :
 
     virtual MRESULT KDefWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     { return WinDefDlgProc( _hwnd, msg, mp1, mp2 ); }
-
-    virtual MRESULT KDlgProc( ULONG msg, MPARAM mp1, MPARAM mp2 );
 };
 #endif

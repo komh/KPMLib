@@ -42,16 +42,6 @@ bool KDialog::LoadDlg( KWindow* pkwndP, KWindow* pkwndO, HMODULE hmod,
     return _hwnd;
 }
 
-void KDialog::SetHWND( HWND hwndDlg )
-{
-    KWindow::SetHWND( hwndDlg );
-
-    if( WinQueryWindowPtr( hwndDlg, 0 ) &&
-        WinQueryWindowPtr( hwndDlg, QWP_PFNWP ) == WndProc )
-        // Set a window procture to DlgProc instead of WndProc
-        WinSubclassWindow( hwndDlg, DlgProc );
-}
-
 MRESULT EXPENTRY KDialog::DlgProc( HWND hwndDlg, ULONG msg, MPARAM mp1,
                                    MPARAM mp2 )
 {
@@ -71,42 +61,6 @@ MRESULT EXPENTRY KDialog::DlgProc( HWND hwndDlg, ULONG msg, MPARAM mp1,
     if( !pkdlg )
         return WinDefDlgProc( hwndDlg, msg, mp1, mp2 );
 
-    return pkdlg->KDlgProc( msg, mp1, mp2 );
-}
-
-MRESULT KDialog::KDlgProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
-{
-    switch( msg )
-    {
-        case WM_CHAR :
-            return OnChar( SHORT1FROMMP( mp1 ), CHAR3FROMMP( mp1 ),
-                           CHAR4FROMMP( mp1 ), SHORT1FROMMP( mp2 ),
-                           SHORT2FROMMP( mp2 ));
-
-        case WM_CLOSE :
-            return OnClose();
-
-        case WM_COMMAND :
-            return OnCommand( SHORT1FROMMP( mp1 ), SHORT1FROMMP( mp2),
-                              SHORT2FROMMP( mp2 ));
-
-        case WM_CONTROL :
-            return OnControl( SHORT1FROMMP( mp1 ), SHORT2FROMMP( mp1 ),
-                              LONGFROMMP( mp2 ));
-
-        case WM_DESTROY :
-            return OnDestroy();
-
-        case WM_INITDLG :
-            return OnInitDlg( HWNDFROMMP( mp1 ), PVOIDFROMMP( mp2 ));
-
-        case WM_MATCHMNEMONIC :
-            return OnMatchMnemonic( SHORT1FROMMP( mp1 ));
-
-        case WM_QUERYDLGCODE :
-            return OnQueryDlgCode( reinterpret_cast< PQMSG >( mp1 ));
-    }
-
-    return KDefWndProc( msg, mp1, mp2 );
+    return pkdlg->KWndProc( msg, mp1, mp2 );
 }
 
