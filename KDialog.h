@@ -16,9 +16,9 @@ public :
     { return WinDismissDlg( _hwnd, ulResult ); }
 
     virtual void DlgBox( KWindow* pkwndP, KWindow* pkwndO, HMODULE hmod,
-                         ULONG idDlg, PVOID pCreateParams );
+                         ULONG idDlg, PVOID pCreateParams = 0 );
     virtual bool LoadDlg( KWindow* pkwndP, KWindow* pkwndO, HMODULE hmod,
-                          ULONG idDlg, PVOID pCreateParams );
+                          ULONG idDlg, PVOID pCreateParams = 0 );
     virtual void ProcessDlg() { _ulResult = WinProcessDlg( _hwnd ); }
 
     virtual void SetHWND( HWND hwndDlg );

@@ -95,7 +95,7 @@ protected :
     static MRESULT EXPENTRY WndProc( HWND hwnd, ULONG msg, MPARAM mp1,
                                      MPARAM mp2 );
 
-    virtual MRESULT KDefWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
+    virtual MRESULT KDefWndProc( ULONG msg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
     {
         return _pfnwpOldProc ? _pfnwpOldProc( _hwnd, msg, mp1, mp2 ) :
                                WinDefWindowProc( _hwnd, msg, mp1, mp2 );
@@ -110,7 +110,7 @@ protected :
                             MPFROM2SHORT( usCh, usVk ));
     }
 
-    virtual MRESULT OnClose() { return KDefWndProc( WM_CLOSE, 0, 0 ); }
+    virtual MRESULT OnClose() { return KDefWndProc( WM_CLOSE ); }
 
     virtual MRESULT OnCommand( USHORT usCmd, USHORT ulSource,
                                bool fPointer );
@@ -158,12 +158,12 @@ protected :
 
     virtual MRESULT OnControl( USHORT id, USHORT usNotifyCode,
                                ULONG ulControlSpec )
-    { return KDefWndProc( WM_CONTROL, MPFROM2SHORT( id, usNotifyCode ), 0 ); }
+    { return KDefWndProc( WM_CONTROL, MPFROM2SHORT( id, usNotifyCode )); }
 
     virtual MRESULT OnCreate( PVOID pCtrlData, PCREATESTRUCT pcs )
     { return KDefWndProc( WM_CREATE, MPFROMP( pCtrlData ), MPFROMP( pcs )); }
 
-    virtual MRESULT OnDestroy() { return KDefWndProc( WM_DESTROY, 0, 0 ); }
+    virtual MRESULT OnDestroy() { return KDefWndProc( WM_DESTROY ); }
     virtual MRESULT OnDrawItem( USHORT idMenu, ULONG ulControlSpec )
     {
         return KDefWndProc( WM_DRAWITEM, MPFROMSHORT( idMenu ),
@@ -270,7 +270,7 @@ protected :
     }
 
     virtual MRESULT OnMatchMnemonic( USHORT usMatch )
-    { return KDefWndProc( WM_MATCHMNEMONIC, MPFROMSHORT( usMatch ), 0 ); }
+    { return KDefWndProc( WM_MATCHMNEMONIC, MPFROMSHORT( usMatch )); }
 
     virtual MRESULT OnMeasureItem( SHORT sID, ULONG ulControlSpec )
     {
@@ -296,10 +296,10 @@ protected :
                             MPFROMSHORT( usPrev ));
     }
 
-    virtual MRESULT OnPaint() { return KDefWndProc( WM_PAINT, 0, 0 ); }
+    virtual MRESULT OnPaint() { return KDefWndProc( WM_PAINT ); }
 
     virtual MRESULT OnQueryDlgCode( PQMSG pQmsg )
-    { return KDefWndProc( WM_QUERYDLGCODE, MPFROMP( pQmsg ), 0 ); }
+    { return KDefWndProc( WM_QUERYDLGCODE, MPFROMP( pQmsg )); }
 
     virtual MRESULT OnSysCommand( USHORT usCmd, USHORT usSource,
                                   bool fPointer );
@@ -354,7 +354,7 @@ protected :
     }
 
     virtual MRESULT OnTrackFrame( USHORT fsTrackFlags )
-    { return KDefWndProc( WM_TRACKFRAME, MPFROMSHORT( fsTrackFlags ), 0 ); }
+    { return KDefWndProc( WM_TRACKFRAME, MPFROMSHORT( fsTrackFlags )); }
 
     virtual MRESULT OnVScroll( USHORT id, SHORT sSlider, USHORT usCmd );
     virtual MRESULT VSbLineUp( USHORT id, SHORT sSlider )

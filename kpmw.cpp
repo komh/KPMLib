@@ -105,7 +105,7 @@ MRESULT KMyClientWindow::CmdSrcPushButton( USHORT usCmd,
         case IDB_MYPUSH :
         {
             KMyDialog kdlg;
-            kdlg.LoadDlg( KWND_DESKTOP, this, 0, ID_KPMW, 0 );
+            kdlg.LoadDlg( KWND_DESKTOP, this, 0, ID_KPMW );
             kdlg.ProcessDlg();
             kdlg.DestroyWindow();
         }
