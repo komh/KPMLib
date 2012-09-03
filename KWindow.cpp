@@ -32,6 +32,9 @@ KWindow::KWindow()
 
 KWindow::~KWindow()
 {
+    if( WinQueryWindowPtr( _hwnd, 0 ) == this )
+        WinSetWindowPtr( _hwnd, 0, 0 );
+
     if( _pfnwpOldProc )
         WinSubclassWindow( _hwnd, _pfnwpOldProc );
 
