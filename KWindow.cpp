@@ -33,15 +33,15 @@ KWindow::KWindow()
 
 KWindow::~KWindow()
 {
-    if( WinQueryWindowPtr( _hwnd, 0 ) == this )
-        WinSetWindowPtr( _hwnd, 0, 0 );
+    if( HIUSHORT( _pcszClassName ) != 0xFFFF )
+        free( reinterpret_cast< void * >( const_cast< PSZ >
+                                            ( _pcszClassName )));
 
     if( _pfnwpOldProc )
         WinSubclassWindow( _hwnd, _pfnwpOldProc );
 
-    if( HIUSHORT( _pcszClassName ) != 0xFFFF )
-        free( reinterpret_cast< void * >( const_cast< PSZ >
-                                            ( _pcszClassName )));
+    if( WinQueryWindowPtr( _hwnd, 0 ) == this )
+        WinSetWindowPtr( _hwnd, 0, 0 );
 }
 
 bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
