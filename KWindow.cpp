@@ -60,6 +60,7 @@ bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                             x, y, cx, cy, hwndO, hwndS,
                             id, pCtlData, &cp );
 
+    // for the pre-defined class
     SetHWND( hwnd );
 
     return hwnd;
