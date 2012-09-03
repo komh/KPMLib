@@ -400,6 +400,7 @@ protected :
     }
 
 private :
+    bool  _fRegistered;
     PFNWP _pfnwpOldProc;
 };
 #endif
