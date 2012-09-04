@@ -45,22 +45,21 @@ bool KDialog::LoadDlg( KWindow* pkwndP, KWindow* pkwndO, HMODULE hmod,
 MRESULT EXPENTRY KDialog::DlgProc( HWND hwndDlg, ULONG msg, MPARAM mp1,
                                    MPARAM mp2 )
 {
-    KDialog* pkdlg = reinterpret_cast< KDialog* >
-                        ( WinQueryWindowPtr( hwndDlg, 0 ));
-
     if( msg == WM_INITDLG )
     {
         CreateParams* pcp = reinterpret_cast< CreateParams* >( mp2 );
 
-        pkdlg = pcp->pkdlg;
+        mp2 = pcp->pCreate;
+
+        KDialog* pkdlg = pcp->pkdlg;
+
+        // Subclass to KWindow::WndProc()
         pkdlg->SetHWND( hwndDlg );
 
-        mp2 = pcp->pCreate;
+        // Pass the control to KWindow::WndProc()
+        return pkdlg->KWndProc( msg, mp1, mp2 );
     }
 
-    if( !pkdlg )
-        return WinDefDlgProc( hwndDlg, msg, mp1, mp2 );
-
-    return pkdlg->KWndProc( msg, mp1, mp2 );
+    return WinDefDlgProc( hwndDlg, msg, mp1, mp2 );
 }
 
