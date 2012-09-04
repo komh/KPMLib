@@ -88,7 +88,6 @@ public :
 
 protected :
     HWND     _hwnd;
-    PCSZ     _pcszClassName;
 
     friend HWND pkwnd2hwnd( const KWindow* kwnd );
 
@@ -400,6 +399,7 @@ protected :
     }
 
 private :
+    PCSZ  _pcszClassName;
     bool  _fRegistered;
     PFNWP _pfnwpOldProc;
 };

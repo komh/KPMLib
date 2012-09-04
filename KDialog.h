@@ -24,12 +24,13 @@ public :
     ULONG GetResult() const { return _ulResult; }
 
 protected :
-    ULONG _ulResult;
-
     static MRESULT EXPENTRY DlgProc( HWND hwndDlg, ULONG msg, MPARAM mp1,
                                      MPARAM mp2 );
 
     virtual MRESULT KDefWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     { return WinDefDlgProc( _hwnd, msg, mp1, mp2 ); }
+
+private :
+    ULONG _ulResult;
 };
 #endif
