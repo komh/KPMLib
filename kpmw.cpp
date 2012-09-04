@@ -25,7 +25,7 @@
 
 class KMyDialog : public KDialog
 {
-public :
+protected :
     virtual MRESULT OnInitDlg( HWND hwndFocus, PVOID pCreate );
     virtual MRESULT CmdSrcPushButton( USHORT usCmd, bool fPointer );
 
@@ -59,7 +59,7 @@ MRESULT KMyDialog::CmdSrcPushButton( USHORT usCmd, bool fPointer )
 
 class KMyClientWindow : public KWindow
 {
-public :
+protected :
     virtual MRESULT OnPaint();
     virtual MRESULT CmdSrcPushButton( USHORT usCmd, bool fPointer );
     virtual MRESULT CmdSrcMenu( USHORT usCmd, bool fPointer );
@@ -264,7 +264,7 @@ MRESULT KMyClientWindow::OnTrackFrame( USHORT usTrackFlags )
 
 class KMyFrameWindow : public KFrameWindow
 {
-public :
+protected :
     virtual MRESULT SysCmdSrcMenu( USHORT usCmd, bool fPointer );
 };
 
