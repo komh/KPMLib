@@ -161,10 +161,10 @@ MRESULT EXPENTRY KWindow::WndProc( HWND hwnd, ULONG msg, MPARAM mp1,
         CreateParams* pcp = reinterpret_cast< CreateParams* >
                                 ( pcs->pPresParams );
 
-        pkwnd = pcp->pkwnd;
-        WinSetWindowPtr( hwnd, 0, pkwnd );
-
         pcs->pPresParams = pcp->pPresParams;
+
+        pkwnd = pcp->pkwnd;
+        pkwnd->SetHWND( hwnd );
     }
 
     return pkwnd->KWndProc( msg, mp1, mp2 );
