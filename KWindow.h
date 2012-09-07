@@ -340,7 +340,8 @@ protected :
 
     virtual MRESULT OnControl( USHORT id, USHORT usNotifyCode,
                                ULONG ulControlSpec )
-    { return KDefWndProc( WM_CONTROL, MPFROM2SHORT( id, usNotifyCode )); }
+    { return KDefWndProc( WM_CONTROL, MPFROM2SHORT( id, usNotifyCode ),
+                          MPFROMLONG( ulControlSpec )); }
 
     virtual MRESULT OnControlPointer( USHORT id, HPOINTER hptrNew )
     {
