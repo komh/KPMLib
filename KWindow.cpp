@@ -1,8 +1,8 @@
 #define INCL_WIN
 #include <os2.h>
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include "KWindow.h"
 
