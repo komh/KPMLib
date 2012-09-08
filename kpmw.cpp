@@ -23,6 +23,8 @@
 #define IDM_MYMENU1 500
 #define IDM_MYMENU2 501
 
+#define IDEF_MYEF 600
+
 class KMyDialog : public KDialog
 {
 protected :
@@ -66,6 +68,7 @@ protected :
     virtual MRESULT OnControl( USHORT id, USHORT usNotifyCode,
                                ULONG ulControlSpec );
     virtual MRESULT BnClicked( USHORT id );
+    virtual MRESULT EnChange( USHORT id );
     virtual MRESULT HSbLineLeft( USHORT id, SHORT sSlider );
     virtual MRESULT HSbLineRight( USHORT id, SHORT sSlider );
     virtual MRESULT HSbPageLeft( USHORT id, SHORT sSlider );
@@ -138,6 +141,11 @@ MRESULT KMyClientWindow::OnControl( USHORT id, USHORT usNotifyCode,
             if( usNotifyCode == BN_CLICKED )
                 return BnClicked( id );
             break;
+
+        case IDEF_MYEF :
+            if ( usNotifyCode == EN_CHANGE )
+                return EnChange( id );
+            break;
     }
 
     return 0;
@@ -167,6 +175,29 @@ MRESULT KMyClientWindow::BnClicked( USHORT id )
             MessageBox( PMLITERAL("My 3State CheckBox button clicked"),
                         PMLITERAL("BnClicked()"), MB_OK );
             break;
+    }
+
+    return 0;
+}
+
+MRESULT KMyClientWindow::EnChange( USHORT id )
+{
+    switch( id )
+    {
+        case IDEF_MYEF :
+        {
+            UCHAR szBuf[ 512 ];
+
+            KEntryField kef;
+
+            WindowFromID( id, kef );
+            kef.QueryWindowText( sizeof( szBuf ), szBuf );
+
+            KStaticText kst;
+            WindowFromID( IDST_MYSTATIC, kst );
+            kst.SetWindowText( szBuf );
+            break;
+        }
     }
 
     return 0;
@@ -387,6 +418,12 @@ void KMyPMApp::Run()
     mi.hwndSubMenu = NULLHANDLE;
     mi.hItem = 0;
     kmSys.InsertItem( &mi, 0 );
+
+    KEntryField kef;
+    kef.CreateWindow( &kclient, PMLITERAL("My Entry Field"),
+                      WS_VISIBLE | ES_CENTER | ES_MARGIN,
+                      500, 150, 100, 30, &kclient, KWND_TOP,
+                      IDEF_MYEF );
 
     KPMApp::Run();
 

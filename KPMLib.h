@@ -10,5 +10,6 @@
 #include "KScrollBar.h"
 #include "KMenu.h"
 #include "KTitleBar.h"
+#include "KEntryField.h"
 
 #endif
