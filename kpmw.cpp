@@ -25,6 +25,8 @@
 
 #define IDEF_MYEF 600
 
+#define IDLB_MYLB 700
+
 class KMyDialog : public KDialog
 {
 protected :
@@ -69,6 +71,7 @@ protected :
                                ULONG ulControlSpec );
     virtual MRESULT BnClicked( USHORT id );
     virtual MRESULT EnChange( USHORT id );
+    virtual MRESULT LnEnter( USHORT Id );
     virtual MRESULT HSbLineLeft( USHORT id, SHORT sSlider );
     virtual MRESULT HSbLineRight( USHORT id, SHORT sSlider );
     virtual MRESULT HSbPageLeft( USHORT id, SHORT sSlider );
@@ -146,6 +149,11 @@ MRESULT KMyClientWindow::OnControl( USHORT id, USHORT usNotifyCode,
             if ( usNotifyCode == EN_CHANGE )
                 return EnChange( id );
             break;
+
+        case IDLB_MYLB :
+            if( usNotifyCode == LN_ENTER )
+                return LnEnter( id );
+            break;
     }
 
     return 0;
@@ -192,6 +200,30 @@ MRESULT KMyClientWindow::EnChange( USHORT id )
 
             WindowFromID( id, kef );
             kef.QueryWindowText( sizeof( szBuf ), szBuf );
+
+            KStaticText kst;
+            WindowFromID( IDST_MYSTATIC, kst );
+            kst.SetWindowText( szBuf );
+            break;
+        }
+    }
+
+    return 0;
+}
+
+MRESULT KMyClientWindow::LnEnter( USHORT id )
+{
+    switch( id )
+    {
+        case IDLB_MYLB :
+        {
+            UCHAR szBuf[ 512 ];
+
+            KListBox klb;
+
+            WindowFromID( id, klb );
+            klb.QueryItemText( klb.QuerySelection( LIT_FIRST ),
+                               sizeof( szBuf ), szBuf );
 
             KStaticText kst;
             WindowFromID( IDST_MYSTATIC, kst );
@@ -424,6 +456,15 @@ void KMyPMApp::Run()
                       WS_VISIBLE | ES_CENTER | ES_MARGIN,
                       500, 150, 100, 30, &kclient, KWND_TOP,
                       IDEF_MYEF );
+
+    KListBox klb;
+    klb.CreateWindow( &kclient, PMLITERAL("My List Box"),
+                      WS_VISIBLE,
+                      500, 200, 100, 150, &kclient, KWND_TOP,
+                      IDLB_MYLB );
+
+    klb.InsertItem( LIT_END, PMLITERAL("Item 1"));
+    klb.InsertItem( LIT_END, PMLITERAL("Item 2"));
 
     KPMApp::Run();
 
