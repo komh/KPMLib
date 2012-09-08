@@ -12,5 +12,6 @@
 #include "KTitleBar.h"
 #include "KEntryField.h"
 #include "KListBox.h"
+#include "KComboBox.h"
 
 #endif
