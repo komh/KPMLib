@@ -60,6 +60,12 @@ public :
     virtual bool QueryWindowRect( PRECTL prcl )
     { return WinQueryWindowRect( _hwnd, prcl ); }
 
+    virtual LONG QueryWindowText( LONG lLength, PCH pchBuffer )
+    { return WinQueryWindowText( _hwnd, lLength, pchBuffer ); }
+
+    virtual LONG QueryWindowTextLength()
+    { return WinQueryWindowTextLength( _hwnd ); }
+
     virtual bool RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
                                 ULONG cbWindowData );
     virtual MRESULT SendMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
