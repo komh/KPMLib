@@ -4,6 +4,9 @@
 #define INCL_WIN
 #include <os2.h>
 
+#include <map>
+using namespace std;
+
 #define PMLITERAL( s ) ( reinterpret_cast < PCSZ >( s ))
 
 #define KWND_DESKTOP ( reinterpret_cast< KWindow* >( HWND_DESKTOP ))
@@ -93,9 +96,22 @@ public :
     virtual void SetClassName( PCSZ pcszClassName );
 
 protected :
+    static map< HWND, KWindow* > mapHWND;
+
     HWND     _hwnd;
 
     friend HWND pkwnd2hwnd( const KWindow* kwnd );
+
+    static void AddHWND( HWND hwnd, KWindow* pkwnd )
+    { mapHWND[ hwnd ] = pkwnd; }
+
+    static void RemoveHWND( HWND hwnd ) { mapHWND.erase( hwnd ); }
+    static KWindow* FindHWND( HWND hwnd )
+    {
+        map< HWND, KWindow* >::iterator it = mapHWND.find( hwnd );
+
+        return ( it == mapHWND.end()) ? 0 : it->second;
+    }
 
     static MRESULT EXPENTRY WndProc( HWND hwnd, ULONG msg, MPARAM mp1,
                                      MPARAM mp2 );

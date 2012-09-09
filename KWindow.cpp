@@ -6,6 +6,8 @@
 
 #include "KWindow.h"
 
+map< HWND, KWindow*> KWindow::mapHWND;
+
 struct CreateParams
 {
     PVOID    pPresParams;
@@ -40,8 +42,8 @@ KWindow::~KWindow()
     if( _pfnwpOldProc )
         WinSubclassWindow( _hwnd, _pfnwpOldProc );
 
-    if( WinQueryWindowPtr( _hwnd, 0 ) == this )
-        WinSetWindowPtr( _hwnd, 0, 0 );
+    if( FindHWND( _hwnd ) == this )
+        RemoveHWND( _hwnd );
 }
 
 bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
@@ -117,9 +119,9 @@ void KWindow::SetHWND( HWND hwnd )
     if( !hwnd )
         return;
 
-    if( !WinQueryWindowPtr( hwnd, 0 ))
+    if( !FindHWND( hwnd ))
     {
-        WinSetWindowPtr( hwnd, 0, this );
+        AddHWND( hwnd, this );
 
         if( !_fRegistered )
             _pfnwpOldProc = WinSubclassWindow( hwnd, WndProc );
@@ -152,8 +154,7 @@ void KWindow::SetClassName( PCSZ pcszClassName )
 MRESULT EXPENTRY KWindow::WndProc( HWND hwnd, ULONG msg, MPARAM mp1,
                                    MPARAM mp2 )
 {
-    KWindow* pkwnd = reinterpret_cast< KWindow* >
-                        ( WinQueryWindowPtr( hwnd, 0 ));
+    KWindow* pkwnd = FindHWND( hwnd );
 
     if( msg == WM_CREATE )
     {
