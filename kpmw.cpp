@@ -12,6 +12,7 @@
 #define IDB_MYRADIO         101
 #define IDB_MYCHECKBOX      102
 #define IDB_MY3STATE        103
+#define IDB_MYOPEN          104
 
 #define IDSB_MYHORZ 200
 #define IDSB_MYVERT 201
@@ -117,6 +118,19 @@ MRESULT KMyClientWindow::CmdSrcPushButton( USHORT usCmd,
             kdlg.LoadDlg( KWND_DESKTOP, this, 0, ID_KPMW );
             kdlg.ProcessDlg();
             kdlg.DestroyWindow();
+        }
+
+        case IDB_MYOPEN :
+        {
+            KFileDlg kfd;
+
+            kfd.Clear();
+            kfd.FileDlg( KWND_DESKTOP, this );
+            if( kfd.GetReturn() == DID_OK )
+            {
+                MessageBox( kfd.GetFullFile(),
+                            PMLITERAL("Your selected file"), MB_OK );
+            }
         }
     }
 
@@ -425,6 +439,12 @@ void KMyPMApp::Run()
                              WS_VISIBLE | BS_3STATE,
                              310, 10, 100, 100, &kclient, KWND_TOP,
                              IDB_MY3STATE );
+
+    KButton kbtnOpen;
+    kbtnOpen.CreateWindow( &kclient, PMLITERAL("My Open"),
+                           WS_VISIBLE | BS_PUSHBUTTON,
+                           410, 10, 100, 100, &kclient, KWND_TOP,
+                           IDB_MYOPEN );
 
     KScrollBar ksbHScroll;
     ksbHScroll.CreateWindow( &kclient, PMLITERAL("HScrollBar"),

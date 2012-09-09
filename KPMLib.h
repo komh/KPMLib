@@ -14,4 +14,6 @@
 #include "KListBox.h"
 #include "KComboBox.h"
 
+#include "KFileDlg.h"
+
 #endif
