@@ -41,7 +41,7 @@ public :
     virtual void SetFullFile( PCSZ pcszFullFile )
     {
         strncpy( _fild.szFullFile,
-                 reinterpret_cast< const char * >( pcszFullFile ),
+                 reinterpret_cast< const char* >( pcszFullFile ),
                  sizeof( _fild.szFullFile ) -1 );
 
         _fild.szFullFile[ sizeof( _fild.szFullFile ) - 1 ] = '\0';

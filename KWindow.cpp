@@ -14,15 +14,15 @@ struct CreateParams
     KWindow* pkwnd;
 };
 
-HWND pkwnd2hwnd( const KWindow* kwnd )
+HWND pkwnd2hwnd( const KWindow* pkwnd )
 {
-    if( kwnd == 0 )           return NULLHANDLE;
-    if( kwnd == KWND_DESKTOP) return HWND_DESKTOP;
-    if( kwnd == KWND_OBJECT)  return HWND_OBJECT;
-    if( kwnd == KWND_TOP )    return HWND_TOP;
-    if( kwnd == KWND_BOTTOM ) return HWND_BOTTOM;
+    if( pkwnd == 0 )           return NULLHANDLE;
+    if( pkwnd == KWND_DESKTOP) return HWND_DESKTOP;
+    if( pkwnd == KWND_OBJECT)  return HWND_OBJECT;
+    if( pkwnd == KWND_TOP )    return HWND_TOP;
+    if( pkwnd == KWND_BOTTOM ) return HWND_BOTTOM;
 
-    return kwnd->_hwnd;
+    return pkwnd->_hwnd;
 }
 
 KWindow::KWindow()
@@ -36,7 +36,7 @@ KWindow::KWindow()
 KWindow::~KWindow()
 {
     if( HIUSHORT( _pcszClassName ) != 0xFFFF )
-        free( reinterpret_cast< void * >( const_cast< PSZ >
+        free( reinterpret_cast< void* >( const_cast< PSZ >
                                             ( _pcszClassName )));
 
     if( _pfnwpOldProc )
@@ -75,7 +75,7 @@ bool KWindow::DestroyWindow()
         _hwnd = 0;
 
         if( HIUSHORT( _pcszClassName ) != 0xFFFF )
-            free( reinterpret_cast< void * >( const_cast< PSZ >
+            free( reinterpret_cast< void* >( const_cast< PSZ >
                                                 ( _pcszClassName )));
         _pcszClassName = 0;
         _pfnwpOldProc  = 0;
@@ -90,7 +90,7 @@ bool KWindow::RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
                              ULONG cbWindowData )
 {
     _pcszClassName = reinterpret_cast< PCSZ >(
-                        strdup( reinterpret_cast< const char * >
+                        strdup( reinterpret_cast< const char* >
                                     ( pcszClassName )));
 
     _fRegistered = true;
@@ -134,7 +134,7 @@ void KWindow::SetHWND( HWND hwnd )
     UCHAR szClassName[ 512 ];
     WinQueryClassName( hwnd, sizeof( szClassName ), szClassName );
     _pcszClassName = reinterpret_cast< PCSZ >
-                            ( strdup( reinterpret_cast< const char * >
+                            ( strdup( reinterpret_cast< const char* >
                                         ( szClassName )));
 }
 
@@ -147,7 +147,7 @@ void KWindow::SetClassName( PCSZ pcszClassName )
         _pcszClassName = pcszClassName;
     else
         _pcszClassName = reinterpret_cast< PCSZ >(
-                            strdup( reinterpret_cast< const char * >
+                            strdup( reinterpret_cast< const char* >
                                         ( pcszClassName )));
 }
 

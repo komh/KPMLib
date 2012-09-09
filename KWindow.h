@@ -98,9 +98,9 @@ public :
 protected :
     static map< HWND, KWindow* > mapHWND;
 
-    HWND     _hwnd;
+    HWND _hwnd;
 
-    friend HWND pkwnd2hwnd( const KWindow* kwnd );
+    friend HWND pkwnd2hwnd( const KWindow* pkwnd );
 
     static void AddHWND( HWND hwnd, KWindow* pkwnd )
     { mapHWND[ hwnd ] = pkwnd; }
