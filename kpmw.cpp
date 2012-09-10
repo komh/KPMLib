@@ -30,6 +30,8 @@
 
 #define IDCB_MYCB 800
 
+#define IDCNR_MYCNR 900
+
 class KMyDialog : public KDialog
 {
 protected :
@@ -76,6 +78,7 @@ protected :
     virtual MRESULT EnChange( USHORT id );
     virtual MRESULT LnEnter( USHORT Id );
     virtual MRESULT CbnEfChange( USHORT id );
+    virtual MRESULT CnEnter( USHORT id, PNOTIFYRECORDENTER pnre );
     virtual MRESULT HSbLineLeft( USHORT id, SHORT sSlider );
     virtual MRESULT HSbLineRight( USHORT id, SHORT sSlider );
     virtual MRESULT HSbPageLeft( USHORT id, SHORT sSlider );
@@ -177,6 +180,12 @@ MRESULT KMyClientWindow::OnControl( USHORT id, USHORT usNotifyCode,
         case IDCB_MYCB :
             if( usNotifyCode == CBN_EFCHANGE )
                 return CbnEfChange( id );
+            break;
+
+        case IDCNR_MYCNR :
+            if( usNotifyCode == CN_ENTER )
+                return CnEnter( id, reinterpret_cast< PNOTIFYRECORDENTER >
+                                        ( ulControlSpec ));
             break;
     }
 
@@ -280,6 +289,21 @@ MRESULT KMyClientWindow::CbnEfChange( USHORT id )
     }
 
     return 0;
+}
+
+MRESULT KMyClientWindow::CnEnter( USHORT id, PNOTIFYRECORDENTER pnre )
+{
+
+    if( !pnre->pRecord )
+        return 0;
+
+    KStaticText kst;
+
+    WindowFromID( IDST_MYSTATIC, kst );
+    kst.SetWindowText( pnre->pRecord->pszName );
+
+    return 0;
+
 }
 
 MRESULT KMyClientWindow::HSbLineLeft( USHORT id, SHORT sSlider )
@@ -526,6 +550,45 @@ void KMyPMApp::Run()
                       IDCB_MYCB );
     kcb.LmInsertItem( LIT_END, PMLITERAL("CB Item 1"));
     kcb.LmInsertItem( LIT_END, PMLITERAL("CB Item 2"));
+
+    KContainer kcnr;
+    kcnr.CreateWindow( &kclient, PMLITERAL("My Container"),
+                       WS_VISIBLE | CCS_AUTOPOSITION | CCS_READONLY,
+                       510, 10, 150, 100, &kclient, KWND_TOP,
+                       IDCNR_MYCNR );
+
+    CNRINFO ci;
+    ci.flWindowAttr = CV_NAME;
+    kcnr.SetCnrInfo( &ci, CMA_FLWINDOWATTR );
+
+    PRECORDCORE precc;
+    RECORDINSERT ri;
+
+    precc = kcnr.AllocRecord( 0, 1 );
+    precc->hptrIcon = WinQuerySysPointer( HWND_DESKTOP, SPTR_APPICON, FALSE );
+    precc->pszName = reinterpret_cast< PSZ >
+                        ( const_cast< char * >("Item1"));
+
+    ri.cb                = sizeof( RECORDINSERT );
+    ri.pRecordOrder      = reinterpret_cast< PRECORDCORE >( CMA_END );
+    ri.pRecordParent     = 0;
+    ri.zOrder            = static_cast< USHORT >( CMA_TOP );
+    ri.fInvalidateRecord = FALSE;
+    ri.cRecordsInsert    = 1;
+    kcnr.InsertRecord( precc, &ri );
+
+    precc = kcnr.AllocRecord( 0, 1 );
+    precc->hptrIcon = WinQuerySysPointer( HWND_DESKTOP, SPTR_APPICON, FALSE );
+    precc->pszName = reinterpret_cast< PSZ >
+                        ( const_cast< char * >("Item2"));
+
+    ri.cb                = sizeof( RECORDINSERT );
+    ri.pRecordOrder      = reinterpret_cast< PRECORDCORE >( CMA_END );
+    ri.pRecordParent     = 0;
+    ri.zOrder            = static_cast< USHORT >( CMA_TOP );
+    ri.fInvalidateRecord = FALSE;
+    ri.cRecordsInsert    = 1;
+    kcnr.InsertRecord( precc, &ri );
 
     KPMApp::Run();
 

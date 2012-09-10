@@ -13,6 +13,7 @@
 #include "KEntryField.h"
 #include "KListBox.h"
 #include "KComboBox.h"
+#include "KContainer.h"
 
 #include "KFileDlg.h"
 
