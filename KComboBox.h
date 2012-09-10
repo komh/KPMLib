@@ -5,8 +5,6 @@
 #include <os2.h>
 
 #include "KWindow.h"
-#include "KEntryField.h"
-#include "KListBox.h"
 
 class KComboBox : public KWindow
 {
