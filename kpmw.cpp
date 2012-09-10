@@ -118,6 +118,7 @@ MRESULT KMyClientWindow::CmdSrcPushButton( USHORT usCmd,
             kdlg.LoadDlg( KWND_DESKTOP, this, 0, ID_KPMW );
             kdlg.ProcessDlg();
             kdlg.DestroyWindow();
+            break;
         }
 
         case IDB_MYOPEN :
@@ -131,6 +132,7 @@ MRESULT KMyClientWindow::CmdSrcPushButton( USHORT usCmd,
                 MessageBox( kfd.GetFullFile(),
                             PMLITERAL("Your selected file"), MB_OK );
             }
+            break;
         }
     }
 
