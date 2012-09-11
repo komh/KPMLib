@@ -31,8 +31,7 @@ OBJ_EXT = .o
 CSRCS   =
 CXXSRCS = kpmw.cpp KPMApp.cpp KWindow.cpp KFrameWindow.cpp KDialog.cpp \
           KStaticText.cpp KButton.cpp KScrollBar.cpp KMenu.cpp KTitleBar.cpp \
-          KEntryField.cpp KListBox.cpp KComboBox.cpp KFileDlg.cpp \
-          KContainer.cpp
+          KEntryField.cpp KListBox.cpp KComboBox.cpp KFileDlg.cpp
 
 include Makefile.common
 

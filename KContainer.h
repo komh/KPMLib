@@ -6,6 +6,7 @@
 
 #include "KWindow.h"
 
+template< typename T, bool MiniRecord = false >
 class KContainer : public KWindow
 {
 public :
@@ -16,7 +17,18 @@ public :
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
-                               PVOID pCtlData = 0, PVOID pPresParams = 0 );
+                               PVOID pCtlData = 0, PVOID pPresParams = 0 )
+    {
+        SetClassName( PMLITERAL( WC_CONTAINER ));
+
+        flStyle &= ~CCS_MINIRECORDCORE;
+        if( MiniRecord )
+            flStyle |= CCS_MINIRECORDCORE;
+
+        return KWindow::CreateWindow( pkwndP, pcszName, flStyle, x, y,
+                                      cx, cy, pkwndO, pkwndS, id,
+                                      pCtlData, pPresParams );
+    }
 
     virtual PFIELDINFO AllocDetailFieldInfo( USHORT nFieldInfo )
     {
@@ -25,9 +37,16 @@ public :
                                MPFROMSHORT( nFieldInfo )));
     }
 
-    virtual PRECORDCORE AllocRecord( ULONG cbRecordData, USHORT nRecords )
+    virtual T* AllocRecord( USHORT nRecords )
     {
-        return reinterpret_cast< PRECORDCORE >
+        ULONG cbRecordData = sizeof( T );
+
+        if( MiniRecord )
+            cbRecordData -= sizeof( MINIRECORDCORE );
+        else
+            cbRecordData -= sizeof( RECORDCORE );
+
+        return reinterpret_cast< T* >
                     ( SendMsg( CM_ALLOCRECORD, MPFROMLONG( cbRecordData ),
                                MPFROMSHORT( nRecords )));
     }
@@ -39,20 +58,20 @@ public :
     }
 
     virtual bool CloseEdit() { return SendMsg( CM_CLOSEEDIT ); }
-    virtual bool CollapseTree( PRECORDCORE pRecord )
+    virtual bool CollapseTree( T* pRecord )
     { return SendMsg( CM_COLLAPSETREE, MPFROMP( pRecord )); }
 
-    virtual bool EraseRecord( PRECORDCORE pRecord )
+    virtual bool EraseRecord( T* pRecord )
     { return SendMsg( CM_ERASERECORD, MPFROMP( pRecord )); }
 
-    virtual bool ExpandTree( PRECORDCORE pRecord )
+    virtual bool ExpandTree( T* pRecord )
     { return SendMsg( CM_EXPANDTREE, MPFROMP( pRecord )); }
 
     virtual bool Filter( PFN pfnFilter, PVOID pStorage )
     { return SendMsg( CM_FILTER, MPFROMP( pfnFilter ), MPFROMP( pStorage )); }
 
     virtual bool FreeDetailFieldInfo( PVOID pFieldInfoArray,
-                                       USHORT cNumFieldInfo )
+                                      USHORT cNumFieldInfo )
     {
         return SendMsg( CM_FREEDETAILFIELDINFO, MPFROMP( pFieldInfoArray ),
                         MPFROMSHORT( cNumFieldInfo ));
@@ -77,7 +96,7 @@ public :
                                       MPFROMP( pfi ), MPFROMP( pfii )));
     }
 
-    virtual ULONG InsertRecord( PRECORDCORE pRecord, PRECORDINSERT pri )
+    virtual ULONG InsertRecord( T* pRecord, PRECORDINSERT pri )
     {
         return LONGFROMMR( SendMsg( CM_INSERTRECORD, MPFROMP( pRecord ),
                                     MPFROMP( pri )));
@@ -121,33 +140,30 @@ public :
                                MPFROMSHORT( cmd )));
     }
 
-    virtual LHANDLE QueryDragImage( PRECORDCORE pRecord )
+    virtual LHANDLE QueryDragImage( T* pRecord )
     { return LONGFROMMR( SendMsg( CM_QUERYDRAGIMAGE, MPFROMP( pRecord ))); }
 
     virtual bool QueryGridInfo( PGRIDINFO pgi )
     { return SendMsg( CM_QUERYGRIDINFO, MPFROMP( pgi )); }
 
-    virtual PRECORDCORE QueryRecord( PRECORDCORE pRecord, USHORT cmd,
-                                     USHORT fsSearch )
+    virtual T* QueryRecord( T* pRecord, USHORT cmd, USHORT fsSearch )
     {
-        return reinterpret_cast< PRECORDCORE >
+        return reinterpret_cast< T* >
                     ( SendMsg( CM_QUERYRECORD, MPFROMP( pRecord ),
                                MPFROM2SHORT( cmd, fsSearch )));
     }
 
-    virtual PRECORDCORE QueryRecordEmphasis( PRECORDCORE pSearchAfter,
-                                             USHORT fsMask )
+    virtual T* QueryRecordEmphasis( T* pSearchAfter, USHORT fsMask )
     {
-        return reinterpret_cast< PRECORDCORE >
+        return reinterpret_cast< T* >
                     ( SendMsg( CM_QUERYRECORDEMPHASIS,
                                MPFROMP( pSearchAfter ),
                                MPFROMSHORT( fsMask )));
     }
 
-    virtual PRECORDCORE QueryRecordFromRect( PRECORDCORE pSearchAfter,
-                                             PQUERYRECFROMRECT pqrfr )
+    virtual T* QueryRecordFromRect( T* pSearchAfter, PQUERYRECFROMRECT pqrfr )
     {
-        return reinterpret_cast< PRECORDCORE >
+        return reinterpret_cast< T* >
                     ( SendMsg( CM_QUERYRECORDFROMRECT,
                                MPFROMP( pSearchAfter ), MPFROMP( pqrfr )));
     }
@@ -195,9 +211,9 @@ public :
                         MPFROMLONG( lScrollInc ));
     }
 
-    virtual PRECORDCORE SearchString( PSEARCHSTRING pss, PRECORDCORE pAfter )
+    virtual T* SearchString( PSEARCHSTRING pss, T* pAfter )
     {
-        return reinterpret_cast< PRECORDCORE >
+        return reinterpret_cast< T* >
                     ( SendMsg( CM_SEARCHSTRING, MPFROMP( pss ),
                                MPFROMP( pAfter )));
     }
@@ -214,7 +230,7 @@ public :
                         MPFROMLONG( fRepaint ));
     }
 
-    virtual bool SetRecordEmphasis( PRECORDCORE pRecord,
+    virtual bool SetRecordEmphasis( T* pRecord,
                                     USHORT usChangeEmphasis,
                                     USHORT fsEmphasisAttr )
     {
@@ -225,7 +241,7 @@ public :
     virtual bool SetTextVisibility( bool fVisible )
     { return SendMsg( CM_SETTEXTVISIBILITY, MPFROMLONG( fVisible )); }
 
-    virtual bool SnapToGrid( PRECORDCORE pRecord, SHORT xDrop, SHORT yDrop )
+    virtual bool SnapToGrid( T* pRecord, SHORT xDrop, SHORT yDrop )
     {
         return SendMsg( CM_SNAPTOGRID, MPFROMP( pRecord ),
                         MPFROM2SHORT( xDrop, yDrop ));

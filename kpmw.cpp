@@ -300,7 +300,7 @@ MRESULT KMyClientWindow::CnEnter( USHORT id, PNOTIFYRECORDENTER pnre )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText( pnre->pRecord->pszName );
+    kst.SetWindowText( pnre->pRecord->pszIcon );
 
     return 0;
 
@@ -551,22 +551,22 @@ void KMyPMApp::Run()
     kcb.LmInsertItem( LIT_END, PMLITERAL("CB Item 1"));
     kcb.LmInsertItem( LIT_END, PMLITERAL("CB Item 2"));
 
-    KContainer kcnr;
+    KContainer< MINIRECORDCORE, true > kcnr;
     kcnr.CreateWindow( &kclient, PMLITERAL("My Container"),
                        WS_VISIBLE | CCS_AUTOPOSITION | CCS_READONLY,
                        510, 10, 150, 100, &kclient, KWND_TOP,
                        IDCNR_MYCNR );
 
     CNRINFO ci;
-    ci.flWindowAttr = CV_NAME;
+    ci.flWindowAttr = CV_ICON;
     kcnr.SetCnrInfo( &ci, CMA_FLWINDOWATTR );
 
-    PRECORDCORE precc;
+    PMINIRECORDCORE prec;
     RECORDINSERT ri;
 
-    precc = kcnr.AllocRecord( 0, 1 );
-    precc->hptrIcon = WinQuerySysPointer( HWND_DESKTOP, SPTR_APPICON, FALSE );
-    precc->pszName = reinterpret_cast< PSZ >
+    prec = kcnr.AllocRecord( 1 );
+    prec->hptrIcon = WinQuerySysPointer( HWND_DESKTOP, SPTR_APPICON, FALSE );
+    prec->pszIcon = reinterpret_cast< PSZ >
                         ( const_cast< char * >("Item1"));
 
     ri.cb                = sizeof( RECORDINSERT );
@@ -575,11 +575,11 @@ void KMyPMApp::Run()
     ri.zOrder            = static_cast< USHORT >( CMA_TOP );
     ri.fInvalidateRecord = FALSE;
     ri.cRecordsInsert    = 1;
-    kcnr.InsertRecord( precc, &ri );
+    kcnr.InsertRecord( prec, &ri );
 
-    precc = kcnr.AllocRecord( 0, 1 );
-    precc->hptrIcon = WinQuerySysPointer( HWND_DESKTOP, SPTR_APPICON, FALSE );
-    precc->pszName = reinterpret_cast< PSZ >
+    prec = kcnr.AllocRecord( 1 );
+    prec->hptrIcon = WinQuerySysPointer( HWND_DESKTOP, SPTR_APPICON, FALSE );
+    prec->pszIcon = reinterpret_cast< PSZ >
                         ( const_cast< char * >("Item2"));
 
     ri.cb                = sizeof( RECORDINSERT );
@@ -588,7 +588,7 @@ void KMyPMApp::Run()
     ri.zOrder            = static_cast< USHORT >( CMA_TOP );
     ri.fInvalidateRecord = FALSE;
     ri.cRecordsInsert    = 1;
-    kcnr.InsertRecord( precc, &ri );
+    kcnr.InsertRecord( prec, &ri );
 
     KPMApp::Run();
 
