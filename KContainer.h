@@ -70,14 +70,14 @@ public :
     virtual bool Filter( PFN pfnFilter, PVOID pStorage )
     { return SendMsg( CM_FILTER, MPFROMP( pfnFilter ), MPFROMP( pStorage )); }
 
-    virtual bool FreeDetailFieldInfo( PVOID pFieldInfoArray,
+    virtual bool FreeDetailFieldInfo( PFIELDINFO* pFieldInfoArray,
                                       USHORT cNumFieldInfo )
     {
         return SendMsg( CM_FREEDETAILFIELDINFO, MPFROMP( pFieldInfoArray ),
                         MPFROMSHORT( cNumFieldInfo ));
     }
 
-    virtual bool FreeRecord( PVOID pRecordArray, USHORT cNumRecord )
+    virtual bool FreeRecord( T** pRecordArray, USHORT cNumRecord )
     {
         return SendMsg( CM_FREERECORD, MPFROMP( pRecordArray ),
                         MPFROMSHORT( cNumRecord ));
@@ -102,7 +102,7 @@ public :
                                     MPFROMP( pri )));
     }
 
-    virtual ULONG InsertRecordArray( PVOID pRecordArray, PRECORDINSERT pri )
+    virtual ULONG InsertRecordArray( T** pRecordArray, PRECORDINSERT pri )
     {
         return LONGFROMMR( SendMsg( CM_INSERTRECORDARRAY,
                                     MPFROMP( pRecordArray ), MPFROMP( pri )));
@@ -111,7 +111,7 @@ public :
     virtual bool InvalidateDetailFieldInfo()
     { return SendMsg( CM_INVALIDATEDETAILFIELDINFO ); }
 
-    virtual bool InvalidateRecord( PVOID pRecordArray, USHORT cNumRecord,
+    virtual bool InvalidateRecord( T** pRecordArray, USHORT cNumRecord,
                                    USHORT fsInvalidateRecord )
     {
         return SendMsg( CM_INVALIDATERECORD, MPFROMP( pRecordArray ),
@@ -168,7 +168,7 @@ public :
                                MPFROMP( pSearchAfter ), MPFROMP( pqrfr )));
     }
 
-    virtual bool QueryRecordInfo( PVOID pRecordArray, USHORT cNumRecord )
+    virtual bool QueryRecordInfo( T** pRecordArray, USHORT cNumRecord )
     {
         return SendMsg( CM_QUERYRECORDINFO, MPFROMP( pRecordArray ),
                         MPFROMSHORT( cNumRecord ));
@@ -187,7 +187,7 @@ public :
                         MPFROM2SHORT( usIndicator, fRightSplitWindow ));
     }
 
-    virtual SHORT RemoveDetailFieldInfo( PVOID pFieldInfoArray,
+    virtual SHORT RemoveDetailFieldInfo( PFIELDINFO* pFieldInfoArray,
                                          USHORT cNumFieldInfo,
                                          USHORT fsRemoveFieldInfo )
     {
@@ -197,7 +197,7 @@ public :
                                                     fsRemoveFieldInfo )));
     }
 
-    virtual LONG RemoveRecord( PVOID pRecordArray, USHORT cNumRecord,
+    virtual LONG RemoveRecord( T** pRecordArray, USHORT cNumRecord,
                                USHORT fsRemoveRecord )
     {
         return LONGFROMMR( SendMsg( CM_REMOVERECORD, MPFROMP( pRecordArray ),

@@ -592,6 +592,16 @@ void KMyPMApp::Run()
 
     KPMApp::Run();
 
+    PMINIRECORDCORE prc, prcNext;
+
+    prc = kcnr.QueryRecord( 0, CMA_FIRST, CMA_ITEMORDER );
+    for(; prc; prc = prcNext )
+    {
+        prcNext = kcnr.QueryRecord( prc, CMA_NEXT, CMA_ITEMORDER );
+
+        kcnr.RemoveRecord( &prc, 1, CMA_FREE );
+    }
+
     kframe.DestroyWindow();
 }
 
