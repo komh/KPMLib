@@ -35,3 +35,23 @@ CXXSRCS = kpmw.cpp KPMApp.cpp KWindow.cpp KFrameWindow.cpp KDialog.cpp \
 
 include Makefile.common
 
+AR      = ar
+ARFLAGS = crv
+
+LIB_NAME = KPMLib
+
+%.lib : %.a
+	emxomf -o $@ $<
+
+all : $(LIB_NAME).a $(LIB_NAME).lib
+
+LIB_OBJS = $(filter-out kpmw$(OBJ_EXT), $(CXXSRCS:.cpp=$(OBJ_EXT)))
+
+$(LIB_NAME).a : $(LIB_OBJS)
+	$(if $(QUIET), @echo [AR] $@)
+	$(QUIET)$(AR) $(ARFLAGS) $@ $^
+
+clean : cleanlib
+
+cleanlib:
+	$(RM) $(LIB_NAME).a $(LIB_NAME).lib
