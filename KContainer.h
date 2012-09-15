@@ -19,7 +19,7 @@ public :
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 )
     {
-        SetClassName( PMLITERAL( WC_CONTAINER ));
+        SetClassName( WC_CONTAINER );
 
         flStyle &= ~CCS_MINIRECORDCORE;
         if( MiniRecord )

@@ -9,7 +9,7 @@ bool KStaticText::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                                 const KWindow* pkwndS, ULONG id,
                                 PVOID pCtlData, PVOID pPresParams )
 {
-    SetClassName( PMLITERAL( WC_STATIC ));
+    SetClassName( WC_STATIC );
 
     return KWindow::CreateWindow( pkwndP, pcszName, flStyle, x, y, cx, cy,
                                   pkwndO, pkwndS, id, pCtlData, pPresParams );

@@ -8,7 +8,7 @@ bool KMenu::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                           const KWindow* pkwndO, const KWindow* pkwndS,
                           ULONG id, PVOID pCtlData, PVOID pPresParams )
 {
-    SetClassName( PMLITERAL( WC_MENU ));
+    SetClassName( WC_MENU );
 
     return KWindow::CreateWindow( pkwndP, pcszName, flStyle, x, y, cx, cy,
                                   pkwndO, pkwndS, id, pCtlData, pPresParams );

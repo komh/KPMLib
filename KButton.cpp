@@ -8,7 +8,7 @@ bool KButton::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                             const KWindow* pkwndO, const KWindow* pkwndS,
                             ULONG id, PVOID pCtlData, PVOID pPresParams )
 {
-    SetClassName( PMLITERAL( WC_BUTTON ));
+    SetClassName( WC_BUTTON );
 
     if( !LOUSHORT( flStyle ))
         flStyle |= BS_PUSHBUTTON;

@@ -7,7 +7,10 @@
 #include <map>
 using namespace std;
 
-#define PMLITERAL( s ) ( reinterpret_cast < PCSZ >( s ))
+#define STR2PSZ( s )   ( reinterpret_cast< PSZ >( s ))
+#define CSTR2PSZ( s )  ( reinterpret_cast< PSZ >( const_cast< char* >( s )))
+#define PSZ2STR( s )   ( reinterpret_cast< char* >( s ))
+#define PCSZ2STR( s)   ( reinterpret_cast< char* >( const_cast< PSZ >( s )))
 
 #define KWND_DESKTOP ( reinterpret_cast< KWindow* >( HWND_DESKTOP ))
 #define KWND_OBJECT  ( reinterpret_cast< KWindow* >( HWND_OBJECT ))

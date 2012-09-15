@@ -9,7 +9,7 @@ bool KScrollBar::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData, PVOID pPresParams )
 {
-    SetClassName( PMLITERAL( WC_SCROLLBAR ));
+    SetClassName( WC_SCROLLBAR );
 
     return KWindow::CreateWindow( pkwndP, pcszName, flStyle, x, y, cx, cy,
                                   pkwndO, pkwndS, id, pCtlData, pPresParams );
