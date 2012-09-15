@@ -35,6 +35,8 @@ CXXSRCS = kpmw.cpp KPMApp.cpp KWindow.cpp KFrameWindow.cpp KDialog.cpp \
 
 include Makefile.common
 
+.PHONY : lib
+
 AR      = ar
 ARFLAGS = crv
 
@@ -43,7 +45,9 @@ LIB_NAME = KPMLib
 %.lib : %.a
 	emxomf -o $@ $<
 
-all : $(LIB_NAME).a $(LIB_NAME).lib
+all : lib
+
+lib : $(LIB_NAME).a $(LIB_NAME).lib
 
 LIB_OBJS = $(filter-out kpmw$(OBJ_EXT), $(CXXSRCS:.cpp=$(OBJ_EXT)))
 
