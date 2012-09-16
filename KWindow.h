@@ -23,6 +23,9 @@ public :
     KWindow();
     virtual ~KWindow();
 
+    virtual HENUM BeginEnumWindows( KWindow* pkwnd )
+    { return WinBeginEnumWindows( pkwnd2hwnd( pkwnd )); }
+
     virtual HPS BeginPaint( HPS hps, PRECTL prcl )
     { return WinBeginPaint( _hwnd, hps, prcl); }
 
@@ -31,6 +34,9 @@ public :
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
+    virtual bool DestroyPointer( HPOINTER hptr )
+    { return WinDestroyPointer( hptr ); }
+
     virtual bool DestroyWindow();
     virtual LONG DrawText( HPS hps, LONG cchText, PCCH lpchText, PRECTL prcl,
                            LONG clrFore, LONG clrBack, ULONG flCmd )
@@ -42,6 +48,26 @@ public :
     virtual bool EndPaint( HPS hps ) { return WinEndPaint( hps ); }
     virtual bool FillRect( HPS hps, PRECTL prcl, LONG lColor )
     { return WinFillRect( hps, prcl, lColor ); }
+
+    virtual bool GetNextWindow( HENUM henum, KWindow& kwndNext )
+    {
+        HWND hwndNext = WinGetNextWindow( henum );
+        kwndNext.SetHWND( hwndNext );
+
+        return hwndNext;
+    }
+
+    virtual HPS GetPS() { return WinGetPS( _hwnd ); }
+    virtual HPOINTER LoadPointer( HMODULE hmodResource, ULONG idPointer )
+    { return WinLoadPointer( HWND_DESKTOP, hmodResource, idPointer ); }
+
+    virtual bool MapWindowPoints( const KWindow* pkwndFrom,
+                                  const KWindow* pkwndTo, PPOINTL prgptl,
+                                  LONG cwpt )
+    {
+        return  WinMapWindowPoints( pkwnd2hwnd( pkwndFrom ),
+                                    pkwnd2hwnd( pkwndTo ), prgptl, cwpt );
+    }
 
     virtual ULONG MessageBox( PCSZ pcszText, PCSZ pcszCaption, ULONG flStyle )
     {
@@ -60,8 +86,23 @@ public :
     { return WinPostMsg( _hwnd, ulMsg, mp1, mp2 ); }
 
     virtual HAB QueryAnchorBlock() { return WinQueryAnchorBlock( _hwnd ); }
+    virtual bool QueryPointerPos( PPOINTL pptlPoint )
+    { return WinQueryPointerPos( HWND_DESKTOP, pptlPoint ); }
+
     virtual ULONG QueryTaskSizePos( PSWP pswp )
     { return WinQueryTaskSizePos( QueryAnchorBlock(), 0, pswp ); }
+
+    virtual HPOINTER QuerySysPointer( LONG lID, bool fCopy )
+    { return WinQuerySysPointer( HWND_DESKTOP, lID, fCopy ); }
+
+    virtual LONG QuerySysValue( LONG iSysValue )
+    { return WinQuerySysValue( HWND_DESKTOP, iSysValue ); }
+
+    virtual bool QueryWindowPos( PSWP pswp )
+    { return WinQueryWindowPos( _hwnd, pswp ); }
+
+    virtual PVOID QueryWindowPtr( LONG index )
+    { return WinQueryWindowPtr( _hwnd, index ); }
 
     virtual bool QueryWindowRect( PRECTL prcl )
     { return WinQueryWindowRect( _hwnd, prcl ); }
@@ -72,10 +113,20 @@ public :
     virtual LONG QueryWindowTextLength()
     { return WinQueryWindowTextLength( _hwnd ); }
 
+    virtual ULONG QueryWindowULong( LONG index )
+    { return WinQueryWindowULong( _hwnd, index ); }
+
+    virtual USHORT QueryWindowUShort( LONG index )
+    { return WinQueryWindowUShort( _hwnd, index ); }
+
     virtual bool RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
                                 ULONG cbWindowData );
+    virtual bool ReleasePS( HPS hps ) { return WinReleasePS( hps ); }
     virtual MRESULT SendMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
     { return WinSendMsg( _hwnd, ulMsg, mp1, mp2 ); }
+
+    virtual bool SetFocus( bool fSet = true )
+    { return WinSetFocus( HWND_DESKTOP, fSet ? _hwnd  : HWND_DESKTOP ); }
 
     virtual bool SetWindowPos( const KWindow* pkwndRel, LONG x, LONG y,
                                LONG cx, LONG cy, ULONG fl )
@@ -84,8 +135,14 @@ public :
                                 x, y, cx, cy, fl );
     }
 
+    virtual bool SetWindowPtr( LONG lb, PVOID p )
+    { return WinSetWindowPtr( _hwnd, lb, p ); }
+
     virtual bool SetWindowText( PCSZ pcszString )
     { return WinSetWindowText( _hwnd, pcszString ); }
+
+    virtual bool SetWindowULong( LONG index, ULONG ul )
+    { return WinSetWindowULong( _hwnd, index, ul ); }
 
     virtual bool ShowWindow( BOOL fNewVisibility )
     { return WinShowWindow( _hwnd, fNewVisibility ); }

@@ -14,6 +14,20 @@ public :
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
+    virtual bool LoadMenu( const KWindow* pkwndO, HMODULE hmod, ULONG idMenu )
+    {
+        HWND hwnd = WinLoadMenu( pkwnd2hwnd( pkwndO ), hmod, idMenu );
+        SetHWND( hwnd );
+
+        return hwnd;
+    }
+
+    virtual bool PopupMenu( const KWindow* pkwndP, const KWindow* pkwndO,
+                            LONG x, LONG y, LONG idItem, ULONG fs )
+    {
+        return WinPopupMenu( pkwnd2hwnd( pkwndP ), pkwnd2hwnd( pkwndO ),
+                             _hwnd, x, y, idItem, fs );
+    }
 
     virtual SHORT DeleteItem( USHORT usItem, bool fIncSub )
     {

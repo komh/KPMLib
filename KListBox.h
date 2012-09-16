@@ -14,6 +14,17 @@ public :
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
+    virtual LONG DeleteLboxItem( LONG index )
+    { return WinDeleteLboxItem( _hwnd, index ); }
+
+    virtual LONG InsertLboxItem( LONG index, PSZ psz )
+    { return WinInsertLboxItem( _hwnd, index, psz ); }
+
+    virtual LONG QueryLboxSelectedItem()
+    { return WinQueryLboxSelectedItem( _hwnd ); }
+
+    virtual bool SetLboxItemText( LONG index, PSZ psz )
+    { return WinSetLboxItemText( _hwnd, index, psz ); }
 
     virtual bool DeleteAll() { return SendMsg( LM_DELETEALL ); }
 
