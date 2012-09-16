@@ -35,15 +35,7 @@ KWindow::KWindow()
 
 KWindow::~KWindow()
 {
-    if( HIUSHORT( _pcszClassName ) != 0xFFFF )
-        free( reinterpret_cast< void* >( const_cast< PSZ >
-                                            ( _pcszClassName )));
-
-    if( _pfnwpOldProc )
-        WinSubclassWindow( _hwnd, _pfnwpOldProc );
-
-    if( FindHWND( _hwnd ) == this )
-        RemoveHWND( _hwnd );
+    SetHWND( 0 );
 }
 
 bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
@@ -72,13 +64,7 @@ bool KWindow::DestroyWindow()
 {
     if( WinDestroyWindow( _hwnd ))
     {
-        _hwnd = 0;
-
-        if( HIUSHORT( _pcszClassName ) != 0xFFFF )
-            free( reinterpret_cast< void* >( const_cast< PSZ >
-                                                ( _pcszClassName )));
-        _pcszClassName = 0;
-        _pfnwpOldProc  = 0;
+        SetHWND( 0 );
 
         return true;
     }
@@ -114,10 +100,28 @@ bool KWindow::WindowFromID( ULONG id, KWindow& kwnd )
 
 void KWindow::SetHWND( HWND hwnd )
 {
-    _hwnd = hwnd;
-
     if( !hwnd )
+    {
+        // Detach from a window
+        if( HIUSHORT( _pcszClassName ) != 0xFFFF )
+            free( reinterpret_cast< void* >( const_cast< PSZ >
+                                                ( _pcszClassName )));
+
+        if( _pfnwpOldProc )
+            WinSubclassWindow( _hwnd, _pfnwpOldProc );
+
+        if( FindHWND( _hwnd ) == this )
+            RemoveHWND( _hwnd );
+
+        _hwnd          = 0;
+        _pcszClassName = 0;
+        _pfnwpOldProc  = 0;
+        _fRegistered   = false;
+
         return;
+    }
+
+    _hwnd = hwnd;
 
     if( !FindHWND( hwnd ))
     {
