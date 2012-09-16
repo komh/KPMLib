@@ -117,6 +117,9 @@ void KWindow::SetHWND( HWND hwnd )
         return;
     }
 
+    // Detach from a old window
+    SetHWND( 0 );
+
     _hwnd = hwnd;
 
     if( !FindHWND( hwnd ))
