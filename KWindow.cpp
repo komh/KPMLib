@@ -6,7 +6,7 @@
 
 #include "KWindow.h"
 
-map< HWND, KWindow*> KWindow::mapHWND;
+map< HWND, KWindow*> KWindow::_mapHWND;
 
 struct CreateParams
 {

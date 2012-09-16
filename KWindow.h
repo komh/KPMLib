@@ -156,21 +156,21 @@ public :
     virtual void SetClassName( PCSZ pcszClassName );
 
 protected :
-    static map< HWND, KWindow* > mapHWND;
+    static map< HWND, KWindow* > _mapHWND;
 
     HWND _hwnd;
 
     friend HWND pkwnd2hwnd( const KWindow* pkwnd );
 
     static void AddHWND( HWND hwnd, KWindow* pkwnd )
-    { mapHWND[ hwnd ] = pkwnd; }
+    { _mapHWND[ hwnd ] = pkwnd; }
 
-    static void RemoveHWND( HWND hwnd ) { mapHWND.erase( hwnd ); }
+    static void RemoveHWND( HWND hwnd ) { _mapHWND.erase( hwnd ); }
     static KWindow* FindHWND( HWND hwnd )
     {
-        map< HWND, KWindow* >::iterator it = mapHWND.find( hwnd );
+        map< HWND, KWindow* >::iterator it = _mapHWND.find( hwnd );
 
-        return ( it == mapHWND.end()) ? 0 : it->second;
+        return ( it == _mapHWND.end()) ? 0 : it->second;
     }
 
     static MRESULT EXPENTRY WndProc( HWND hwnd, ULONG msg, MPARAM mp1,
