@@ -419,10 +419,10 @@ MRESULT KMyFrameWindow::SysCmdSrcMenu( USHORT usCmd, bool fPointer )
 class KMyPMApp : public KPMApp
 {
 public :
-    virtual void Run();
+    virtual int Run();
 };
 
-void KMyPMApp::Run()
+int KMyPMApp::Run()
 {
     KMyClientWindow kclient;
     kclient.RegisterClass( _hab, CSTR2PSZ( WC_KPMW ), CS_SIZEREDRAW,
@@ -603,14 +603,14 @@ void KMyPMApp::Run()
     }
 
     kframe.DestroyWindow();
+
+    return 0;
 }
 
 int main()
 {
     KMyPMApp app;
 
-    app.Run();
-
-    return 0;
+    return app.Run();
 }
 

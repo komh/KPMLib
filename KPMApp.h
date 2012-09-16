@@ -4,20 +4,15 @@
 #define INCL_WIN
 #include <os2.h>
 
-class KPMApp
+#include "KPMThread.h"
+
+class KPMApp : public KPMThread
 {
 public :
-    KPMApp();
-    virtual ~KPMApp();
+    KPMApp() : KPMThread() {};
+    virtual ~KPMApp() {};
 
-    virtual void Run();
-
-    HAB GetHAB() const { return _hab; }
-    HMQ GetHMQ() const { return _hmq; }
-
-protected :
-    HAB _hab;
-    HMQ _hmq;
+    virtual int Run();
 };
 #endif
 
