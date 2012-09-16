@@ -4,14 +4,29 @@
 #define INCL_WIN
 #include <os2.h>
 
+#include <list>
+using namespace std;
+
 #include "KWindow.h"
 
 template< typename T, bool MiniRecord = false >
 class KContainer : public KWindow
 {
 public :
-    KContainer() : KWindow() {};
-    virtual ~KContainer() {};
+    struct SortParam
+    {
+        PVOID pStorage;
+        KContainer< T, MiniRecord >* pkcnr;
+    };
+
+    KContainer() : KWindow() { _fDoSort = false; }
+    virtual ~KContainer()
+    {
+        typename list< SortParam* >::iterator it;
+
+        for( it = _SortParamList.begin(); it != _SortParamList.end(); ++it )
+            delete *it;
+    }
 
     virtual bool CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                                ULONG flStyle, LONG x, LONG y,
@@ -98,14 +113,24 @@ public :
 
     virtual ULONG InsertRecord( T* pRecord, PRECORDINSERT pri )
     {
-        return LONGFROMMR( SendMsg( CM_INSERTRECORD, MPFROMP( pRecord ),
-                                    MPFROMP( pri )));
+        LONG rc = LONGFROMMR( SendMsg( CM_INSERTRECORD, MPFROMP( pRecord ),
+                              MPFROMP( pri )));
+
+        if( _fDoSort )
+            SortRecord( 0 );
+
+        return rc;
     }
 
     virtual ULONG InsertRecordArray( T** pRecordArray, PRECORDINSERT pri )
     {
-        return LONGFROMMR( SendMsg( CM_INSERTRECORDARRAY,
-                                    MPFROMP( pRecordArray ), MPFROMP( pri )));
+        ULONG rc = LONGFROMMR( SendMsg( CM_INSERTRECORDARRAY,
+                               MPFROMP( pRecordArray ), MPFROMP( pri )));
+
+        if( _fDoSort )
+            SortRecord( 0 );
+
+        return rc;
     }
 
     virtual bool InvalidateDetailFieldInfo()
@@ -220,8 +245,24 @@ public :
 
     virtual bool SetCnrInfo( PCNRINFO pCnrInfo, ULONG ulCnrInfoFl )
     {
-        return SendMsg( CM_SETCNRINFO, MPFROMP( pCnrInfo ),
-                        MPFROMLONG( ulCnrInfoFl ));
+        bool rc;
+
+        if( ulCnrInfoFl & CMA_PSORTRECORD )
+        {
+            ulCnrInfoFl          &= ~CMA_PSORTRECORD;
+            pCnrInfo->pSortRecord = 0;
+            _fDoSort              = true;
+        }
+        else
+            _fDoSort = false;
+
+        rc = SendMsg( CM_SETCNRINFO, MPFROMP( pCnrInfo ),
+                      MPFROMLONG( ulCnrInfoFl ));
+
+        if( _fDoSort )
+            SortRecord( 0 );
+
+        return rc;
     }
 
     virtual bool SetGridInfo( PGRIDINFO pGridInfo, bool fRepaint )
@@ -247,10 +288,45 @@ public :
                         MPFROM2SHORT( xDrop, yDrop ));
     }
 
-    virtual bool SortRecord( PFN pfnCompare, PVOID pStorage )
+    virtual bool SortRecord( PVOID pStorage, bool fSend = true )
     {
-        return SendMsg( CM_SORTRECORD, MPFROMP( pfnCompare ),
-                        MPFROMP( pStorage ));
+        SortParam sp;
+        SortParam* psp = &sp;
+
+        if( !fSend )
+        {
+            psp = new SortParam;
+
+            _SortParamList.push_back( psp );
+        }
+
+        psp->pStorage = pStorage;
+        psp->pkcnr    = this;
+
+        if( fSend )
+            return SendMsg( CM_SORTRECORD, MPFROMP( SortCompare ),
+                            MPFROMP( psp ));
+
+        return PostMsg( CM_SORTRECORD, MPFROMP( SortCompare ),
+                        MPFROMP( psp ));
+    }
+
+protected :
+    virtual SHORT KSortCompare( T* p1, T* p2, PVOID pStorage ) { return 0; }
+
+private :
+    bool _fDoSort;
+
+    list< SortParam* > _SortParamList;
+
+    static SHORT EXPENTRY SortCompare( T* p1, T* p2, PVOID pStorage )
+    {
+        SortParam* psp = reinterpret_cast< SortParam* >( pStorage );
+
+        pStorage = psp->pStorage;
+        KContainer< T, MiniRecord >* pkcnr = psp->pkcnr;
+
+        return pkcnr->KSortCompare( p1, p2, pStorage );
     }
 };
 #endif
