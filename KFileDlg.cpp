@@ -6,6 +6,8 @@ KFileDlg::KFileDlg() : KDialog()
 
 KFileDlg::~KFileDlg()
 {
+    if( _fild.papszFQFilename )
+        WinFreeFileDlgList( _fild.papszFQFilename );
 }
 
 bool KFileDlg::FileDlg( const KWindow* pkwndP, const KWindow* pkwndO )
