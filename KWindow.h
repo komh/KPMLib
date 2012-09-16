@@ -77,7 +77,7 @@ public :
     virtual MRESULT SendMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
     { return WinSendMsg( _hwnd, ulMsg, mp1, mp2 ); }
 
-    virtual bool SetWindowPos( KWindow* pkwndRel, LONG x, LONG y,
+    virtual bool SetWindowPos( const KWindow* pkwndRel, LONG x, LONG y,
                                LONG cx, LONG cy, ULONG fl )
     {
         return WinSetWindowPos( _hwnd, pkwnd2hwnd( pkwndRel ),

@@ -8,7 +8,7 @@ KFileDlg::~KFileDlg()
 {
 }
 
-bool KFileDlg::FileDlg( KWindow* pkwndP, KWindow* pkwndO )
+bool KFileDlg::FileDlg( const KWindow* pkwndP, const KWindow* pkwndO )
 {
     HWND hwndP = pkwnd2hwnd( pkwndP );
     HWND hwndO = pkwnd2hwnd( pkwndO );

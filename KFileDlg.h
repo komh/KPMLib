@@ -14,7 +14,7 @@ public :
     KFileDlg();
     virtual ~KFileDlg();
 
-    virtual bool FileDlg( KWindow* pkwndP, KWindow* pkwndO );
+    virtual bool FileDlg( const KWindow* pkwndP, const KWindow* pkwndO );
 
     virtual void Clear()
     {
