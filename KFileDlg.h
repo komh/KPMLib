@@ -60,13 +60,12 @@ public :
     SHORT GetEAType() const { return _fild.sEAType; }
 
 protected :
+    FILEDLG _fild;
+
     static MRESULT EXPENTRY FileDlgProc( HWND hwndDlg, ULONG msg, MPARAM mp1,
                                          MPARAM mp2 );
 
     virtual MRESULT KDefWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     { return WinDefFileDlgProc( _hwnd, msg, mp1, mp2 ); }
-
-private :
-    FILEDLG _fild;
 };
 #endif
