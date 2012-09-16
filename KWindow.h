@@ -913,7 +913,6 @@ protected :
 
 private :
     PCSZ  _pcszClassName;
-    bool  _fRegistered;
     PFNWP _pfnwpOldProc;
 };
 #endif

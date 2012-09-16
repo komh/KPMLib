@@ -30,7 +30,6 @@ KWindow::KWindow()
     _hwnd          = 0;
     _pcszClassName = 0;
     _pfnwpOldProc  = 0;
-    _fRegistered   = false;
 }
 
 KWindow::~KWindow()
@@ -79,8 +78,6 @@ bool KWindow::RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
                         strdup( reinterpret_cast< const char* >
                                     ( pcszClassName )));
 
-    _fRegistered = true;
-
     return WinRegisterClass( hab, pcszClassName, WndProc, flStyle,
                              sizeof( PVOID ) + cbWindowData );
 }
@@ -116,7 +113,6 @@ void KWindow::SetHWND( HWND hwnd )
         _hwnd          = 0;
         _pcszClassName = 0;
         _pfnwpOldProc  = 0;
-        _fRegistered   = false;
 
         return;
     }
@@ -127,7 +123,7 @@ void KWindow::SetHWND( HWND hwnd )
     {
         AddHWND( hwnd, this );
 
-        if( !_fRegistered )
+        if( WinQueryWindowPtr( hwnd, QWP_PFNWP ) != WndProc )
             _pfnwpOldProc = WinSubclassWindow( hwnd, WndProc );
     }
 
@@ -144,8 +140,6 @@ void KWindow::SetHWND( HWND hwnd )
 
 void KWindow::SetClassName( PCSZ pcszClassName )
 {
-    _fRegistered = false;
-
     // pre-defined class such as WC_FRAME ?
     if( HIUSHORT( pcszClassName ) == 0xFFFF )
         _pcszClassName = pcszClassName;
