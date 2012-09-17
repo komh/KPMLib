@@ -28,10 +28,17 @@ public :
 
     virtual bool DeleteAll() { return SendMsg( LM_DELETEALL ); }
 
+    virtual bool DeleteAllP() { return PostMsg( LM_DELETEALL ); }
+
     virtual SHORT DeleteItem( SHORT sItemIndex )
     {
         return SHORT1FROMMR( SendMsg( LM_DELETEITEM,
                                       MPFROMSHORT( sItemIndex )));
+    }
+
+    virtual bool DeleteItemP( SHORT sItemIndex )
+    {
+        return PostMsg( LM_DELETEITEM, MPFROMSHORT( sItemIndex ));
     }
 
     virtual SHORT InsertItem( SHORT sItemIndex, PCSZ pcszItemText )
@@ -41,10 +48,22 @@ public :
                                       MPFROMP( pcszItemText )));
     }
 
+    virtual bool InsertItemP( SHORT sItemIndex, PCSZ pcszItemText )
+    {
+        return PostMsg( LM_INSERTITEM, MPFROMSHORT( sItemIndex ),
+                        MPFROMP( pcszItemText ));
+    }
+
     virtual LONG InsertMultiItems( PLBOXINFO plbi, PCSZ* papcszText )
     {
         return LONGFROMMR( SendMsg( LM_INSERTMULTITEMS,
                                     MPFROMP( plbi ), MPFROMP( papcszText )));
+    }
+
+    virtual bool InsertMultiItemsP( PLBOXINFO plbi, PCSZ* papcszText )
+    {
+        return PostMsg( LM_INSERTMULTITEMS, MPFROMP( plbi ),
+                        MPFROMP( papcszText ));
     }
 
     virtual SHORT QueryItemCount()
@@ -93,14 +112,29 @@ public :
                         MPFROMLONG( fSelect ));
     }
 
+    virtual bool SelectItemP( SHORT sItemIndex, bool fSelect )
+    {
+        return PostMsg( LM_SELECTITEM, MPFROMSHORT( sItemIndex ),
+                        MPFROMLONG( fSelect ));
+    }
+
     virtual bool SetItemHandle( SHORT sItemIndex, ULONG ulItemHandle )
     {
         return SendMsg( LM_SETITEMHANDLE, MPFROMSHORT( sItemIndex ),
                         MPFROMLONG( ulItemHandle ));
     }
 
+    virtual bool SetItemHandleP( SHORT sItemIndex, ULONG ulItemHandle )
+    {
+        return PostMsg( LM_SETITEMHANDLE, MPFROMSHORT( sItemIndex ),
+                        MPFROMLONG( ulItemHandle ));
+    }
+
     virtual bool SetItemHeight( ULONG ulNewHeight )
     { return SendMsg( LM_SETITEMHEIGHT, MPFROMLONG( ulNewHeight )); }
+
+    virtual bool SetItemHeightP( ULONG ulNewHeight )
+    { return PostMsg( LM_SETITEMHEIGHT, MPFROMLONG( ulNewHeight )); }
 
     virtual bool SetItemText( SHORT sItemIndex, PCSZ pcszItemText )
     {
@@ -108,10 +142,22 @@ public :
                         MPFROMP( pcszItemText ));
     }
 
+    virtual bool SetItemTextP( SHORT sItemIndex, PCSZ pcszItemText )
+    {
+        return PostMsg( LM_SETITEMTEXT, MPFROMSHORT( sItemIndex ),
+                        MPFROMP( pcszItemText ));
+    }
+
     virtual bool SetItemWidth( ULONG ulNewWidth )
     { return SendMsg( LM_SETITEMWIDTH, MPFROMLONG( ulNewWidth )); }
 
+    virtual bool SetItemWidthP( ULONG ulNewWidth )
+    { return PostMsg( LM_SETITEMWIDTH, MPFROMLONG( ulNewWidth )); }
+
     virtual bool SetTopIndex( SHORT sItemIndex )
     { return SendMsg( LM_SETTOPINDEX, MPFROMSHORT( sItemIndex )); }
+
+    virtual bool SetTopIndexP( SHORT sItemIndex )
+    { return PostMsg( LM_SETTOPINDEX, MPFROMSHORT( sItemIndex )); }
 };
 #endif

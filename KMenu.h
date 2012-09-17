@@ -35,13 +35,26 @@ public :
                                       MPFROM2SHORT( usItem, fIncSub )));
     }
 
+    virtual bool DeleteItemP( USHORT usItem, bool fIncSub )
+    {
+        return PostMsg( MM_DELETEITEM, MPFROM2SHORT( usItem, fIncSub ));
+    }
+
     virtual void EndMenuMode( bool fDismiss )
     { SendMsg( MM_ENDMENUMODE, MPFROMLONG( fDismiss )); }
+
+    virtual bool EndMenuModeP( bool fDismiss )
+    { return PostMsg( MM_ENDMENUMODE, MPFROMLONG( fDismiss )); }
 
     virtual SHORT InsertItem( PMENUITEM pmi, PCSZ pcszText )
     {
         return SHORT1FROMMR( SendMsg( MM_INSERTITEM, MPFROMP( pmi ),
                                       MPFROMP( pcszText )));
+    }
+
+    virtual bool InsertItemP( PMENUITEM pmi, PCSZ pcszText )
+    {
+        return PostMsg( MM_INSERTITEM, MPFROMP( pmi ), MPFROMP( pcszText ));
     }
 
     virtual bool IsItemValid( USHORT usItem, BOOL fIncSub )
@@ -110,18 +123,38 @@ public :
                                       MPFROM2SHORT( usItem, fIncSub )));
     }
 
+    virtual bool RemoveItemP( USHORT usItem, bool fIncSub )
+    {
+        return PostMsg( MM_REMOVEITEM, MPFROM2SHORT( usItem, fIncSub ));
+    }
+
     virtual bool SelectItem( SHORT sItem, bool fIncSub, bool fDismiss )
     {
         return SendMsg( MM_SELECTITEM, MPFROM2SHORT( sItem, fIncSub ),
                         MPFROM2SHORT( 0, fDismiss ));
     }
 
+    virtual bool SelectItemP( SHORT sItem, bool fIncSub, bool fDismiss )
+    {
+        return PostMsg( MM_SELECTITEM, MPFROM2SHORT( sItem, fIncSub ),
+                        MPFROM2SHORT( 0, fDismiss ));
+    }
+
     virtual bool SetDefaultItemID( ULONG ulId )
     { return SendMsg( MM_SETDEFAULTITEMID, MPFROMLONG( ulId )); }
+
+    virtual bool SetDefaultItemIDP( ULONG ulId )
+    { return PostMsg( MM_SETDEFAULTITEMID, MPFROMLONG( ulId )); }
 
     virtual bool SetItem( bool fIncSub, PMENUITEM pmi )
     {
         return SendMsg( MM_SETITEM, MPFROM2SHORT( 0, fIncSub ),
+                        MPFROMP( pmi ));
+    }
+
+    virtual bool SetItemP( bool fIncSub, PMENUITEM pmi )
+    {
+        return PostMsg( MM_SETITEM, MPFROM2SHORT( 0, fIncSub ),
                         MPFROMP( pmi ));
     }
 
@@ -132,9 +165,22 @@ public :
                         MPFROM2SHORT( usMask, usData ));
     }
 
+    virtual bool SetItemAttrP( USHORT usItem, bool fIncSub,
+                               USHORT usMask, USHORT usData )
+    {
+        return PostMsg( MM_SETITEMATTR, MPFROM2SHORT( usItem, fIncSub ),
+                        MPFROM2SHORT( usMask, usData ));
+    }
+
     virtual bool SetItemHandle( USHORT usItem, ULONG ulHandle )
     {
         return SendMsg( MM_SETITEMHANDLE, MPFROMSHORT( usItem ),
+                        MPFROMLONG( ulHandle ));
+    }
+
+    virtual bool SetItemHandleP( USHORT usItem, ULONG ulHandle )
+    {
+        return PostMsg( MM_SETITEMHANDLE, MPFROMSHORT( usItem ),
                         MPFROMLONG( ulHandle ));
     }
 
@@ -144,7 +190,16 @@ public :
                         MPFROMP( pcszText ));
     }
 
+    virtual bool SetItemTextP( USHORT usItem, PCSZ pcszText )
+    {
+        return PostMsg( MM_SETITEMTEXT, MPFROMSHORT( usItem ),
+                        MPFROMP( pcszText ));
+    }
+
     virtual bool StartMenuMode( bool fShowSub, bool fResume )
     { return SendMsg( MM_STARTMENUMODE, MPFROM2SHORT( fShowSub, fResume )); }
+
+    virtual bool StartMenuModeP( bool fShowSub, bool fResume )
+    { return PostMsg( MM_STARTMENUMODE, MPFROM2SHORT( fShowSub, fResume )); }
 };
 #endif

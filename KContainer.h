@@ -72,23 +72,49 @@ public :
                         MPFROMLONG( ulFlags ));
     }
 
+    virtual bool ArrangeP( ULONG ulType, ULONG ulFlags )
+    {
+        return PostMsg( CM_ARRANGE, MPFROMLONG( ulType ),
+                        MPFROMLONG( ulFlags ));
+    }
+
     virtual bool CloseEdit() { return SendMsg( CM_CLOSEEDIT ); }
+    virtual bool CloseEditP() { return PostMsg( CM_CLOSEEDIT ); }
     virtual bool CollapseTree( T* pRecord )
     { return SendMsg( CM_COLLAPSETREE, MPFROMP( pRecord )); }
+
+    virtual bool CollapseTreeP( T* pRecord )
+    { return PostMsg( CM_COLLAPSETREE, MPFROMP( pRecord )); }
 
     virtual bool EraseRecord( T* pRecord )
     { return SendMsg( CM_ERASERECORD, MPFROMP( pRecord )); }
 
+    virtual bool EraseRecordP( T* pRecord )
+    { return PostMsg( CM_ERASERECORD, MPFROMP( pRecord )); }
+
     virtual bool ExpandTree( T* pRecord )
     { return SendMsg( CM_EXPANDTREE, MPFROMP( pRecord )); }
 
+    virtual bool ExpandTreeP( T* pRecord )
+    { return PostMsg( CM_EXPANDTREE, MPFROMP( pRecord )); }
+
     virtual bool Filter( PFN pfnFilter, PVOID pStorage )
     { return SendMsg( CM_FILTER, MPFROMP( pfnFilter ), MPFROMP( pStorage )); }
+
+    virtual bool FilterP( PFN pfnFilter, PVOID pStorage )
+    { return PostMsg( CM_FILTER, MPFROMP( pfnFilter ), MPFROMP( pStorage )); }
 
     virtual bool FreeDetailFieldInfo( PFIELDINFO* pFieldInfoArray,
                                       USHORT cNumFieldInfo )
     {
         return SendMsg( CM_FREEDETAILFIELDINFO, MPFROMP( pFieldInfoArray ),
+                        MPFROMSHORT( cNumFieldInfo ));
+    }
+
+    virtual bool FreeDetailFieldInfoP( PFIELDINFO* pFieldInfoArray,
+                                       USHORT cNumFieldInfo )
+    {
+        return PostMsg( CM_FREEDETAILFIELDINFO, MPFROMP( pFieldInfoArray ),
                         MPFROMSHORT( cNumFieldInfo ));
     }
 
@@ -98,9 +124,21 @@ public :
                         MPFROMSHORT( cNumRecord ));
     }
 
+    virtual bool FreeRecordP( T** pRecordArray, USHORT cNumRecord )
+    {
+        return PostMsg( CM_FREERECORD, MPFROMP( pRecordArray ),
+                        MPFROMSHORT( cNumRecord ));
+    }
+
     virtual bool HorzScrollSplitWindow( USHORT usWindow, LONG lScrollInc )
     {
         return SendMsg( CM_HORZSCROLLSPLITWINDOW, MPFROMSHORT( usWindow ),
+                        MPFROMLONG( lScrollInc ));
+    }
+
+    virtual bool HorzScrollSplitWindowP( USHORT usWindow, LONG lScrollInc )
+    {
+        return PostMsg( CM_HORZSCROLLSPLITWINDOW, MPFROMSHORT( usWindow ),
                         MPFROMLONG( lScrollInc ));
     }
 
@@ -111,6 +149,13 @@ public :
                                       MPFROMP( pfi ), MPFROMP( pfii )));
     }
 
+    virtual bool InsertDetailFieldInfoP( PFIELDINFO pfi,
+                                         PFIELDINFOINSERT pfii )
+    {
+        return PostMsg( CM_INSERTDETAILFIELDINFO, MPFROMP( pfi ),
+                        MPFROMP( pfii ));
+    }
+
     virtual ULONG InsertRecord( T* pRecord, PRECORDINSERT pri )
     {
         LONG rc = LONGFROMMR( SendMsg( CM_INSERTRECORD, MPFROMP( pRecord ),
@@ -118,6 +163,17 @@ public :
 
         if( _fDoSort )
             SortRecord( 0 );
+
+        return rc;
+    }
+
+    virtual bool InsertRecordP( T* pRecord, PRECORDINSERT pri )
+    {
+        bool rc = PostMsg( CM_INSERTRECORD, MPFROMP( pRecord ),
+                           MPFROMP( pri ));
+
+        if( _fDoSort )
+            SortRecordP( 0 );
 
         return rc;
     }
@@ -133,8 +189,22 @@ public :
         return rc;
     }
 
+    virtual bool InsertRecordArrayP( T** pRecordArray, PRECORDINSERT pri )
+    {
+        bool rc = PostMsg( CM_INSERTRECORDARRAY, MPFROMP( pRecordArray ),
+                           MPFROMP( pri ));
+
+        if( _fDoSort )
+            SortRecordP( 0 );
+
+        return rc;
+    }
+
     virtual bool InvalidateDetailFieldInfo()
     { return SendMsg( CM_INVALIDATEDETAILFIELDINFO ); }
+
+    virtual bool InvalidateDetailFieldInfoP()
+    { return PostMsg( CM_INVALIDATEDETAILFIELDINFO ); }
 
     virtual bool InvalidateRecord( T** pRecordArray, USHORT cNumRecord,
                                    USHORT fsInvalidateRecord )
@@ -143,14 +213,30 @@ public :
                         MPFROM2SHORT( cNumRecord, fsInvalidateRecord ));
     }
 
+    virtual bool InvalidateRecordP( T** pRecordArray, USHORT cNumRecord,
+                                    USHORT fsInvalidateRecord )
+    {
+        return PostMsg( CM_INVALIDATERECORD, MPFROMP( pRecordArray ),
+                        MPFROM2SHORT( cNumRecord, fsInvalidateRecord ));
+    }
+
     virtual bool MoveTree( PTREEMOVE ptm )
     { return SendMsg( CM_MOVETREE, MPFROMP( ptm )); }
+
+    virtual bool MoveTreeP( PTREEMOVE ptm )
+    { return PostMsg( CM_MOVETREE, MPFROMP( ptm )); }
 
     virtual bool OpenEdit( PCNREDITDATA pced )
     { return SendMsg( CM_OPENEDIT, MPFROMP( pced )); }
 
+    virtual bool OpenEditP( PCNREDITDATA pced )
+    { return PostMsg( CM_OPENEDIT, MPFROMP( pced )); }
+
     virtual bool PaintBackground( POWNERBACKGROUND pobg )
     { return SendMsg( CM_PAINTBACKGROUND, MPFROMP( pobg )); }
+
+    virtual bool PaintBackgroundP( POWNERBACKGROUND pobg )
+    { return PostMsg( CM_PAINTBACKGROUND, MPFROMP( pobg )); }
 
     virtual USHORT QueryCnrInfo( PCNRINFO pci, USHORT cbBuffer )
     {
@@ -222,6 +308,14 @@ public :
                                                     fsRemoveFieldInfo )));
     }
 
+    virtual bool RemoveDetailFieldInfoP( PFIELDINFO* pFieldInfoArray,
+                                         USHORT cNumFieldInfo,
+                                         USHORT fsRemoveFieldInfo )
+    {
+        return PostMsg( CM_REMOVEDETAILFIELDINFO, MPFROMP( pFieldInfoArray ),
+                        MPFROM2SHORT( cNumFieldInfo, fsRemoveFieldInfo ));
+    }
+
     virtual LONG RemoveRecord( T** pRecordArray, USHORT cNumRecord,
                                USHORT fsRemoveRecord )
     {
@@ -230,9 +324,22 @@ public :
                                                   fsRemoveRecord )));
     }
 
+    virtual bool RemoveRecordP( T** pRecordArray, USHORT cNumRecord,
+                                USHORT fsRemoveRecord )
+    {
+        return PostMsg( CM_REMOVERECORD, MPFROMP( pRecordArray ),
+                        MPFROM2SHORT( cNumRecord, fsRemoveRecord ));
+    }
+
     virtual bool ScrollWindow( USHORT fsScrollDirection, LONG lScrollInc )
     {
         return SendMsg( CM_SCROLLWINDOW, MPFROMSHORT( fsScrollDirection ),
+                        MPFROMLONG( lScrollInc ));
+    }
+
+    virtual bool ScrollWindowP( USHORT fsScrollDirection, LONG lScrollInc )
+    {
+        return PostMsg( CM_SCROLLWINDOW, MPFROMSHORT( fsScrollDirection ),
                         MPFROMLONG( lScrollInc ));
     }
 
@@ -265,9 +372,37 @@ public :
         return rc;
     }
 
+    virtual bool SetCnrInfoP( PCNRINFO pCnrInfo, ULONG ulCnrInfoFl )
+    {
+        bool rc;
+
+        if( ulCnrInfoFl & CMA_PSORTRECORD )
+        {
+            ulCnrInfoFl          &= ~CMA_PSORTRECORD;
+            pCnrInfo->pSortRecord = 0;
+            _fDoSort              = true;
+        }
+        else
+            _fDoSort = false;
+
+        rc = PostMsg( CM_SETCNRINFO, MPFROMP( pCnrInfo ),
+                      MPFROMLONG( ulCnrInfoFl ));
+
+        if( _fDoSort )
+            SortRecordP( 0 );
+
+        return rc;
+    }
+
     virtual bool SetGridInfo( PGRIDINFO pGridInfo, bool fRepaint )
     {
         return SendMsg( CM_SETGRIDINFO, MPFROMP( pGridInfo ),
+                        MPFROMLONG( fRepaint ));
+    }
+
+    virtual bool SetGridInfoP( PGRIDINFO pGridInfo, bool fRepaint )
+    {
+        return PostMsg( CM_SETGRIDINFO, MPFROMP( pGridInfo ),
                         MPFROMLONG( fRepaint ));
     }
 
@@ -279,8 +414,19 @@ public :
                         MPFROM2SHORT( usChangeEmphasis, fsEmphasisAttr ));
     }
 
+    virtual bool SetRecordEmphasisP( T* pRecord,
+                                     USHORT usChangeEmphasis,
+                                     USHORT fsEmphasisAttr )
+    {
+        return PostMsg( CM_SETRECORDEMPHASIS, MPFROMP( pRecord ),
+                        MPFROM2SHORT( usChangeEmphasis, fsEmphasisAttr ));
+    }
+
     virtual bool SetTextVisibility( bool fVisible )
     { return SendMsg( CM_SETTEXTVISIBILITY, MPFROMLONG( fVisible )); }
+
+    virtual bool SetTextVisibilityP( bool fVisible )
+    { return PostMsg( CM_SETTEXTVISIBILITY, MPFROMLONG( fVisible )); }
 
     virtual bool SnapToGrid( T* pRecord, SHORT xDrop, SHORT yDrop )
     {
@@ -288,24 +434,28 @@ public :
                         MPFROM2SHORT( xDrop, yDrop ));
     }
 
-    virtual bool SortRecord( PVOID pStorage, bool fSend = true )
+    virtual bool SnapToGridP( T* pRecord, SHORT xDrop, SHORT yDrop )
     {
-        SortParam sp;
-        SortParam* psp = &sp;
+        return PostMsg( CM_SNAPTOGRID, MPFROMP( pRecord ),
+                        MPFROM2SHORT( xDrop, yDrop ));
+    }
 
-        if( !fSend )
-        {
-            psp = new SortParam;
+    virtual bool SortRecord( PVOID pStorage )
+    {
+        SortParam sp = { pStorage, this };
 
-            _SortParamList.push_back( psp );
-        }
+        return SendMsg( CM_SORTRECORD, MPFROMP( SortCompare ),
+                        MPFROMP( &sp ));
+    }
+
+    virtual bool SortRecordP( PVOID pStorage )
+    {
+        SortParam* psp = new SortParam;
+
+        _SortParamList.push_back( psp );
 
         psp->pStorage = pStorage;
         psp->pkcnr    = this;
-
-        if( fSend )
-            return SendMsg( CM_SORTRECORD, MPFROMP( SortCompare ),
-                            MPFROMP( psp ));
 
         return PostMsg( CM_SORTRECORD, MPFROMP( SortCompare ),
                         MPFROMP( psp ));

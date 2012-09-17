@@ -18,5 +18,8 @@ public :
     virtual bool QueryHilite() { return SendMsg( TBM_QUERYHILITE ); }
     virtual bool SetHilite( bool fHighlighted )
     { return SendMsg( TBM_SETHILITE, MPFROMLONG( fHighlighted )); }
+
+    virtual bool SetHiliteP( bool fHighlighted )
+    { return PostMsg( TBM_SETHILITE, MPFROMLONG( fHighlighted )); }
 };
 #endif

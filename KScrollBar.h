@@ -27,13 +27,25 @@ public :
     virtual bool SetPos( SHORT sSlider )
     { return SendMsg( SBM_SETPOS, MPFROMSHORT( sSlider )); }
 
+    virtual bool SetPosP( SHORT sSlider )
+    { return PostMsg( SBM_SETPOS, MPFROMSHORT( sSlider )); }
+
     virtual bool SetScrollBar( SHORT sSlider, SHORT sFirst, SHORT sLast )
     {
         return SendMsg( SBM_SETSCROLLBAR, MPFROMSHORT( sSlider ),
                         MPFROM2SHORT( sFirst, sLast ));
     }
 
+    virtual bool SetScrollBarP( SHORT sSlider, SHORT sFirst, SHORT sLast )
+    {
+        return PostMsg( SBM_SETSCROLLBAR, MPFROMSHORT( sSlider ),
+                        MPFROM2SHORT( sFirst, sLast ));
+    }
+
     virtual bool SetThumbSize( SHORT sVisible, SHORT sTotal )
     { return SendMsg( SBM_SETTHUMBSIZE, MPFROM2SHORT( sVisible, sTotal )); }
+
+    virtual bool SetThumbSizeP( SHORT sVisible, SHORT sTotal )
+    { return PostMsg( SBM_SETTHUMBSIZE, MPFROM2SHORT( sVisible, sTotal )); }
 };
 #endif

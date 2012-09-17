@@ -23,5 +23,8 @@ public :
 
     virtual HBITMAP SetHandle( HBITMAP hbmHandle )
     { return LONGFROMMR( SendMsg( SM_SETHANDLE, MPFROMLONG( hbmHandle ))); }
+
+    virtual bool SetHandleP( HBITMAP hbmHandle )
+    { return PostMsg( SM_SETHANDLE, MPFROMLONG( hbmHandle )); }
 };
 #endif
