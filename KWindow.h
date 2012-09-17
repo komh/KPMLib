@@ -153,7 +153,7 @@ public :
     HWND GetHWND() const { return _hwnd; }
     virtual void SetHWND( HWND hwnd );
 
-    PCSZ GetClassName() const { return CSTR2PSZ( _strClassName.c_str()); }
+    PCSZ GetClassName() const { return _strClassName.c_str(); }
     virtual void SetClassName( PCSZ pcszClassName );
 
 protected :

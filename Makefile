@@ -2,7 +2,7 @@
 CC       = gcc
 CFLAGS   = -Wall
 CXX      = g++
-CXXFLAGS = -Wall
+CXXFLAGS = -Wall -DOS2EMX_PLAIN_CHAR=1
 LD       = g++
 LDFLAGS  =
 LIBS     =

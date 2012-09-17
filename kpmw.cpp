@@ -47,13 +47,13 @@ private :
 MRESULT KMyDialog::OnInitDlg( HWND hwndFocus, PVOID pCreate )
 {
     WindowFromID( IDT_KPMW_STATUS, _kstStatus );
-    _kstStatus.SetWindowText( CSTR2PSZ("I'm fine"));
+    _kstStatus.SetWindowText("I'm fine");
 
     WindowFromID( IDT_KPMW_SPEED, _kstSpeed );
-    _kstSpeed.SetWindowText( CSTR2PSZ("Very fast"));
+    _kstSpeed.SetWindowText("Very fast");
 
     WindowFromID( DID_CANCEL, _kbtCancel );
-    _kbtCancel.SetWindowText( CSTR2PSZ("Exit"));
+    _kbtCancel.SetWindowText("Exit");
 
     return FALSE;
 }
@@ -101,7 +101,7 @@ MRESULT KMyClientWindow::OnPaint()
 
     QueryWindowRect( &rcl );
 
-    DrawText( hps, -1, CSTR2PSZ("This is KPMApp test program !!!"),
+    DrawText( hps, -1, "This is KPMApp test program !!!",
               &rcl, SYSCLR_WINDOWTEXT, SYSCLR_WINDOW,
               DT_CENTER | DT_VCENTER );
 
@@ -133,7 +133,7 @@ MRESULT KMyClientWindow::CmdSrcPushButton( USHORT usCmd,
             if( kfd.GetReturn() == DID_OK )
             {
                 MessageBox( kfd.GetFullFile(),
-                            CSTR2PSZ("Your selected file"), MB_OK );
+                            "Your selected file", MB_OK );
             }
             break;
         }
@@ -146,8 +146,8 @@ MRESULT KMyClientWindow::CmdSrcMenu( USHORT usCmd, bool fPointer )
 {
     if( usCmd == IDM_MYMENU2 )
     {
-        MessageBox( CSTR2PSZ("My menu item 2 selected"),
-                    CSTR2PSZ("Client:CmdSrcMenu()"), MB_OK );
+        MessageBox( "My menu item 2 selected",
+                    "Client:CmdSrcMenu()", MB_OK );
 
         return 0;
     }
@@ -198,8 +198,8 @@ MRESULT KMyClientWindow::BnClicked( USHORT id )
     {
         case IDB_MYRADIO :
         {
-            MessageBox( CSTR2PSZ("My Radio button clicked"),
-                        CSTR2PSZ("BnClicked()"), MB_OK );
+            MessageBox("My Radio button clicked",
+                       "BnClicked()", MB_OK );
 
             KButton kbtnRadio;
             WindowFromID( id, kbtnRadio );
@@ -208,13 +208,13 @@ MRESULT KMyClientWindow::BnClicked( USHORT id )
         }
 
         case IDB_MYCHECKBOX :
-            MessageBox( CSTR2PSZ("My CheckBox button clicked"),
-                        CSTR2PSZ("BnClicked()"), MB_OK );
+            MessageBox("My CheckBox button clicked",
+                       "BnClicked()", MB_OK );
             break;
 
         case IDB_MY3STATE :
-            MessageBox( CSTR2PSZ("My 3State CheckBox button clicked"),
-                        CSTR2PSZ("BnClicked()"), MB_OK );
+            MessageBox("My 3State CheckBox button clicked",
+                       "BnClicked()", MB_OK );
             break;
     }
 
@@ -227,7 +227,7 @@ MRESULT KMyClientWindow::EnChange( USHORT id )
     {
         case IDEF_MYEF :
         {
-            UCHAR szBuf[ 512 ];
+            char szBuf[ 512 ];
 
             KEntryField kef;
 
@@ -250,7 +250,7 @@ MRESULT KMyClientWindow::LnEnter( USHORT id )
     {
         case IDLB_MYLB :
         {
-            UCHAR szBuf[ 512 ];
+            char szBuf[ 512 ];
 
             KListBox klb;
 
@@ -274,7 +274,7 @@ MRESULT KMyClientWindow::CbnEfChange( USHORT id )
     {
         case IDCB_MYCB :
         {
-            UCHAR szBuf[ 512 ];
+            char szBuf[ 512 ];
 
             KComboBox kcb;
 
@@ -311,7 +311,7 @@ MRESULT KMyClientWindow::HSbLineLeft( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText( CSTR2PSZ("SB_LINELEFT by OnHScroll()"));
+    kst.SetWindowText("SB_LINELEFT by OnHScroll()");
 
     return 0;
 }
@@ -321,7 +321,7 @@ MRESULT KMyClientWindow::HSbLineRight( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText( CSTR2PSZ("SB_LINERIGHT by OnHScroll()"));
+    kst.SetWindowText("SB_LINERIGHT by OnHScroll()");
 
     return 0;
 }
@@ -331,7 +331,7 @@ MRESULT KMyClientWindow::HSbPageLeft( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText( CSTR2PSZ("SB_PAGELEFT by OnHScroll()"));
+    kst.SetWindowText("SB_PAGELEFT by OnHScroll()");
 
     return 0;
 }
@@ -341,7 +341,7 @@ MRESULT KMyClientWindow::HSbPageRight( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText( CSTR2PSZ("SB_PAGERIGHT by OnHScroll()"));
+    kst.SetWindowText("SB_PAGERIGHT by OnHScroll()");
 
     return 0;
 }
@@ -351,7 +351,7 @@ MRESULT KMyClientWindow::VSbLineUp( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText( CSTR2PSZ("SB_LINEUP by OnVScroll()"));
+    kst.SetWindowText("SB_LINEUP by OnVScroll()");
 
     return 0;
 }
@@ -361,7 +361,7 @@ MRESULT KMyClientWindow::VSbLineDown( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText( CSTR2PSZ("SB_LINEDOWN by OnVScroll()"));
+    kst.SetWindowText("SB_LINEDOWN by OnVScroll()");
 
     return 0;
 }
@@ -371,7 +371,7 @@ MRESULT KMyClientWindow::VSbPageUp( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText( CSTR2PSZ("SB_PAGEUP by OnVScroll()"));
+    kst.SetWindowText("SB_PAGEUP by OnVScroll()");
 
     return 0;
 }
@@ -381,7 +381,7 @@ MRESULT KMyClientWindow::VSbPageDown( USHORT id, SHORT sSlider )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText( CSTR2PSZ("SB_PAGEDOWN by OnVScroll()"));
+    kst.SetWindowText("SB_PAGEDOWN by OnVScroll()");
 
     return 0;
 }
@@ -391,7 +391,7 @@ MRESULT KMyClientWindow::OnTrackFrame( USHORT usTrackFlags )
     KStaticText kst;
 
     WindowFromID( IDST_MYSTATIC, kst );
-    kst.SetWindowText( CSTR2PSZ("Client: OnTrackFrame() called"));
+    kst.SetWindowText("Client: OnTrackFrame() called");
 
     return KWindow::OnTrackFrame( usTrackFlags );
 }
@@ -406,8 +406,8 @@ MRESULT KMyFrameWindow::SysCmdSrcMenu( USHORT usCmd, bool fPointer )
 {
     if( usCmd == IDM_MYMENU1 )
     {
-        MessageBox( CSTR2PSZ("My menu item 1 selected"),
-                    CSTR2PSZ("Frame: SysCmdSrcMenu()"), MB_OK );
+        MessageBox("My menu item 1 selected",
+                   "Frame: SysCmdSrcMenu()", MB_OK );
 
         return 0;
     }
@@ -425,7 +425,7 @@ public :
 int KMyPMApp::Run()
 {
     KMyClientWindow kclient;
-    kclient.RegisterClass( _hab, CSTR2PSZ( WC_KPMW ), CS_SIZEREDRAW,
+    kclient.RegisterClass( _hab, WC_KPMW, CS_SIZEREDRAW,
                            sizeof( PVOID ));
 
     ULONG flFrameFlags = FCF_SYSMENU | FCF_TITLEBAR | FCF_MINMAX |
@@ -435,7 +435,7 @@ int KMyPMApp::Run()
     kframe.CreateStdWindow( KWND_DESKTOP,           // parent window handle
                             WS_VISIBLE,             // frame window style
                             &flFrameFlags,          // window style
-                            CSTR2PSZ("KPMApp"),    // window title
+                            "KPMApp",               // window title
                             0,                      // default client style
                             0,                      // resource in exe file
                             ID_KPMW,                // frame window id
@@ -443,56 +443,56 @@ int KMyPMApp::Run()
                           );
 
     KButton kbtnPush;
-    kbtnPush.CreateWindow( &kclient, CSTR2PSZ("My Push"),
+    kbtnPush.CreateWindow( &kclient, "My Push",
                            WS_VISIBLE | BS_PUSHBUTTON,
                            10, 10, 100, 100, &kclient, KWND_TOP,
                            IDB_MYPUSH );
 
     KButton kbtnRadio;
-    kbtnRadio.CreateWindow( &kclient, CSTR2PSZ("My Radio"),
+    kbtnRadio.CreateWindow( &kclient, "My Radio",
                             WS_VISIBLE | BS_RADIOBUTTON,
                             110, 10, 100, 100, &kclient, KWND_TOP,
                             IDB_MYRADIO );
 
     KButton kbtnCheckBox;
-    kbtnCheckBox.CreateWindow( &kclient, CSTR2PSZ("My CheckBox"),
+    kbtnCheckBox.CreateWindow( &kclient, "My CheckBox",
                                WS_VISIBLE | BS_CHECKBOX,
                                210, 10, 100, 100, &kclient, KWND_TOP,
                                IDB_MYCHECKBOX );
 
     KButton kbtn3State;
-    kbtn3State.CreateWindow( &kclient, CSTR2PSZ("My 3-State"),
+    kbtn3State.CreateWindow( &kclient, "My 3-State",
                              WS_VISIBLE | BS_3STATE,
                              310, 10, 100, 100, &kclient, KWND_TOP,
                              IDB_MY3STATE );
 
     KButton kbtnOpen;
-    kbtnOpen.CreateWindow( &kclient, CSTR2PSZ("My Open"),
+    kbtnOpen.CreateWindow( &kclient, "My Open",
                            WS_VISIBLE | BS_PUSHBUTTON,
                            410, 10, 100, 100, &kclient, KWND_TOP,
                            IDB_MYOPEN );
 
     KScrollBar ksbHScroll;
-    ksbHScroll.CreateWindow( &kclient, CSTR2PSZ("HScrollBar"),
+    ksbHScroll.CreateWindow( &kclient, "HScrollBar",
                              WS_VISIBLE | SBS_HORZ,
                              100, 150, 200, 30, &kclient, KWND_TOP,
                              IDSB_MYHORZ );
     ksbHScroll.SetScrollBar( 50, 0, 100 );
 
     KScrollBar ksbVScroll;
-    ksbVScroll.CreateWindow( &kclient, CSTR2PSZ("VScrollBar"),
+    ksbVScroll.CreateWindow( &kclient, "VScrollBar",
                              WS_VISIBLE | SBS_VERT,
                              400, 150, 30, 200, &kclient, KWND_TOP,
                              IDSB_MYVERT );
     ksbVScroll.SetScrollBar( 50, 0, 100 );
 
     KStaticText kst;
-    kst.CreateWindow( &kclient, CSTR2PSZ("My Static Text"),
+    kst.CreateWindow( &kclient, "My Static Text",
                       WS_VISIBLE | SS_TEXT | SS_AUTOSIZE,
                       0, 300, 400, -1, &kclient, KWND_TOP, IDST_MYSTATIC );
 
     KTitleBar ktb;
-    ktb.CreateWindow( &kclient, CSTR2PSZ("My Title Bar"),
+    ktb.CreateWindow( &kclient, "My Title Bar",
                       WS_VISIBLE,
                       100, 200, 200, 20, &kclient, KWND_TOP, IDTB_MYTITLE );
     ktb.SetHilite( true );
@@ -510,7 +510,7 @@ int KMyPMApp::Run()
     mi.id          = IDM_MYMENU1;
     mi.hwndSubMenu = 0;
     mi.hItem       = 0;
-    kmSys.InsertItem( &mi, CSTR2PSZ("My item1"));
+    kmSys.InsertItem( &mi, "My item1");
 
     mi.iPosition++;
     mi.afStyle     = MIS_TEXT;
@@ -518,7 +518,7 @@ int KMyPMApp::Run()
     mi.id          = IDM_MYMENU2;
     mi.hwndSubMenu = 0;
     mi.hItem       = 0;
-    kmSys.InsertItem( &mi, CSTR2PSZ("My item2"));
+    kmSys.InsertItem( &mi, "My item2");
 
     mi.iPosition++;
     mi.afStyle = MIS_SEPARATOR;
@@ -529,30 +529,30 @@ int KMyPMApp::Run()
     kmSys.InsertItem( &mi, 0 );
 
     KEntryField kef;
-    kef.CreateWindow( &kclient, CSTR2PSZ("My Entry Field"),
+    kef.CreateWindow( &kclient, "My Entry Field",
                       WS_VISIBLE | ES_CENTER | ES_MARGIN,
                       500, 150, 100, 30, &kclient, KWND_TOP,
                       IDEF_MYEF );
 
     KListBox klb;
-    klb.CreateWindow( &kclient, CSTR2PSZ("My List Box"),
+    klb.CreateWindow( &kclient, "My List Box",
                       WS_VISIBLE,
                       500, 200, 100, 150, &kclient, KWND_TOP,
                       IDLB_MYLB );
 
-    klb.InsertItem( LIT_END, CSTR2PSZ("Item 1"));
-    klb.InsertItem( LIT_END, CSTR2PSZ("Item 2"));
+    klb.InsertItem( LIT_END, "Item 1");
+    klb.InsertItem( LIT_END, "Item 2");
 
     KComboBox kcb;
-    kcb.CreateWindow( &kclient, CSTR2PSZ("My Combox Box"),
+    kcb.CreateWindow( &kclient, "My Combox Box",
                       WS_VISIBLE | CBS_DROPDOWN,
                       100, 300, 200, 100, &kclient, KWND_TOP,
                       IDCB_MYCB );
-    kcb.LmInsertItem( LIT_END, CSTR2PSZ("CB Item 1"));
-    kcb.LmInsertItem( LIT_END, CSTR2PSZ("CB Item 2"));
+    kcb.LmInsertItem( LIT_END, "CB Item 1");
+    kcb.LmInsertItem( LIT_END, "CB Item 2");
 
     KContainer< MINIRECORDCORE, true > kcnr;
-    kcnr.CreateWindow( &kclient, CSTR2PSZ("My Container"),
+    kcnr.CreateWindow( &kclient, "My Container",
                        WS_VISIBLE | CCS_AUTOPOSITION | CCS_READONLY,
                        510, 10, 150, 100, &kclient, KWND_TOP,
                        IDCNR_MYCNR );

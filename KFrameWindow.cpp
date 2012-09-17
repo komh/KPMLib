@@ -24,7 +24,7 @@ bool KFrameWindow::CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
     CreateWindow( pkwndP, pcszTitle, flStyle, 0, 0, 0, 0, 0,
                   KWND_TOP, ulId, &fcd, 0 );
 
-    kwndClient.CreateWindow( this, CSTR2PSZ(""),
+    kwndClient.CreateWindow( this, "",
                              flClientStyle,
                              0, 0, 0, 0, this, KWND_TOP, FID_CLIENT,
                              0, 0 );

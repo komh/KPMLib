@@ -50,7 +50,7 @@ bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
 
     CreateParams cp = { pPresParams, this };
 
-    hwnd = WinCreateWindow( hwndP, CSTR2PSZ( _strClassName.c_str()), pcszName,
+    hwnd = WinCreateWindow( hwndP, _strClassName.c_str(), pcszName,
                             flStyle, x, y, cx, cy, hwndO, hwndS, id, pCtlData,
                             &cp );
 
@@ -75,7 +75,7 @@ bool KWindow::DestroyWindow()
 bool KWindow::RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
                              ULONG cbWindowData )
 {
-    _strClassName = PCSZ2STR( pcszClassName );
+    _strClassName = pcszClassName;
 
     return WinRegisterClass( hab, pcszClassName, WndProc, flStyle,
                              sizeof( PVOID ) + cbWindowData );
@@ -127,10 +127,10 @@ void KWindow::SetHWND( HWND hwnd )
             _pfnwpOldProc = WinSubclassWindow( hwnd, WndProc );
     }
 
-    UCHAR szClassName[ 512 ];
+    char szClassName[ 512 ];
     WinQueryClassName( hwnd, sizeof( szClassName ), szClassName );
 
-    _strClassName = PSZ2STR( szClassName );
+    _strClassName = szClassName;
 }
 
 void KWindow::SetClassName( PCSZ pcszClassName )
@@ -143,10 +143,10 @@ void KWindow::SetClassName( PCSZ pcszClassName )
         szPublicName[ 0 ] = '#';
         _ultoa( LOUSHORT( pcszClassName ), szPublicName + 1, 10 );
 
-        pcszClassName = STR2PSZ( szPublicName );
+        pcszClassName = szPublicName;
     }
 
-    _strClassName = PCSZ2STR( pcszClassName );
+    _strClassName = pcszClassName;
 }
 
 MRESULT EXPENTRY KWindow::WndProc( HWND hwnd, ULONG msg, MPARAM mp1,
