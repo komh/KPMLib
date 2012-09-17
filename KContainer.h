@@ -162,7 +162,7 @@ public :
                               MPFROMP( pri )));
 
         if( _fDoSort )
-            SortRecord( 0 );
+            SortRecord();
 
         return rc;
     }
@@ -173,7 +173,7 @@ public :
                            MPFROMP( pri ));
 
         if( _fDoSort )
-            SortRecordP( 0 );
+            SortRecordP();
 
         return rc;
     }
@@ -184,7 +184,7 @@ public :
                                MPFROMP( pRecordArray ), MPFROMP( pri )));
 
         if( _fDoSort )
-            SortRecord( 0 );
+            SortRecord();
 
         return rc;
     }
@@ -195,7 +195,7 @@ public :
                            MPFROMP( pri ));
 
         if( _fDoSort )
-            SortRecordP( 0 );
+            SortRecordP();
 
         return rc;
     }
@@ -367,7 +367,7 @@ public :
                       MPFROMLONG( ulCnrInfoFl ));
 
         if( _fDoSort )
-            SortRecord( 0 );
+            SortRecord();
 
         return rc;
     }
@@ -389,7 +389,7 @@ public :
                       MPFROMLONG( ulCnrInfoFl ));
 
         if( _fDoSort )
-            SortRecordP( 0 );
+            SortRecordP();
 
         return rc;
     }
@@ -440,7 +440,7 @@ public :
                         MPFROM2SHORT( xDrop, yDrop ));
     }
 
-    virtual bool SortRecord( PVOID pStorage )
+    virtual bool SortRecord( PVOID pStorage = 0 )
     {
         SortParam sp = { pStorage, this };
 
@@ -448,7 +448,7 @@ public :
                         MPFROMP( &sp ));
     }
 
-    virtual bool SortRecordP( PVOID pStorage )
+    virtual bool SortRecordP( PVOID pStorage = 0 )
     {
         SortParam* psp = new SortParam;
 
