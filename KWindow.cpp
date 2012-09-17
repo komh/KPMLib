@@ -28,8 +28,9 @@ HWND pkwnd2hwnd( const KWindow* pkwnd )
 KWindow::KWindow()
 {
     _hwnd          = 0;
-    _pcszClassName = 0;
     _pfnwpOldProc  = 0;
+
+    _strClassName.clear();
 }
 
 KWindow::~KWindow()
@@ -49,9 +50,9 @@ bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
 
     CreateParams cp = { pPresParams, this };
 
-    hwnd = WinCreateWindow( hwndP, _pcszClassName, pcszName,flStyle,
-                            x, y, cx, cy, hwndO, hwndS,
-                            id, pCtlData, &cp );
+    hwnd = WinCreateWindow( hwndP, CSTR2PSZ( _strClassName.c_str()), pcszName,
+                            flStyle, x, y, cx, cy, hwndO, hwndS, id, pCtlData,
+                            &cp );
 
     // for the pre-defined class
     SetHWND( hwnd );
@@ -74,9 +75,7 @@ bool KWindow::DestroyWindow()
 bool KWindow::RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
                              ULONG cbWindowData )
 {
-    _pcszClassName = reinterpret_cast< PCSZ >(
-                        strdup( reinterpret_cast< const char* >
-                                    ( pcszClassName )));
+    _strClassName = PCSZ2STR( pcszClassName );
 
     return WinRegisterClass( hab, pcszClassName, WndProc, flStyle,
                              sizeof( PVOID ) + cbWindowData );
@@ -100,9 +99,6 @@ void KWindow::SetHWND( HWND hwnd )
     if( !hwnd )
     {
         // Detach from a window
-        if( HIUSHORT( _pcszClassName ) != 0xFFFF )
-            free( reinterpret_cast< void* >( const_cast< PSZ >
-                                                ( _pcszClassName )));
 
         if( _pfnwpOldProc )
             WinSubclassWindow( _hwnd, _pfnwpOldProc );
@@ -111,8 +107,9 @@ void KWindow::SetHWND( HWND hwnd )
             RemoveHWND( _hwnd );
 
         _hwnd          = 0;
-        _pcszClassName = 0;
         _pfnwpOldProc  = 0;
+
+        _strClassName.clear();
 
         return;
     }
@@ -130,26 +127,26 @@ void KWindow::SetHWND( HWND hwnd )
             _pfnwpOldProc = WinSubclassWindow( hwnd, WndProc );
     }
 
-    // Already allocated ?
-    if( _pcszClassName )
-        return;
-
     UCHAR szClassName[ 512 ];
     WinQueryClassName( hwnd, sizeof( szClassName ), szClassName );
-    _pcszClassName = reinterpret_cast< PCSZ >
-                            ( strdup( reinterpret_cast< const char* >
-                                        ( szClassName )));
+
+    _strClassName = PSZ2STR( szClassName );
 }
 
 void KWindow::SetClassName( PCSZ pcszClassName )
 {
+    char szPublicName[ 7 ]; // #nnnnn
+
     // pre-defined class such as WC_FRAME ?
     if( HIUSHORT( pcszClassName ) == 0xFFFF )
-        _pcszClassName = pcszClassName;
-    else
-        _pcszClassName = reinterpret_cast< PCSZ >(
-                            strdup( reinterpret_cast< const char* >
-                                        ( pcszClassName )));
+    {
+        szPublicName[ 0 ] = '#';
+        _ultoa( LOUSHORT( pcszClassName ), szPublicName + 1, 10 );
+
+        pcszClassName = STR2PSZ( szPublicName );
+    }
+
+    _strClassName = PCSZ2STR( pcszClassName );
 }
 
 MRESULT EXPENTRY KWindow::WndProc( HWND hwnd, ULONG msg, MPARAM mp1,

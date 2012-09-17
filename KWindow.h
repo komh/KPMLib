@@ -5,6 +5,7 @@
 #include <os2.h>
 
 #include <map>
+#include <string>
 using namespace std;
 
 #define STR2PSZ( s )   ( reinterpret_cast< PSZ >( s ))
@@ -152,7 +153,7 @@ public :
     HWND GetHWND() const { return _hwnd; }
     virtual void SetHWND( HWND hwnd );
 
-    PCSZ GetClassName() const { return _pcszClassName; }
+    PCSZ GetClassName() const { return CSTR2PSZ( _strClassName.c_str()); }
     virtual void SetClassName( PCSZ pcszClassName );
 
 protected :
@@ -912,8 +913,8 @@ protected :
     }
 
 private :
-    PCSZ  _pcszClassName;
-    PFNWP _pfnwpOldProc;
+    string _strClassName;
+    PFNWP  _pfnwpOldProc;
 };
 #endif
 
