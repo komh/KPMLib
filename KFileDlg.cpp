@@ -1,7 +1,10 @@
+#include <cstring>
+
 #include "KFileDlg.h"
 
 KFileDlg::KFileDlg() : KDialog()
 {
+    memset( &_fild, 0, sizeof( _fild ));
 }
 
 KFileDlg::~KFileDlg()
