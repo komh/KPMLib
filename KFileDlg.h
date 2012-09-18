@@ -55,7 +55,7 @@ public :
     PCSZ GetFullFile() const
     { return reinterpret_cast< PCSZ >( _fild.szFullFile ); }
 
-    PAPSZ GetFQFileFilename() const { return _fild.papszFQFilename; }
+    PAPSZ GetFQFilename() const { return _fild.papszFQFilename; }
     ULONG GetFQFCount() const { return _fild.ulFQFCount; }
     SHORT GetEAType() const { return _fild.sEAType; }
 
