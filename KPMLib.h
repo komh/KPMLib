@@ -1,6 +1,7 @@
 #ifndef KPMLIB_H
 #define KPMLIB_H
 
+#include "KPMThread.h"
 #include "KPMApp.h"
 #include "KWindow.h"
 #include "KFrameWindow.h"
@@ -16,5 +17,6 @@
 #include "KContainer.h"
 
 #include "KFileDlg.h"
+#include "KDirDlg.h"
 
 #endif
