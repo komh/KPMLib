@@ -7,15 +7,18 @@
 class KPMThread
 {
 public :
-    KPMThread();
-    virtual ~KPMThread();
+    KPMThread() : _tid( 0 ), _hab( 0 ), _hmq( 0 ) {}
+    virtual ~KPMThread() {}
 
-    virtual int Run() { return 0; }
+    virtual int Run() = 0;
 
+    int GetTID() const { return _tid; }
     HAB GetHAB() const { return _hab; }
     HMQ GetHMQ() const { return _hmq; }
 
 protected :
+    int _tid;
+
     HAB _hab;
     HMQ _hmq;
 };

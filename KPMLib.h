@@ -2,6 +2,8 @@
 #define KPMLIB_H
 
 #include "KPMThread.h"
+#include "KPMMainThread.h"
+#include "KPMSubThread.h"
 #include "KPMApp.h"
 #include "KWindow.h"
 #include "KFrameWindow.h"

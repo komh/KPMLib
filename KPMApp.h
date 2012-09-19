@@ -4,12 +4,12 @@
 #define INCL_WIN
 #include <os2.h>
 
-#include "KPMThread.h"
+#include "KPMMainThread.h"
 
-class KPMApp : public KPMThread
+class KPMApp : public KPMMainThread
 {
 public :
-    KPMApp() : KPMThread() {};
+    KPMApp() : KPMMainThread() {};
     virtual ~KPMApp() {};
 
     virtual int Run();

@@ -1,15 +1,17 @@
 #define INCL_WIN
 #include <os2.h>
 
-#include "KPMThread.h"
+#include "KPMMainThread.h"
 
-KPMThread::KPMThread()
+KPMMainThread::KPMMainThread()
 {
+    _tid = 1;
+
     _hab = WinInitialize( 0 );
     _hmq = WinCreateMsgQueue( _hab, 0);
 }
 
-KPMThread::~KPMThread()
+KPMMainThread::~KPMMainThread()
 {
     WinDestroyMsgQueue( _hmq );
     WinTerminate( _hab );
