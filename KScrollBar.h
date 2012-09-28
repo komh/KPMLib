@@ -16,6 +16,7 @@ public :
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
 
     virtual SHORT QueryPos() { return SHORT1FROMMR( SendMsg( SBM_QUERYPOS )); }
+
     virtual void QueryRange( SHORT& sFirst, SHORT& sLast )
     {
         MRESULT mr = SendMsg( SBM_QUERYRANGE );

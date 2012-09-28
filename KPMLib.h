@@ -5,6 +5,7 @@
 #include "KPMMainThread.h"
 #include "KPMSubThread.h"
 #include "KPMApp.h"
+
 #include "KWindow.h"
 #include "KFrameWindow.h"
 #include "KDialog.h"

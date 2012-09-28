@@ -20,6 +20,7 @@ public :
     };
 
     KContainer() : KWindow() { _fDoSort = false; }
+
     virtual ~KContainer()
     {
         typename list< StorageParam* >::iterator it;
@@ -81,6 +82,7 @@ public :
 
     virtual bool CloseEdit() { return SendMsg( CM_CLOSEEDIT ); }
     virtual bool CloseEditP() { return PostMsg( CM_CLOSEEDIT ); }
+
     virtual bool CollapseTree( T* pRecord )
     { return SendMsg( CM_COLLAPSETREE, MPFROMP( pRecord )); }
 

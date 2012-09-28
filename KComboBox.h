@@ -25,6 +25,7 @@ public :
     { return PostMsg( CBM_HILITE, MPFROMLONG( fHilite )); }
 
     virtual bool IsLitShowing() { return SendMsg( CBM_ISLISTSHOWING ); }
+
     virtual bool ShowList( bool fShow )
     { return SendMsg( CBM_SHOWLIST, MPFROMLONG( fShow )); }
 
@@ -133,6 +134,7 @@ public :
     virtual bool EmPaste() { return SendMsg( EM_PASTE ); }
     virtual bool EmPasteP() { return PostMsg( EM_PASTE ); }
     virtual bool EmQueryChanged() { return SendMsg( EM_QUERYCHANGED ); }
+
     virtual SHORT EmQueryFirstChar()
     { return SHORT1FROMMR( SendMsg( EM_QUERYFIRSTCHAR )); }
 

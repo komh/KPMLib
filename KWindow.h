@@ -29,10 +29,12 @@ public :
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
+
     virtual bool DestroyPointer( HPOINTER hptr )
     { return WinDestroyPointer( hptr ); }
 
     virtual bool DestroyWindow();
+
     virtual HPOINTER LoadPointer( HMODULE hmodResource, ULONG idPointer )
     { return WinLoadPointer( HWND_DESKTOP, hmodResource, idPointer ); }
 
@@ -61,6 +63,7 @@ public :
     { return WinPostMsg( _hwnd, ulMsg, mp1, mp2 ); }
 
     virtual HAB QueryAnchorBlock() { return WinQueryAnchorBlock( _hwnd ); }
+
     virtual bool QueryPointerPos( PPOINTL pptlPoint )
     { return WinQueryPointerPos( HWND_DESKTOP, pptlPoint ); }
 
@@ -96,6 +99,7 @@ public :
 
     virtual bool RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
                                 ULONG cbWindowData );
+
     virtual MRESULT SendMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
     { return WinSendMsg( _hwnd, ulMsg, mp1, mp2 ); }
 
@@ -140,6 +144,7 @@ protected :
     { _mapHWND[ hwnd ] = pkwnd; }
 
     static void RemoveHWND( HWND hwnd ) { _mapHWND.erase( hwnd ); }
+
     static KWindow* FindHWND( HWND hwnd )
     {
         map< HWND, KWindow* >::iterator it = _mapHWND.find( hwnd );
@@ -157,6 +162,7 @@ protected :
     }
 
     virtual MRESULT KWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 );
+
     virtual MRESULT OnPlAltered( HINI hiniUser, HINI hiniSystem )
     {
         return KDefWndProc( PL_ALTERED, MPFROMLONG( hiniUser ),
@@ -208,6 +214,7 @@ protected :
                             *reinterpret_cast< MPARAM* >( &pts ),
                             MPFROM2SHORT( fHit, fsFlags ));
     }
+
     virtual MRESULT OnButton1Down( POINTS pts, USHORT fHit, USHORT fsFlags )
     {
         return KDefWndProc( WM_BUTTON1DOWN,
@@ -249,6 +256,7 @@ protected :
                             *reinterpret_cast< MPARAM* >( &pts ),
                             MPFROM2SHORT( fHit, fsFlags ));
     }
+
     virtual MRESULT OnButton2Down( POINTS pts, USHORT fHit, USHORT fsFlags )
     {
         return KDefWndProc( WM_BUTTON2DOWN,
@@ -290,6 +298,7 @@ protected :
                             *reinterpret_cast< MPARAM* >( &pts ),
                             MPFROM2SHORT( fHit, fsFlags ));
     }
+
     virtual MRESULT OnButton3Down( POINTS pts, USHORT fHit, USHORT fsFlags )
     {
         return KDefWndProc( WM_BUTTON3DOWN,
@@ -342,9 +351,9 @@ protected :
     { return KDefWndProc( WM_CHORD, 0, MPFROMSHORT( fsHit )); }
 
     virtual MRESULT OnClose() { return KDefWndProc( WM_CLOSE ); }
-
     virtual MRESULT OnCommand( USHORT usCmd, USHORT ulSource,
                                bool fPointer );
+
     virtual MRESULT CmdSrcPushButton( USHORT usCmd, bool fPointer )
     {
         return KDefWndProc( WM_COMMAND, MPFROMSHORT( usCmd ),
@@ -412,6 +421,7 @@ protected :
     { return KDefWndProc( WM_CTLCOLORCHANGE ); }
 
     virtual MRESULT OnDestroy() { return KDefWndProc( WM_DESTROY ); }
+
     virtual MRESULT OnDrawItem( USHORT id, ULONG ulControlSpec )
     {
         return KDefWndProc( WM_DRAWITEM, MPFROMSHORT( id ),
@@ -449,6 +459,7 @@ protected :
     }
 
     virtual MRESULT OnHelp( USHORT usCmd, USHORT usSource, bool fPointer );
+
     virtual MRESULT HelpCmdSrcPushButton( USHORT usCmd, bool fPointer )
     {
         return KDefWndProc( WM_HELP, MPFROMSHORT( usCmd ),
@@ -498,6 +509,7 @@ protected :
     }
 
     virtual MRESULT OnHScroll( USHORT id, SHORT sSlider, USHORT usCmd );
+
     virtual MRESULT HSbLineLeft( USHORT id, SHORT sSlider )
     {
         return KDefWndProc( WM_HSCROLL, MPFROMSHORT( id ),
@@ -837,6 +849,7 @@ protected :
     }
 
     virtual MRESULT OnVScroll( USHORT id, SHORT sSlider, USHORT usCmd );
+
     virtual MRESULT VSbLineUp( USHORT id, SHORT sSlider )
     {
         return KDefWndProc( WM_VSCROLL, MPFROMSHORT( id ),

@@ -28,6 +28,7 @@ public :
     virtual bool AutoSize() { return SendMsg( BM_AUTOSIZE ); }
     virtual bool AutoSizeP() { return PostMsg( BM_AUTOSIZE ); }
     virtual void Click( bool fUp ) { SendMsg( BM_CLICK, MPFROMLONG( fUp )); }
+
     virtual bool ClickP( bool fUp )
     { return PostMsg( BM_CLICK, MPFROMLONG( fUp )); }
 

@@ -26,18 +26,22 @@ public :
     virtual void SetFl( ULONG fl ) { _fild.fl = fl; }
     virtual void SetUser( ULONG ulUser ) { _fild.ulUser = ulUser; }
     virtual void SetTitle( PSZ pszTitle ) { _fild.pszTitle = pszTitle; }
+
     virtual void SetOkButton( PSZ pszOKButton )
     { _fild.pszOKButton = pszOKButton; }
 
     virtual void SetIType( PSZ pszIType ) { _fild.pszIType = pszIType; }
+
     virtual void SetITypeList( PAPSZ papszITypeList )
     { _fild.papszITypeList = papszITypeList; }
 
     virtual void SetIDrive( PSZ pszIDrive ) { _fild.pszIDrive = pszIDrive; }
+
     virtual void SetIDriveList( PAPSZ papszIDriveList )
     { _fild.papszIDriveList = papszIDriveList; }
 
     virtual void SetMod( HMODULE hMod ) { _fild.hMod = hMod; }
+
     virtual void SetFullFile( PCSZ pcszFullFile )
     {
         strncpy( _fild.szFullFile,
@@ -52,6 +56,7 @@ public :
 
     LONG GetReturn() const { return _fild.lReturn; }
     LONG GetSrc() const { return _fild.lSRC; }
+
     PCSZ GetFullFile() const
     { return reinterpret_cast< PCSZ >( _fild.szFullFile ); }
 
