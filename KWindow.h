@@ -24,9 +24,6 @@ public :
     KWindow();
     virtual ~KWindow();
 
-    virtual HENUM BeginEnumWindows( KWindow* pkwnd )
-    { return WinBeginEnumWindows( pkwnd2hwnd( pkwnd )); }
-
     virtual bool CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
@@ -36,14 +33,6 @@ public :
     { return WinDestroyPointer( hptr ); }
 
     virtual bool DestroyWindow();
-    virtual bool GetNextWindow( HENUM henum, KWindow& kwndNext )
-    {
-        HWND hwndNext = WinGetNextWindow( henum );
-        kwndNext.SetHWND( hwndNext );
-
-        return hwndNext;
-    }
-
     virtual HPOINTER LoadPointer( HMODULE hmodResource, ULONG idPointer )
     { return WinLoadPointer( HWND_DESKTOP, hmodResource, idPointer ); }
 

@@ -23,4 +23,6 @@
 
 #include "KPresentationSpace.h"
 
+#include "KEnumWindows.h"
+
 #endif

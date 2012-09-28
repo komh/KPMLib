@@ -118,12 +118,12 @@ MRESULT KDirDlg::OnInitDlg( HWND hwnd, PVOID pcreate )
                           SWP_MOVE | SWP_SIZE);
     ulCurY += swpFileST.cy + SPACING;
 
-    HENUM    henum;
-    KWindow  kwndNext;
+    KEnumWindows kenum;
+    KWindow      kwndNext;
 
     // Hide unused stuff
-    henum = BeginEnumWindows(this);
-    while (GetNextWindow(henum, kwndNext))
+    kenum.BeginEnumWindows(this);
+    while (kenum.GetNextWindow(kwndNext))
     {
         USHORT usID = kwndNext.QueryWindowUShort(QWS_ID);
         if (usID != DID_FILENAME_TXT &&
@@ -140,6 +140,7 @@ MRESULT KDirDlg::OnInitDlg( HWND hwnd, PVOID pcreate )
             kwndNext.ShowWindow(false);
         }
     }
+    kenum.EndEnumWindows();
 
     SetWindowPos(KWND_TOP,
                  (lScreenX/2)-((swpDirLB.cx+2*SPACING+2*lDlgFrameX)/2),
