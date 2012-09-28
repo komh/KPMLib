@@ -489,20 +489,14 @@ private :
     {
         StorageParam* psp = reinterpret_cast< StorageParam* >( pStorage );
 
-        pStorage = psp->pStorage;
-        KContainer< T, MiniRecord >* pkcnr = psp->pkcnr;
-
-        return pkcnr->KFilter( p, pStorage );
+        return psp->pkcnr->KFilter( p, psp->pStorage );
     }
 
     static SHORT EXPENTRY SortCompare( T* p1, T* p2, PVOID pStorage )
     {
         StorageParam* psp = reinterpret_cast< StorageParam* >( pStorage );
 
-        pStorage = psp->pStorage;
-        KContainer< T, MiniRecord >* pkcnr = psp->pkcnr;
-
-        return pkcnr->KSortCompare( p1, p2, pStorage );
+        return psp->pkcnr->KSortCompare( p1, p2, psp->pStorage );
     }
 };
 #endif
