@@ -160,14 +160,13 @@ MRESULT KDirDlg::OnControl( USHORT id, USHORT usCode, ULONG ulParam )
     PFILEDLG pfiledlg = reinterpret_cast< PFILEDLG >
                             (QueryWindowPtr(QWL_USER));
 
-    KPresentationSpace kps;
-
-    SWP           swp;
-    RECTL         rectlString = {0,0,1000,1000};
-    char          *ptr = NULL;
-    int           iHalfLen;
-    int           iLength;
-    CHAR          szString[CCHMAXPATH];
+    KWindowPS kwps;
+    SWP       swp;
+    RECTL     rectlString = {0,0,1000,1000};
+    char*     ptr = NULL;
+    int       iHalfLen;
+    int       iLength;
+    CHAR      szString[CCHMAXPATH];
 
     strcpy(szString, pfiledlg->szFullFile);
     iLength = strlen(pfiledlg->szFullFile);
@@ -179,11 +178,11 @@ MRESULT KDirDlg::OnControl( USHORT id, USHORT usCode, ULONG ulParam )
         }
     }
 
-    kps.GetPS( &_kstFile );
+    kwps.GetPS( &_kstFile );
     _kstFile.QueryWindowPos(&swp);
 
-    kps.DrawText(iLength, szString, &rectlString, 0, 0,
-                 DT_BOTTOM | DT_QUERYEXTENT | DT_TEXTATTRS);
+    kwps.DrawText(iLength, szString, &rectlString, 0, 0,
+                  DT_BOTTOM | DT_QUERYEXTENT | DT_TEXTATTRS);
     while(rectlString.xRight > swp.cx)
     {
         iHalfLen = iLength / 2;
@@ -198,11 +197,11 @@ MRESULT KDirDlg::OnControl( USHORT id, USHORT usCode, ULONG ulParam )
         iLength = strlen(szString);
         rectlString.xLeft = rectlString.yBottom = 0;
         rectlString.xRight = rectlString.yTop = 1000;
-        kps.DrawText(iLength, szString, &rectlString, 0, 0,
-                     DT_BOTTOM | DT_QUERYEXTENT | DT_TEXTATTRS);
+        kwps.DrawText(iLength, szString, &rectlString, 0, 0,
+                      DT_BOTTOM | DT_QUERYEXTENT | DT_TEXTATTRS);
     }
 
-    kps.ReleasePS();
+    kwps.ReleasePS();
     _kstFile.SetWindowText(szString);
 
     return KFileDlg::OnControl( id, usCode, ulParam );

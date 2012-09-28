@@ -6,19 +6,18 @@
 
 #include "KWindow.h"
 
-class KPresentationSpace
+class KWindowPS
 {
 public :
-    friend HPS pkps2hps( const KPresentationSpace* pkps );
+    friend HPS pkwps2hps( const KWindowPS* pkwps );
 
-    KPresentationSpace() : _hps( 0 ) {};
-    virtual ~KPresentationSpace() {};
+    KWindowPS() : _hps( 0 ) {};
+    virtual ~KWindowPS() {};
 
-    virtual bool BeginPaint( const KWindow* pkwnd,
-                             const KPresentationSpace* pkps,
+    virtual bool BeginPaint( const KWindow* pkwnd, const KWindowPS* pkwps,
                              PRECTL prcl )
     {
-        _hps = WinBeginPaint( pkwnd2hwnd( pkwnd ), pkps2hps( pkps ), prcl );
+        _hps = WinBeginPaint( pkwnd2hwnd( pkwnd ), pkwps2hps( pkwps ), prcl );
 
         return _hps;
     }

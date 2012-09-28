@@ -22,7 +22,7 @@
 #include "KFileDlg.h"
 #include "KDirDlg.h"
 
-#include "KPresentationSpace.h"
+#include "KWindowPS.h"
 
 #include "KEnumWindows.h"
 

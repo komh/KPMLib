@@ -92,21 +92,21 @@ protected :
 
 MRESULT KMyClientWindow::OnPaint()
 {
-    KPresentationSpace kps;
+    KWindowPS kwps;
 
     RECTL rcl;
 
-    kps.BeginPaint( this, 0, &rcl);
+    kwps.BeginPaint( this, 0, &rcl);
 
-    kps.FillRect( &rcl, SYSCLR_WINDOW );
+    kwps.FillRect( &rcl, SYSCLR_WINDOW );
 
     QueryWindowRect( &rcl );
 
-    kps.DrawText( -1, "This is KPMApp test program !!!",
-                  &rcl, SYSCLR_WINDOWTEXT, SYSCLR_WINDOW,
-                  DT_CENTER | DT_VCENTER );
+    kwps.DrawText( -1, "This is KPMApp test program !!!",
+                   &rcl, SYSCLR_WINDOWTEXT, SYSCLR_WINDOW,
+                   DT_CENTER | DT_VCENTER );
 
-    kps.EndPaint();
+    kwps.EndPaint();
 
     return 0;
 }
