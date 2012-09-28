@@ -27,9 +27,6 @@ public :
     virtual HENUM BeginEnumWindows( KWindow* pkwnd )
     { return WinBeginEnumWindows( pkwnd2hwnd( pkwnd )); }
 
-    virtual HPS BeginPaint( HPS hps, PRECTL prcl )
-    { return WinBeginPaint( _hwnd, hps, prcl); }
-
     virtual bool CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
@@ -39,17 +36,6 @@ public :
     { return WinDestroyPointer( hptr ); }
 
     virtual bool DestroyWindow();
-    virtual LONG DrawText( HPS hps, LONG cchText, PCCH lpchText, PRECTL prcl,
-                           LONG clrFore, LONG clrBack, ULONG flCmd )
-    {
-        return WinDrawText( hps, cchText, lpchText, prcl, clrFore, clrBack,
-                            flCmd );
-    }
-
-    virtual bool EndPaint( HPS hps ) { return WinEndPaint( hps ); }
-    virtual bool FillRect( HPS hps, PRECTL prcl, LONG lColor )
-    { return WinFillRect( hps, prcl, lColor ); }
-
     virtual bool GetNextWindow( HENUM henum, KWindow& kwndNext )
     {
         HWND hwndNext = WinGetNextWindow( henum );
@@ -58,7 +44,6 @@ public :
         return hwndNext;
     }
 
-    virtual HPS GetPS() { return WinGetPS( _hwnd ); }
     virtual HPOINTER LoadPointer( HMODULE hmodResource, ULONG idPointer )
     { return WinLoadPointer( HWND_DESKTOP, hmodResource, idPointer ); }
 
@@ -122,7 +107,6 @@ public :
 
     virtual bool RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
                                 ULONG cbWindowData );
-    virtual bool ReleasePS( HPS hps ) { return WinReleasePS( hps ); }
     virtual MRESULT SendMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
     { return WinSendMsg( _hwnd, ulMsg, mp1, mp2 ); }
 

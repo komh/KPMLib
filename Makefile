@@ -45,7 +45,8 @@ CXXSRCS = kpmw.cpp \
           KListBox.cpp \
           KComboBox.cpp \
           KFileDlg.cpp \
-          KDirDlg.cpp
+          KDirDlg.cpp \
+          KPresentationSpace.cpp
 
 include Makefile.common
 

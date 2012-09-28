@@ -21,4 +21,6 @@
 #include "KFileDlg.h"
 #include "KDirDlg.h"
 
+#include "KPresentationSpace.h"
+
 #endif
