@@ -13,7 +13,7 @@ template< typename T, bool MiniRecord = false >
 class KContainer : public KWindow
 {
 public :
-    struct SortParam
+    struct StorageParam
     {
         PVOID pStorage;
         KContainer< T, MiniRecord >* pkcnr;
@@ -22,9 +22,10 @@ public :
     KContainer() : KWindow() { _fDoSort = false; }
     virtual ~KContainer()
     {
-        typename list< SortParam* >::iterator it;
+        typename list< StorageParam* >::iterator it;
 
-        for( it = _SortParamList.begin(); it != _SortParamList.end(); ++it )
+        for( it = _StorageParamList.begin(); it != _StorageParamList.end();
+             ++it )
             delete *it;
     }
 
@@ -98,11 +99,24 @@ public :
     virtual bool ExpandTreeP( T* pRecord )
     { return PostMsg( CM_EXPANDTREE, MPFROMP( pRecord )); }
 
-    virtual bool Filter( PFN pfnFilter, PVOID pStorage )
-    { return SendMsg( CM_FILTER, MPFROMP( pfnFilter ), MPFROMP( pStorage )); }
+    virtual bool Filter( PVOID pStorage = 0 )
+    {
+        StorageParam sp = { pStorage, this };
 
-    virtual bool FilterP( PFN pfnFilter, PVOID pStorage )
-    { return PostMsg( CM_FILTER, MPFROMP( pfnFilter ), MPFROMP( pStorage )); }
+        return SendMsg( CM_FILTER, MPFROMP( FilterFunc ), MPFROMP( &sp ));
+    }
+
+    virtual bool FilterP( PVOID pStorage = 0 )
+    {
+        StorageParam* psp = new StorageParam;
+
+        _StorageParamList.push_back( psp );
+
+        psp->pStorage = pStorage;
+        psp->pkcnr    = this;
+
+        return PostMsg( CM_FILTER, MPFROMP( FilterFunc ), MPFROMP( psp ));
+    }
 
     virtual bool FreeDetailFieldInfo( PFIELDINFO* pFieldInfoArray,
                                       USHORT cNumFieldInfo )
@@ -442,7 +456,7 @@ public :
 
     virtual bool SortRecord( PVOID pStorage = 0 )
     {
-        SortParam sp = { pStorage, this };
+        StorageParam sp = { pStorage, this };
 
         return SendMsg( CM_SORTRECORD, MPFROMP( SortCompare ),
                         MPFROMP( &sp ));
@@ -450,9 +464,9 @@ public :
 
     virtual bool SortRecordP( PVOID pStorage = 0 )
     {
-        SortParam* psp = new SortParam;
+        StorageParam* psp = new StorageParam;
 
-        _SortParamList.push_back( psp );
+        _StorageParamList.push_back( psp );
 
         psp->pStorage = pStorage;
         psp->pkcnr    = this;
@@ -462,16 +476,28 @@ public :
     }
 
 protected :
+
+    virtual BOOL  KFilter( T* p, PVOID pStorage ) { return TRUE; }
     virtual SHORT KSortCompare( T* p1, T* p2, PVOID pStorage ) { return 0; }
 
 private :
     bool _fDoSort;
 
-    list< SortParam* > _SortParamList;
+    list< StorageParam* > _StorageParamList;
+
+    static BOOL EXPENTRY FilterFunc( T* p, PVOID pStorage )
+    {
+        StorageParam* psp = reinterpret_cast< StorageParam* >( pStorage );
+
+        pStorage = psp->pStorage;
+        KContainer< T, MiniRecord >* pkcnr = psp->pkcnr;
+
+        return pkcnr->KFilter( p, pStorage );
+    }
 
     static SHORT EXPENTRY SortCompare( T* p1, T* p2, PVOID pStorage )
     {
-        SortParam* psp = reinterpret_cast< SortParam* >( pStorage );
+        StorageParam* psp = reinterpret_cast< StorageParam* >( pStorage );
 
         pStorage = psp->pStorage;
         KContainer< T, MiniRecord >* pkcnr = psp->pkcnr;
