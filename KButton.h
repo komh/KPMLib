@@ -30,28 +30,45 @@ public :
     virtual void Click( bool fUp ) { SendMsg( BM_CLICK, MPFROMLONG( fUp )); }
 
     virtual bool ClickP( bool fUp )
-    { return PostMsg( BM_CLICK, MPFROMLONG( fUp )); }
+    {
+        return PostMsg( BM_CLICK, MPFROMLONG( fUp ));
+    }
 
     virtual USHORT QueryCheck()
-    { return SHORT1FROMMR( SendMsg( BM_QUERYCHECK )); }
+    {
+        return SHORT1FROMMR( SendMsg( BM_QUERYCHECK ));
+    }
 
     virtual SHORT QueryCheckIndex()
-    { return SHORT1FROMMR( SendMsg( BM_QUERYCHECKINDEX )); }
+    {
+        return SHORT1FROMMR( SendMsg( BM_QUERYCHECKINDEX ));
+    }
 
     virtual bool QueryHilite() { return SendMsg( BM_QUERYHILITE ); }
+
     virtual USHORT SetCheck( USHORT usCheck )
-    { return SHORT1FROMMR( SendMsg( BM_SETCHECK, MPFROMSHORT( usCheck ))); }
+    {
+        return SHORT1FROMMR( SendMsg( BM_SETCHECK, MPFROMSHORT( usCheck )));
+    }
 
     virtual bool SetDefault( bool fDefault )
-    { return SendMsg( BM_SETDEFAULT, MPFROMLONG( fDefault )); }
+    {
+        return SendMsg( BM_SETDEFAULT, MPFROMLONG( fDefault ));
+    }
 
     virtual bool SetDefaultP( bool fDefault )
-    { return PostMsg( BM_SETDEFAULT, MPFROMLONG( fDefault )); }
+    {
+        return PostMsg( BM_SETDEFAULT, MPFROMLONG( fDefault ));
+    }
 
     virtual bool SetHilite( bool fHilite )
-    { return SendMsg( BM_SETHILITE, MPFROMLONG( fHilite )); }
+    {
+        return SendMsg( BM_SETHILITE, MPFROMLONG( fHilite ));
+    }
 
     virtual bool SetHiliteP( bool fHilite )
-    { return PostMsg( BM_SETHILITE, MPFROMLONG( fHilite )); }
+    {
+        return PostMsg( BM_SETHILITE, MPFROMLONG( fHilite ));
+    }
 };
 #endif

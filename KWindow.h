@@ -31,12 +31,16 @@ public :
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
 
     virtual bool DestroyPointer( HPOINTER hptr )
-    { return WinDestroyPointer( hptr ); }
+    {
+        return WinDestroyPointer( hptr );
+    }
 
     virtual bool DestroyWindow();
 
     virtual HPOINTER LoadPointer( HMODULE hmodResource, ULONG idPointer )
-    { return WinLoadPointer( HWND_DESKTOP, hmodResource, idPointer ); }
+    {
+        return WinLoadPointer( HWND_DESKTOP, hmodResource, idPointer );
+    }
 
     virtual bool MapWindowPoints( const KWindow* pkwndFrom,
                                   const KWindow* pkwndTo, PPOINTL prgptl,
@@ -60,51 +64,79 @@ public :
     }
 
     virtual bool PostMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
-    { return WinPostMsg( _hwnd, ulMsg, mp1, mp2 ); }
+    {
+        return WinPostMsg( _hwnd, ulMsg, mp1, mp2 );
+    }
 
     virtual HAB QueryAnchorBlock() { return WinQueryAnchorBlock( _hwnd ); }
 
     virtual bool QueryPointerPos( PPOINTL pptlPoint )
-    { return WinQueryPointerPos( HWND_DESKTOP, pptlPoint ); }
+    {
+        return WinQueryPointerPos( HWND_DESKTOP, pptlPoint );
+    }
 
     virtual ULONG QueryTaskSizePos( PSWP pswp )
-    { return WinQueryTaskSizePos( QueryAnchorBlock(), 0, pswp ); }
+    {
+        return WinQueryTaskSizePos( QueryAnchorBlock(), 0, pswp );
+    }
 
     virtual HPOINTER QuerySysPointer( LONG lID, bool fCopy )
-    { return WinQuerySysPointer( HWND_DESKTOP, lID, fCopy ); }
+    {
+        return WinQuerySysPointer( HWND_DESKTOP, lID, fCopy );
+    }
 
     virtual LONG QuerySysValue( LONG iSysValue )
-    { return WinQuerySysValue( HWND_DESKTOP, iSysValue ); }
+    {
+        return WinQuerySysValue( HWND_DESKTOP, iSysValue );
+    }
 
     virtual bool QueryWindowPos( PSWP pswp )
-    { return WinQueryWindowPos( _hwnd, pswp ); }
+    {
+        return WinQueryWindowPos( _hwnd, pswp );
+    }
 
     virtual PVOID QueryWindowPtr( LONG index )
-    { return WinQueryWindowPtr( _hwnd, index ); }
+    {
+        return WinQueryWindowPtr( _hwnd, index );
+    }
 
     virtual bool QueryWindowRect( PRECTL prcl )
-    { return WinQueryWindowRect( _hwnd, prcl ); }
+    {
+        return WinQueryWindowRect( _hwnd, prcl );
+    }
 
     virtual LONG QueryWindowText( LONG lLength, PCH pchBuffer )
-    { return WinQueryWindowText( _hwnd, lLength, pchBuffer ); }
+    {
+        return WinQueryWindowText( _hwnd, lLength, pchBuffer );
+    }
 
     virtual LONG QueryWindowTextLength()
-    { return WinQueryWindowTextLength( _hwnd ); }
+    {
+        return WinQueryWindowTextLength( _hwnd );
+    }
 
     virtual ULONG QueryWindowULong( LONG index )
-    { return WinQueryWindowULong( _hwnd, index ); }
+    {
+        return WinQueryWindowULong( _hwnd, index );
+    }
 
     virtual USHORT QueryWindowUShort( LONG index )
-    { return WinQueryWindowUShort( _hwnd, index ); }
+    {
+        return WinQueryWindowUShort( _hwnd, index );
+    }
 
     virtual bool RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
                                 ULONG cbWindowData );
 
     virtual MRESULT SendMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
-    { return WinSendMsg( _hwnd, ulMsg, mp1, mp2 ); }
+    {
+        return WinSendMsg( _hwnd, ulMsg, mp1, mp2 );
+    }
 
     virtual bool SetFocus( bool fSet = true )
-    { return WinSetFocus( HWND_DESKTOP, fSet ? _hwnd  : HWND_DESKTOP ); }
+    {
+        return WinSetFocus( HWND_DESKTOP, fSet ? _hwnd  : HWND_DESKTOP );
+    }
 
     virtual bool SetWindowPos( const KWindow* pkwndRel, LONG x, LONG y,
                                LONG cx, LONG cy, ULONG fl )
@@ -114,16 +146,24 @@ public :
     }
 
     virtual bool SetWindowPtr( LONG lb, PVOID p )
-    { return WinSetWindowPtr( _hwnd, lb, p ); }
+    {
+        return WinSetWindowPtr( _hwnd, lb, p );
+    }
 
     virtual bool SetWindowText( PCSZ pcszString )
-    { return WinSetWindowText( _hwnd, pcszString ); }
+    {
+        return WinSetWindowText( _hwnd, pcszString );
+    }
 
     virtual bool SetWindowULong( LONG index, ULONG ul )
-    { return WinSetWindowULong( _hwnd, index, ul ); }
+    {
+        return WinSetWindowULong( _hwnd, index, ul );
+    }
 
     virtual bool ShowWindow( BOOL fNewVisibility )
-    { return WinShowWindow( _hwnd, fNewVisibility ); }
+    {
+        return WinShowWindow( _hwnd, fNewVisibility );
+    }
 
     virtual bool WindowFromID( ULONG id, KWindow& kwnd );
 
@@ -141,7 +181,9 @@ protected :
     friend HWND pkwnd2hwnd( const KWindow* pkwnd );
 
     static void AddHWND( HWND hwnd, KWindow* pkwnd )
-    { _mapHWND[ hwnd ] = pkwnd; }
+    {
+        _mapHWND[ hwnd ] = pkwnd;
+    }
 
     static void RemoveHWND( HWND hwnd ) { _mapHWND.erase( hwnd ); }
 
@@ -348,7 +390,9 @@ protected :
     }
 
     virtual MRESULT OnChord( USHORT fsHit )
-    { return KDefWndProc( WM_CHORD, 0, MPFROMSHORT( fsHit )); }
+    {
+        return KDefWndProc( WM_CHORD, 0, MPFROMSHORT( fsHit ));
+    }
 
     virtual MRESULT OnClose() { return KDefWndProc( WM_CLOSE ); }
     virtual MRESULT OnCommand( USHORT usCmd, USHORT ulSource,
@@ -415,10 +459,14 @@ protected :
     }
 
     virtual MRESULT OnCreate( PVOID pCtrlData, PCREATESTRUCT pcs )
-    { return KDefWndProc( WM_CREATE, MPFROMP( pCtrlData ), MPFROMP( pcs )); }
+    {
+        return KDefWndProc( WM_CREATE, MPFROMP( pCtrlData ), MPFROMP( pcs ));
+    }
 
     virtual MRESULT OnCtlColorChange()
-    { return KDefWndProc( WM_CTLCOLORCHANGE ); }
+    {
+        return KDefWndProc( WM_CTLCOLORCHANGE );
+    }
 
     virtual MRESULT OnDestroy() { return KDefWndProc( WM_DESTROY ); }
 
@@ -429,7 +477,9 @@ protected :
     }
 
     virtual MRESULT OnEnable( bool fNewEnabledState )
-    { return KDefWndProc( WM_ENABLE, MPFROMLONG( fNewEnabledState )); }
+    {
+        return KDefWndProc( WM_ENABLE, MPFROMLONG( fNewEnabledState ));
+    }
 
     virtual MRESULT OnEndDrag( POINTS pts, bool fPointer )
     {
@@ -444,7 +494,9 @@ protected :
     }
 
     virtual MRESULT OnError( USHORT usErrorCode )
-    { return KDefWndProc( WM_ERROR, MPFROMSHORT( usErrorCode )); }
+    {
+        return KDefWndProc( WM_ERROR, MPFROMSHORT( usErrorCode ));
+    }
 
     virtual MRESULT OnFocusChange( HWND hwndFocus, bool fSetFocus,
                                    USHORT fsFocusChange )
@@ -572,7 +624,9 @@ protected :
     }
 
     virtual MRESULT OnMatchMnemonic( USHORT usMatch )
-    { return KDefWndProc( WM_MATCHMNEMONIC, MPFROMSHORT( usMatch )); }
+    {
+        return KDefWndProc( WM_MATCHMNEMONIC, MPFROMSHORT( usMatch ));
+    }
 
     virtual MRESULT OnMeasureItem( SHORT sID, ULONG ulControlSpec )
     {
@@ -593,7 +647,9 @@ protected :
     }
 
     virtual MRESULT OnMinMaxFrame( PSWP pswp )
-    { return KDefWndProc( WM_MINMAXFRAME, MPFROMP( pswp )); }
+    {
+        return KDefWndProc( WM_MINMAXFRAME, MPFROMP( pswp ));
+    }
 
     virtual MRESULT OnMouseMap( ULONG ulPhysButton, ULONG ulMappedButton )
     {
@@ -653,7 +709,9 @@ protected :
     virtual MRESULT OnPPaint() { return KDefWndProc( WM_PPAINT ); }
 
     virtual MRESULT OnPresParamChanged( ULONG idAttrType )
-    { return KDefWndProc( WM_PRESPARAMCHANGED, MPFROMLONG( idAttrType )); }
+    {
+        return KDefWndProc( WM_PRESPARAMCHANGED, MPFROMLONG( idAttrType ));
+    }
 
     virtual MRESULT OnPSetFocus( HWND hwnd, bool fFocus )
     {
@@ -669,21 +727,31 @@ protected :
     }
 
     virtual MRESULT OnPSysColorChange( ULONG ulOptions )
-    { return KDefWndProc( WM_PSYSCOLORCHANGE, MPFROMLONG( ulOptions )); }
+    {
+        return KDefWndProc( WM_PSYSCOLORCHANGE, MPFROMLONG( ulOptions ));
+    }
 
     virtual MRESULT OnQueryAccelTable()
-    { return KDefWndProc( WM_QUERYACCELTABLE ); }
+    {
+        return KDefWndProc( WM_QUERYACCELTABLE );
+    }
 
     virtual MRESULT OnQueryConvertPos( PRECTL pCursorPos )
-    { return KDefWndProc( WM_QUERYCONVERTPOS, MPFROMP( pCursorPos )); }
+    {
+        return KDefWndProc( WM_QUERYCONVERTPOS, MPFROMP( pCursorPos ));
+    }
 
     virtual MRESULT OnQueryCtlType() { return KDefWndProc( WM_QUERYCTLTYPE ); }
 
     virtual MRESULT OnQueryDlgCode( PQMSG pQmsg )
-    { return KDefWndProc( WM_QUERYDLGCODE, MPFROMP( pQmsg )); }
+    {
+        return KDefWndProc( WM_QUERYDLGCODE, MPFROMP( pQmsg ));
+    }
 
     virtual MRESULT OnQueryHelpInfo()
-    { return KDefWndProc( WM_QUERYHELPINFO ); }
+    {
+        return KDefWndProc( WM_QUERYHELPINFO );
+    }
 
     virtual MRESULT OnQueryTrackInfo( USHORT usTFlags, PTRACKINFO pti )
     {
@@ -692,30 +760,46 @@ protected :
     }
 
     virtual MRESULT OnQueryWindowParams( PWNDPARAMS pwp )
-    { return KDefWndProc( WM_QUERYWINDOWPARAMS, MPFROMP( pwp )); }
+    {
+        return KDefWndProc( WM_QUERYWINDOWPARAMS, MPFROMP( pwp ));
+    }
 
     virtual MRESULT OnQuit() { return KDefWndProc( WM_QUIT ); }
 
     virtual MRESULT OnRealizePalette()
-    { return KDefWndProc( WM_REALIZEPALETTE ); }
+    {
+        return KDefWndProc( WM_REALIZEPALETTE );
+    }
 
     virtual MRESULT OnSaveApplication()
-    { return KDefWndProc( WM_SAVEAPPLICATION ); }
+    {
+        return KDefWndProc( WM_SAVEAPPLICATION );
+    }
 
     virtual MRESULT OnSem1( ULONG flAccumBits )
-    { return KDefWndProc( WM_SEM1, MPFROMLONG( flAccumBits )); }
+    {
+        return KDefWndProc( WM_SEM1, MPFROMLONG( flAccumBits ));
+    }
 
     virtual MRESULT OnSem2( ULONG flAccumBits )
-    { return KDefWndProc( WM_SEM2, MPFROMLONG( flAccumBits )); }
+    {
+        return KDefWndProc( WM_SEM2, MPFROMLONG( flAccumBits ));
+    }
 
     virtual MRESULT OnSem3( ULONG flAccumBits )
-    { return KDefWndProc( WM_SEM3, MPFROMLONG( flAccumBits )); }
+    {
+        return KDefWndProc( WM_SEM3, MPFROMLONG( flAccumBits ));
+    }
 
     virtual MRESULT OnSem4( ULONG flAccumBits )
-    { return KDefWndProc( WM_SEM4, MPFROMLONG( flAccumBits )); }
+    {
+        return KDefWndProc( WM_SEM4, MPFROMLONG( flAccumBits ));
+    }
 
     virtual MRESULT OnSetAccelTable( HACCEL haccelNew )
-    { return KDefWndProc( WM_SETACCELTABLE, MPFROMLONG( haccelNew )); }
+    {
+        return KDefWndProc( WM_SETACCELTABLE, MPFROMLONG( haccelNew ));
+    }
 
     virtual MRESULT OnSetFocus( HWND hwnd, bool fFocus )
     {
@@ -724,16 +808,24 @@ protected :
     }
 
     virtual MRESULT OnSetHelpInfo( LONG lHelpInfo )
-    { return KDefWndProc( WM_SETHELPINFO, MPFROMLONG( lHelpInfo )); }
+    {
+        return KDefWndProc( WM_SETHELPINFO, MPFROMLONG( lHelpInfo ));
+    }
 
     virtual MRESULT OnSetSelection( bool fSel )
-    { return KDefWndProc( WM_SETSELECTION, MPFROMLONG( fSel )); }
+    {
+        return KDefWndProc( WM_SETSELECTION, MPFROMLONG( fSel ));
+    }
 
     virtual MRESULT OnSetWindowParams( PWNDPARAMS pwp )
-    { return KDefWndProc( WM_SETWINDOWPARAMS, MPFROMP( pwp )); }
+    {
+        return KDefWndProc( WM_SETWINDOWPARAMS, MPFROMP( pwp ));
+    }
 
     virtual MRESULT OnShow( bool fShow )
-    { return KDefWndProc( WM_SHOW, MPFROMLONG( fShow )); }
+    {
+        return KDefWndProc( WM_SHOW, MPFROMLONG( fShow ));
+    }
 
     virtual MRESULT OnSingleSelect( POINTS pts, bool fPointer )
     {
@@ -750,10 +842,14 @@ protected :
     }
 
     virtual MRESULT OnSubstituteString( USHORT usIndex )
-    { return KDefWndProc( WM_SUBSTITUTESTRING, MPFROMSHORT( usIndex )); }
+    {
+        return KDefWndProc( WM_SUBSTITUTESTRING, MPFROMSHORT( usIndex ));
+    }
 
     virtual MRESULT OnSysColorChange( ULONG flOptions )
-    { return KDefWndProc( WM_SYSCOLORCHANGE, MPFROMLONG( flOptions )); }
+    {
+        return KDefWndProc( WM_SYSCOLORCHANGE, MPFROMLONG( flOptions ));
+    }
 
     virtual MRESULT OnSysCommand( USHORT usCmd, USHORT usSource,
                                   bool fPointer );
@@ -821,21 +917,31 @@ protected :
     }
 
     virtual MRESULT OnTimer( USHORT idTimer )
-    { return KDefWndProc( WM_TIMER, MPFROMSHORT( idTimer )); }
+    {
+        return KDefWndProc( WM_TIMER, MPFROMSHORT( idTimer ));
+    }
 
     virtual MRESULT OnTrackFrame( USHORT fsTrackFlags )
-    { return KDefWndProc( WM_TRACKFRAME, MPFROMSHORT( fsTrackFlags )); }
+    {
+        return KDefWndProc( WM_TRACKFRAME, MPFROMSHORT( fsTrackFlags ));
+    }
 
     virtual MRESULT OnTranslateAccel( PQMSG pqmsg )
-    { return KDefWndProc( WM_TRANSLATEACCEL, MPFROMP( pqmsg )); }
+    {
+        return KDefWndProc( WM_TRANSLATEACCEL, MPFROMP( pqmsg ));
+    }
 
 #if 0
     virtual MRESULT OnTranslateMnemonic( PQMSG pqmsg )
-    { return KDefWndProc( WM_TRANSLATEMNEMONIC, MPFROMP( pqmsg )); }
+    {
+        return KDefWndProc( WM_TRANSLATEMNEMONIC, MPFROMP( pqmsg ));
+    }
 #endif
 
     virtual MRESULT OnUpdateFrame( ULONG flCreateFlags )
-    { return KDefWndProc( WM_UPDATEFRAME, MPFROMLONG( flCreateFlags )); }
+    {
+        return KDefWndProc( WM_UPDATEFRAME, MPFROMLONG( flCreateFlags ));
+    }
 
     virtual MRESULT OnVRNDisabled( PVOID mp1, PVOID mp2 )
     {

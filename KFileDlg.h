@@ -28,17 +28,23 @@ public :
     virtual void SetTitle( PSZ pszTitle ) { _fild.pszTitle = pszTitle; }
 
     virtual void SetOkButton( PSZ pszOKButton )
-    { _fild.pszOKButton = pszOKButton; }
+    {
+        _fild.pszOKButton = pszOKButton;
+    }
 
     virtual void SetIType( PSZ pszIType ) { _fild.pszIType = pszIType; }
 
     virtual void SetITypeList( PAPSZ papszITypeList )
-    { _fild.papszITypeList = papszITypeList; }
+    {
+        _fild.papszITypeList = papszITypeList;
+    }
 
     virtual void SetIDrive( PSZ pszIDrive ) { _fild.pszIDrive = pszIDrive; }
 
     virtual void SetIDriveList( PAPSZ papszIDriveList )
-    { _fild.papszIDriveList = papszIDriveList; }
+    {
+        _fild.papszIDriveList = papszIDriveList;
+    }
 
     virtual void SetMod( HMODULE hMod ) { _fild.hMod = hMod; }
 
@@ -58,7 +64,9 @@ public :
     LONG GetSrc() const { return _fild.lSRC; }
 
     PCSZ GetFullFile() const
-    { return reinterpret_cast< PCSZ >( _fild.szFullFile ); }
+    {
+        return reinterpret_cast< PCSZ >( _fild.szFullFile );
+    }
 
     PAPSZ GetFQFilename() const { return _fild.papszFQFilename; }
     ULONG GetFQFCount() const { return _fild.ulFQFCount; }
@@ -71,6 +79,8 @@ protected :
                                          MPARAM mp2 );
 
     virtual MRESULT KDefWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
-    { return WinDefFileDlgProc( _hwnd, msg, mp1, mp2 ); }
+    {
+        return WinDefFileDlgProc( _hwnd, msg, mp1, mp2 );
+    }
 };
 #endif

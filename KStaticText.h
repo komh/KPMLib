@@ -19,12 +19,18 @@ public :
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
 
     virtual HBITMAP QueryHandle()
-    { return LONGFROMMR( SendMsg( SM_QUERYHANDLE )); }
+    {
+        return LONGFROMMR( SendMsg( SM_QUERYHANDLE ));
+    }
 
     virtual HBITMAP SetHandle( HBITMAP hbmHandle )
-    { return LONGFROMMR( SendMsg( SM_SETHANDLE, MPFROMLONG( hbmHandle ))); }
+    {
+        return LONGFROMMR( SendMsg( SM_SETHANDLE, MPFROMLONG( hbmHandle )));
+    }
 
     virtual bool SetHandleP( HBITMAP hbmHandle )
-    { return PostMsg( SM_SETHANDLE, MPFROMLONG( hbmHandle )); }
+    {
+        return PostMsg( SM_SETHANDLE, MPFROMLONG( hbmHandle ));
+    }
 };
 #endif

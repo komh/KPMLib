@@ -24,10 +24,14 @@ public :
     virtual bool Paste() { return SendMsg( EM_PASTE ); }
     virtual bool PasteP() { return PostMsg( EM_PASTE ); }
     virtual bool QueryChanged() { return SendMsg( EM_QUERYCHANGED ); }
+
     virtual SHORT QueryFirstChar()
-    { return SHORT1FROMMR( SendMsg( EM_QUERYFIRSTCHAR )); }
+    {
+        return SHORT1FROMMR( SendMsg( EM_QUERYFIRSTCHAR ));
+    }
 
     virtual bool QueryReadOnly() { return SendMsg( EM_QUERYREADONLY ); }
+
     virtual void QuerySel( SHORT& sMinSel, SHORT& sMaxSel )
     {
         MRESULT mr = SendMsg( EM_QUERYSEL );
@@ -37,33 +41,53 @@ public :
     }
 
     virtual bool SetFirstChar( SHORT sOffset )
-    { return SendMsg( EM_SETFIRSTCHAR, MPFROMSHORT( sOffset )); }
+    {
+        return SendMsg( EM_SETFIRSTCHAR, MPFROMSHORT( sOffset ));
+    }
 
     virtual bool SetFirstCharP( SHORT sOffset )
-    { return PostMsg( EM_SETFIRSTCHAR, MPFROMSHORT( sOffset )); }
+    {
+        return PostMsg( EM_SETFIRSTCHAR, MPFROMSHORT( sOffset ));
+    }
 
     virtual bool SetInsertMode( bool fInsert )
-    { return SendMsg( EM_SETINSERTMODE, MPFROMLONG( fInsert )); }
+    {
+        return SendMsg( EM_SETINSERTMODE, MPFROMLONG( fInsert ));
+    }
 
     virtual bool SetInsertModeP( bool fInsert )
-    { return PostMsg( EM_SETINSERTMODE, MPFROMLONG( fInsert )); }
+    {
+        return PostMsg( EM_SETINSERTMODE, MPFROMLONG( fInsert ));
+    }
 
     virtual bool SetReadOnly( bool fReadOnly )
-    { return SendMsg( EM_SETREADONLY, MPFROMLONG( fReadOnly )); }
+    {
+        return SendMsg( EM_SETREADONLY, MPFROMLONG( fReadOnly ));
+    }
 
     virtual bool SetReadOnlyP( bool fReadOnly )
-    { return PostMsg( EM_SETREADONLY, MPFROMLONG( fReadOnly )); }
+    {
+        return PostMsg( EM_SETREADONLY, MPFROMLONG( fReadOnly ));
+    }
 
     virtual bool SetSel( USHORT usMinSel, USHORT usMaxSel )
-    { return SendMsg( EM_SETSEL, MPFROM2SHORT( usMinSel, usMaxSel )); }
+    {
+        return SendMsg( EM_SETSEL, MPFROM2SHORT( usMinSel, usMaxSel ));
+    }
 
     virtual bool SetSelP( USHORT usMinSel, USHORT usMaxSel )
-    { return PostMsg( EM_SETSEL, MPFROM2SHORT( usMinSel, usMaxSel )); }
+    {
+        return PostMsg( EM_SETSEL, MPFROM2SHORT( usMinSel, usMaxSel ));
+    }
 
     virtual bool SetTextLimit( SHORT sTextLimit )
-    { return SendMsg( EM_SETTEXTLIMIT, MPFROMSHORT( sTextLimit )); }
+    {
+        return SendMsg( EM_SETTEXTLIMIT, MPFROMSHORT( sTextLimit ));
+    }
 
     virtual bool SetTextLimitP( SHORT sTextLimit )
-    { return PostMsg( EM_SETTEXTLIMIT, MPFROMSHORT( sTextLimit )); }
+    {
+        return PostMsg( EM_SETTEXTLIMIT, MPFROMSHORT( sTextLimit ));
+    }
 };
 #endif

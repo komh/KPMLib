@@ -26,10 +26,14 @@ public :
     }
 
     virtual bool SetPos( SHORT sSlider )
-    { return SendMsg( SBM_SETPOS, MPFROMSHORT( sSlider )); }
+    {
+        return SendMsg( SBM_SETPOS, MPFROMSHORT( sSlider ));
+    }
 
     virtual bool SetPosP( SHORT sSlider )
-    { return PostMsg( SBM_SETPOS, MPFROMSHORT( sSlider )); }
+    {
+        return PostMsg( SBM_SETPOS, MPFROMSHORT( sSlider ));
+    }
 
     virtual bool SetScrollBar( SHORT sSlider, SHORT sFirst, SHORT sLast )
     {
@@ -44,9 +48,13 @@ public :
     }
 
     virtual bool SetThumbSize( SHORT sVisible, SHORT sTotal )
-    { return SendMsg( SBM_SETTHUMBSIZE, MPFROM2SHORT( sVisible, sTotal )); }
+    {
+        return SendMsg( SBM_SETTHUMBSIZE, MPFROM2SHORT( sVisible, sTotal ));
+    }
 
     virtual bool SetThumbSizeP( SHORT sVisible, SHORT sTotal )
-    { return PostMsg( SBM_SETTHUMBSIZE, MPFROM2SHORT( sVisible, sTotal )); }
+    {
+        return PostMsg( SBM_SETTHUMBSIZE, MPFROM2SHORT( sVisible, sTotal ));
+    }
 };
 #endif

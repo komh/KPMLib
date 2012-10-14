@@ -32,7 +32,9 @@ public :
     virtual bool EndPaint() { return WinEndPaint( _hps ); }
 
     virtual bool FillRect( PRECTL prcl, LONG lColor )
-    { return WinFillRect( _hps, prcl, lColor ); }
+    {
+        return WinFillRect( _hps, prcl, lColor );
+    }
 
     virtual bool GetPS( const KWindow* pkwnd )
     {

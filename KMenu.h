@@ -14,6 +14,7 @@ public :
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
+
     virtual bool LoadMenu( const KWindow* pkwndO, HMODULE hmod, ULONG idMenu )
     {
         HWND hwnd = WinLoadMenu( pkwnd2hwnd( pkwndO ), hmod, idMenu );
@@ -41,10 +42,14 @@ public :
     }
 
     virtual void EndMenuMode( bool fDismiss )
-    { SendMsg( MM_ENDMENUMODE, MPFROMLONG( fDismiss )); }
+    {
+        SendMsg( MM_ENDMENUMODE, MPFROMLONG( fDismiss ));
+    }
 
     virtual bool EndMenuModeP( bool fDismiss )
-    { return PostMsg( MM_ENDMENUMODE, MPFROMLONG( fDismiss )); }
+    {
+        return PostMsg( MM_ENDMENUMODE, MPFROMLONG( fDismiss ));
+    }
 
     virtual SHORT InsertItem( PMENUITEM pmi, PCSZ pcszText )
     {
@@ -58,7 +63,9 @@ public :
     }
 
     virtual bool IsItemValid( USHORT usItem, BOOL fIncSub )
-    { return SendMsg( MM_ISITEMVALID, MPFROM2SHORT( usItem, fIncSub )); }
+    {
+        return SendMsg( MM_ISITEMVALID, MPFROM2SHORT( usItem, fIncSub ));
+    }
 
     virtual SHORT ItemIDFromPosition( SHORT sItemIndex )
     {
@@ -73,7 +80,9 @@ public :
     }
 
     virtual ULONG QueryDefaultItemID()
-    { return LONGFROMMR( SendMsg( MM_QUERYDEFAULTITEMID )); }
+    {
+        return LONGFROMMR( SendMsg( MM_QUERYDEFAULTITEMID ));
+    }
 
     virtual bool QueryItem( USHORT usItem, bool fIncSub, PMENUITEM pmi )
     {
@@ -89,7 +98,9 @@ public :
     }
 
     virtual SHORT QueryItemCount()
-    { return SHORT1FROMMR( SendMsg( MM_QUERYITEMCOUNT )); }
+    {
+        return SHORT1FROMMR( SendMsg( MM_QUERYITEMCOUNT ));
+    }
 
     virtual bool QueryItemRect( USHORT usItem, bool fIncSub, PRECTL prcl )
     {
@@ -141,10 +152,14 @@ public :
     }
 
     virtual bool SetDefaultItemID( ULONG ulId )
-    { return SendMsg( MM_SETDEFAULTITEMID, MPFROMLONG( ulId )); }
+    {
+        return SendMsg( MM_SETDEFAULTITEMID, MPFROMLONG( ulId ));
+    }
 
     virtual bool SetDefaultItemIDP( ULONG ulId )
-    { return PostMsg( MM_SETDEFAULTITEMID, MPFROMLONG( ulId )); }
+    {
+        return PostMsg( MM_SETDEFAULTITEMID, MPFROMLONG( ulId ));
+    }
 
     virtual bool SetItem( bool fIncSub, PMENUITEM pmi )
     {
@@ -197,9 +212,13 @@ public :
     }
 
     virtual bool StartMenuMode( bool fShowSub, bool fResume )
-    { return SendMsg( MM_STARTMENUMODE, MPFROM2SHORT( fShowSub, fResume )); }
+    {
+        return SendMsg( MM_STARTMENUMODE, MPFROM2SHORT( fShowSub, fResume ));
+    }
 
     virtual bool StartMenuModeP( bool fShowSub, bool fResume )
-    { return PostMsg( MM_STARTMENUMODE, MPFROM2SHORT( fShowSub, fResume )); }
+    {
+        return PostMsg( MM_STARTMENUMODE, MPFROM2SHORT( fShowSub, fResume ));
+    }
 };
 #endif

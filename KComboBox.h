@@ -19,18 +19,26 @@ public :
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
 
     virtual bool Hilite( bool fHilite )
-    { return SendMsg( CBM_HILITE, MPFROMLONG( fHilite )); }
+    {
+        return SendMsg( CBM_HILITE, MPFROMLONG( fHilite ));
+    }
 
     virtual bool HiliteP( bool fHilite )
-    { return PostMsg( CBM_HILITE, MPFROMLONG( fHilite )); }
+    {
+        return PostMsg( CBM_HILITE, MPFROMLONG( fHilite ));
+    }
 
     virtual bool IsLitShowing() { return SendMsg( CBM_ISLISTSHOWING ); }
 
     virtual bool ShowList( bool fShow )
-    { return SendMsg( CBM_SHOWLIST, MPFROMLONG( fShow )); }
+    {
+        return SendMsg( CBM_SHOWLIST, MPFROMLONG( fShow ));
+    }
 
     virtual bool ShowListP( bool fShow )
-    { return PostMsg( CBM_SHOWLIST, MPFROMLONG( fShow )); }
+    {
+        return PostMsg( CBM_SHOWLIST, MPFROMLONG( fShow ));
+    }
 
     // member-functions for ListBox control
     virtual bool LmDeleteAll() { return SendMsg( LM_DELETEALL ); }
@@ -61,7 +69,9 @@ public :
     }
 
     virtual SHORT LmQueryItemCount()
-    { return SHORT1FROMMR( SendMsg( LM_QUERYITEMCOUNT )); }
+    {
+        return SHORT1FROMMR( SendMsg( LM_QUERYITEMCOUNT ));
+    }
 
     virtual SHORT LMQueryItemText( SHORT sItemIndex, SHORT sMaxCount,
                                    PSZ pszItemText )
@@ -84,7 +94,9 @@ public :
     }
 
     virtual SHORT LmQueryTopIndex()
-    { return SHORT1FROMMR( SendMsg( LM_QUERYTOPINDEX )); }
+    {
+        return SHORT1FROMMR( SendMsg( LM_QUERYTOPINDEX ));
+    }
 
     virtual SHORT LmSearchString( USHORT usCmd, SHORT sItemStart,
                                 PCSZ pcszSearchString )
@@ -119,10 +131,14 @@ public :
     }
 
     virtual bool LmSetTopIndex( SHORT sItemIndex )
-    { return SendMsg( LM_SETTOPINDEX, MPFROMSHORT( sItemIndex )); }
+    {
+        return SendMsg( LM_SETTOPINDEX, MPFROMSHORT( sItemIndex ));
+    }
 
     virtual bool LmSetTopIndexP( SHORT sItemIndex )
-    { return PostMsg( LM_SETTOPINDEX, MPFROMSHORT( sItemIndex )); }
+    {
+        return PostMsg( LM_SETTOPINDEX, MPFROMSHORT( sItemIndex ));
+    }
 
     // member-functions for EntryField control
     virtual bool EmClear() { return SendMsg( EM_CLEAR ); }
@@ -136,7 +152,9 @@ public :
     virtual bool EmQueryChanged() { return SendMsg( EM_QUERYCHANGED ); }
 
     virtual SHORT EmQueryFirstChar()
-    { return SHORT1FROMMR( SendMsg( EM_QUERYFIRSTCHAR )); }
+    {
+        return SHORT1FROMMR( SendMsg( EM_QUERYFIRSTCHAR ));
+    }
 
     virtual void EmQuerySel( SHORT& sMinSel, SHORT& sMaxSel )
     {
@@ -147,21 +165,33 @@ public :
     }
 
     virtual bool EmSetFirstChar( SHORT sOffset )
-    { return SendMsg( EM_SETFIRSTCHAR, MPFROMSHORT( sOffset )); }
+    {
+        return SendMsg( EM_SETFIRSTCHAR, MPFROMSHORT( sOffset ));
+    }
 
     virtual bool EmSetFirstCharP( SHORT sOffset )
-    { return PostMsg( EM_SETFIRSTCHAR, MPFROMSHORT( sOffset )); }
+    {
+        return PostMsg( EM_SETFIRSTCHAR, MPFROMSHORT( sOffset ));
+    }
 
     virtual bool EmSetSel( USHORT usMinSel, USHORT usMaxSel )
-    { return SendMsg( EM_SETSEL, MPFROM2SHORT( usMinSel, usMaxSel )); }
+    {
+        return SendMsg( EM_SETSEL, MPFROM2SHORT( usMinSel, usMaxSel ));
+    }
 
     virtual bool EmSetSelP( USHORT usMinSel, USHORT usMaxSel )
-    { return PostMsg( EM_SETSEL, MPFROM2SHORT( usMinSel, usMaxSel )); }
+    {
+        return PostMsg( EM_SETSEL, MPFROM2SHORT( usMinSel, usMaxSel ));
+    }
 
     virtual bool EmSetTextLimit( SHORT sTextLimit )
-    { return SendMsg( EM_SETTEXTLIMIT, MPFROMSHORT( sTextLimit )); }
+    {
+        return SendMsg( EM_SETTEXTLIMIT, MPFROMSHORT( sTextLimit ));
+    }
 
     virtual bool EmSetTextLimitP( SHORT sTextLimit )
-    { return PostMsg( EM_SETTEXTLIMIT, MPFROMSHORT( sTextLimit )); }
+    {
+        return PostMsg( EM_SETTEXTLIMIT, MPFROMSHORT( sTextLimit ));
+    }
 };
 #endif

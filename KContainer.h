@@ -84,22 +84,34 @@ public :
     virtual bool CloseEditP() { return PostMsg( CM_CLOSEEDIT ); }
 
     virtual bool CollapseTree( T* pRecord )
-    { return SendMsg( CM_COLLAPSETREE, MPFROMP( pRecord )); }
+    {
+        return SendMsg( CM_COLLAPSETREE, MPFROMP( pRecord ));
+    }
 
     virtual bool CollapseTreeP( T* pRecord )
-    { return PostMsg( CM_COLLAPSETREE, MPFROMP( pRecord )); }
+    {
+        return PostMsg( CM_COLLAPSETREE, MPFROMP( pRecord ));
+    }
 
     virtual bool EraseRecord( T* pRecord )
-    { return SendMsg( CM_ERASERECORD, MPFROMP( pRecord )); }
+    {
+        return SendMsg( CM_ERASERECORD, MPFROMP( pRecord ));
+    }
 
     virtual bool EraseRecordP( T* pRecord )
-    { return PostMsg( CM_ERASERECORD, MPFROMP( pRecord )); }
+    {
+        return PostMsg( CM_ERASERECORD, MPFROMP( pRecord ));
+    }
 
     virtual bool ExpandTree( T* pRecord )
-    { return SendMsg( CM_EXPANDTREE, MPFROMP( pRecord )); }
+    {
+        return SendMsg( CM_EXPANDTREE, MPFROMP( pRecord ));
+    }
 
     virtual bool ExpandTreeP( T* pRecord )
-    { return PostMsg( CM_EXPANDTREE, MPFROMP( pRecord )); }
+    {
+        return PostMsg( CM_EXPANDTREE, MPFROMP( pRecord ));
+    }
 
     virtual bool Filter( PVOID pStorage = 0 )
     {
@@ -217,10 +229,14 @@ public :
     }
 
     virtual bool InvalidateDetailFieldInfo()
-    { return SendMsg( CM_INVALIDATEDETAILFIELDINFO ); }
+    {
+        return SendMsg( CM_INVALIDATEDETAILFIELDINFO );
+    }
 
     virtual bool InvalidateDetailFieldInfoP()
-    { return PostMsg( CM_INVALIDATEDETAILFIELDINFO ); }
+    {
+        return PostMsg( CM_INVALIDATEDETAILFIELDINFO );
+    }
 
     virtual bool InvalidateRecord( T** pRecordArray, USHORT cNumRecord,
                                    USHORT fsInvalidateRecord )
@@ -237,22 +253,34 @@ public :
     }
 
     virtual bool MoveTree( PTREEMOVE ptm )
-    { return SendMsg( CM_MOVETREE, MPFROMP( ptm )); }
+    {
+        return SendMsg( CM_MOVETREE, MPFROMP( ptm ));
+    }
 
     virtual bool MoveTreeP( PTREEMOVE ptm )
-    { return PostMsg( CM_MOVETREE, MPFROMP( ptm )); }
+    {
+        return PostMsg( CM_MOVETREE, MPFROMP( ptm ));
+    }
 
     virtual bool OpenEdit( PCNREDITDATA pced )
-    { return SendMsg( CM_OPENEDIT, MPFROMP( pced )); }
+    {
+        return SendMsg( CM_OPENEDIT, MPFROMP( pced ));
+    }
 
     virtual bool OpenEditP( PCNREDITDATA pced )
-    { return PostMsg( CM_OPENEDIT, MPFROMP( pced )); }
+    {
+        return PostMsg( CM_OPENEDIT, MPFROMP( pced ));
+    }
 
     virtual bool PaintBackground( POWNERBACKGROUND pobg )
-    { return SendMsg( CM_PAINTBACKGROUND, MPFROMP( pobg )); }
+    {
+        return SendMsg( CM_PAINTBACKGROUND, MPFROMP( pobg ));
+    }
 
     virtual bool PaintBackgroundP( POWNERBACKGROUND pobg )
-    { return PostMsg( CM_PAINTBACKGROUND, MPFROMP( pobg )); }
+    {
+        return PostMsg( CM_PAINTBACKGROUND, MPFROMP( pobg ));
+    }
 
     virtual USHORT QueryCnrInfo( PCNRINFO pci, USHORT cbBuffer )
     {
@@ -268,10 +296,14 @@ public :
     }
 
     virtual LHANDLE QueryDragImage( T* pRecord )
-    { return LONGFROMMR( SendMsg( CM_QUERYDRAGIMAGE, MPFROMP( pRecord ))); }
+    {
+        return LONGFROMMR( SendMsg( CM_QUERYDRAGIMAGE, MPFROMP( pRecord )));
+    }
 
     virtual bool QueryGridInfo( PGRIDINFO pgi )
-    { return SendMsg( CM_QUERYGRIDINFO, MPFROMP( pgi )); }
+    {
+        return SendMsg( CM_QUERYGRIDINFO, MPFROMP( pgi ));
+    }
 
     virtual T* QueryRecord( T* pRecord, USHORT cmd, USHORT fsSearch )
     {
@@ -439,10 +471,14 @@ public :
     }
 
     virtual bool SetTextVisibility( bool fVisible )
-    { return SendMsg( CM_SETTEXTVISIBILITY, MPFROMLONG( fVisible )); }
+    {
+        return SendMsg( CM_SETTEXTVISIBILITY, MPFROMLONG( fVisible ));
+    }
 
     virtual bool SetTextVisibilityP( bool fVisible )
-    { return PostMsg( CM_SETTEXTVISIBILITY, MPFROMLONG( fVisible )); }
+    {
+        return PostMsg( CM_SETTEXTVISIBILITY, MPFROMLONG( fVisible ));
+    }
 
     virtual bool SnapToGrid( T* pRecord, SHORT xDrop, SHORT yDrop )
     {
