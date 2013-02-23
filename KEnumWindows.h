@@ -9,8 +9,12 @@
 class KEnumWindows
 {
 public :
-    KEnumWindows() {}
-    virtual ~KEnumWindows() {}
+    KEnumWindows() { _henum = NULLHANDLE; }
+    virtual ~KEnumWindows()
+    {
+        if( _henum != NULLHANDLE )
+            WinEndEnumWindows( _henum );
+    }
 
     virtual HENUM BeginEnumWindows( const KWindow* pkwnd )
     {
