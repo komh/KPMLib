@@ -10,6 +10,11 @@ class KEnumWindows
 {
 public :
     KEnumWindows() { _henum = NULLHANDLE; }
+    KEnumWindows( const KWindow* pkwnd )
+    {
+        _henum = WinBeginEnumWindows( pkwnd2hwnd( pkwnd ));
+    }
+
     virtual ~KEnumWindows()
     {
         if( _henum != NULLHANDLE )
