@@ -44,9 +44,9 @@ public :
         return WinSendDlgItemMsg( _hwnd, idItem, msg, mp1, mp2 );
     }
 
-    virtual bool SetDlgItemText( ULONG idItem, PSZ pszText )
+    virtual bool SetDlgItemText( ULONG idItem, PCSZ pcszText )
     {
-        return WinSetDlgItemText( _hwnd, idItem, pszText );
+        return WinSetDlgItemText( _hwnd, idItem, pcszText );
     }
 
     ULONG GetResult() const { return _ulResult; }
