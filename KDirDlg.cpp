@@ -43,7 +43,7 @@
 
 #include <cstring>
 
-#include <KPMLib.h>
+#include "KPMLib.h"
 
 #include "KDirDlg.h"
 
