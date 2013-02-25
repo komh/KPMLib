@@ -1,6 +1,8 @@
 #ifndef KENTRY_FIELD_H
 #define KENTRY_FIELD_H
 
+#include <string>
+
 #include "KWindow.h"
 
 class KEntryField : public KWindow
@@ -9,7 +11,7 @@ public :
     KEntryField() : KWindow() {};
     virtual ~KEntryField() {};
 
-    virtual bool CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
+    virtual bool CreateWindow( const KWindow* pkwndP, const string& strName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,

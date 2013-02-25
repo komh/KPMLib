@@ -1,8 +1,9 @@
 #define INCL_WIN
 #include <os2.h>
 
+#include <string>
+
 #include <cstdlib>
-#include <cstring>
 
 #include "KWindow.h"
 
@@ -38,7 +39,7 @@ KWindow::~KWindow()
     SetHWND( 0 );
 }
 
-bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
+bool KWindow::CreateWindow( const KWindow* pkwndP, const string& strName,
                             ULONG flStyle, LONG x, LONG y, LONG cx, LONG cy,
                             const KWindow* pkwndO, const KWindow* pkwndS,
                             ULONG id, PVOID pCtlData, PVOID pPresParams )
@@ -50,7 +51,7 @@ bool KWindow::CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
 
     CreateParams cp = { pPresParams, this };
 
-    hwnd = WinCreateWindow( hwndP, _strClassName.c_str(), pcszName,
+    hwnd = WinCreateWindow( hwndP, _strClassName.c_str(), strName.c_str(),
                             flStyle, x, y, cx, cy, hwndO, hwndS, id, pCtlData,
                             &cp );
 
@@ -72,12 +73,12 @@ bool KWindow::DestroyWindow()
     return false;
 }
 
-bool KWindow::RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
-                             ULONG cbWindowData )
+bool KWindow::RegisterClass( HAB hab, const string& strClassName,
+                             ULONG flStyle, ULONG cbWindowData )
 {
-    _strClassName = pcszClassName;
+    _strClassName = strClassName;
 
-    return WinRegisterClass( hab, pcszClassName, WndProc, flStyle,
+    return WinRegisterClass( hab, strClassName.c_str(), WndProc, flStyle,
                              sizeof( PVOID ) + cbWindowData );
 }
 

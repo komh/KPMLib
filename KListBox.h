@@ -1,7 +1,13 @@
 #ifndef KLIST_BOX_H
 #define KLIST_BOX_H
 
+#include <string>
+
+#include <vector>
+
 #include "KWindow.h"
+
+typedef vector< string > KLBVECSTR;
 
 class KListBox : public KWindow
 {
@@ -9,7 +15,7 @@ public :
     KListBox() : KWindow() {};
     virtual ~KListBox() {};
 
-    virtual bool CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
+    virtual bool CreateWindow( const KWindow* pkwndP, const string& strName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
@@ -20,9 +26,9 @@ public :
         return WinDeleteLboxItem( _hwnd, index );
     }
 
-    virtual LONG InsertLboxItem( LONG index, PSZ psz )
+    virtual LONG InsertLboxItem( LONG index, const string& str )
     {
-        return WinInsertLboxItem( _hwnd, index, psz );
+        return WinInsertLboxItem( _hwnd, index, str.c_str());
     }
 
     virtual LONG QueryLboxSelectedItem()
@@ -30,9 +36,9 @@ public :
         return WinQueryLboxSelectedItem( _hwnd );
     }
 
-    virtual bool SetLboxItemText( LONG index, PSZ psz )
+    virtual bool SetLboxItemText( LONG index, const string& str )
     {
-        return WinSetLboxItemText( _hwnd, index, psz );
+        return WinSetLboxItemText( _hwnd, index, str.c_str());
     }
 
     virtual bool DeleteAll() { return SendMsg( LM_DELETEALL ); }
@@ -49,30 +55,59 @@ public :
         return PostMsg( LM_DELETEITEM, MPFROMSHORT( sItemIndex ));
     }
 
-    virtual SHORT InsertItem( SHORT sItemIndex, PCSZ pcszItemText )
+    virtual SHORT InsertItem( SHORT sItemIndex, const string& strItemText )
     {
         return SHORT1FROMMR( SendMsg( LM_INSERTITEM,
                                       MPFROMSHORT( sItemIndex ),
-                                      MPFROMP( pcszItemText )));
+                                      MPFROMP( strItemText.c_str())));
     }
 
-    virtual bool InsertItemP( SHORT sItemIndex, PCSZ pcszItemText )
+    virtual bool InsertItemP( SHORT sItemIndex, const string& strItemText )
     {
         return PostMsg( LM_INSERTITEM, MPFROMSHORT( sItemIndex ),
-                        MPFROMP( pcszItemText ));
+                        MPFROMP( strItemText.c_str()));
     }
 
-    virtual LONG InsertMultiItems( PLBOXINFO plbi, PCSZ* papcszText )
+    virtual LONG InsertMultiItems( PLBOXINFO plbi, const KLBVECSTR& vsText )
     {
-        return LONGFROMMR( SendMsg( LM_INSERTMULTITEMS,
-                                    MPFROMP( plbi ), MPFROMP( papcszText )));
+        PCSZ* papcszText;
+        LONG  rc;
+
+        papcszText = new PCSZ[ plbi->ulItemCount ];
+
+        for( size_t i = 0; i < vsText.size(); i++ )
+            papcszText[ i ] = vsText[ i ].c_str();
+
+        rc = LONGFROMMR( SendMsg( LM_INSERTMULTITEMS,
+                                  MPFROMP( plbi ), MPFROMP( papcszText )));
+
+        delete[] papcszText;
+
+        return rc;
     }
 
-    virtual bool InsertMultiItemsP( PLBOXINFO plbi, PCSZ* papcszText )
+#if 0
+    virtual bool InsertMultiItemsP( PLBOXINFO plbi, const KLBVECSTR& vsText )
     {
-        return PostMsg( LM_INSERTMULTITEMS, MPFROMP( plbi ),
-                        MPFROMP( papcszText ));
+        PCSZ* papcszText;
+        LONG  rc;
+
+        papcszText = new PCSZ[ plbi->ulItemCount ];
+
+        for( size_t i = 0; i < vsText.size(); i++ )
+            papcszText[ i ] = vsText[ i ].c_str();
+
+        rc = PostMsg( LM_INSERTMULTITEMS, MPFROMP( plbi ),
+                      MPFROMP( papcszText ));
+
+        // FIXME :
+        // this causes to crash because memory can be freed
+        // before it is passed to PM
+        delete[] papcszText;
+
+        return rc;
     }
+#endif
 
     virtual SHORT QueryItemCount()
     {
@@ -85,12 +120,21 @@ public :
                                     MPFROMSHORT( sItemIndex )));
     }
 
-    virtual SHORT QueryItemText( SHORT sItemIndex, SHORT sMaxCount,
-                                 PSZ pszItemText )
+    virtual SHORT QueryItemText( SHORT sItemIndex, string& strItemText )
     {
-        return SHORT1FROMMR( SendMsg( LM_QUERYITEMTEXT,
-                                      MPFROM2SHORT( sItemIndex, sMaxCount ),
-                                      MPFROMP( pszItemText )));
+        SHORT sMaxCount = QueryItemTextLength( sItemIndex ) + 1;
+        PSZ   pszItemText = new CHAR[ sMaxCount ];
+        SHORT rc;
+
+        rc = SHORT1FROMMR( SendMsg( LM_QUERYITEMTEXT,
+                                    MPFROM2SHORT( sItemIndex, sMaxCount ),
+                                    MPFROMP( pszItemText )));
+
+        strItemText = pszItemText;
+
+        delete[] pszItemText;
+
+        return rc;
     }
 
     virtual SHORT QueryItemTextLength( SHORT sItemIndex )
@@ -111,11 +155,11 @@ public :
     }
 
     virtual SHORT SearchString( USHORT usCmd, SHORT sItemStart,
-                                PCSZ pcszSearchString )
+                                const string& strSearchString )
     {
         return SHORT1FROMMR( SendMsg( LM_SEARCHSTRING,
                                       MPFROM2SHORT( usCmd, sItemStart ),
-                                      MPFROMP( pcszSearchString )));
+                                      MPFROMP( strSearchString.c_str())));
     }
 
     virtual bool SelectItem( SHORT sItemIndex, bool fSelect )
@@ -152,16 +196,16 @@ public :
         return PostMsg( LM_SETITEMHEIGHT, MPFROMLONG( ulNewHeight ));
     }
 
-    virtual bool SetItemText( SHORT sItemIndex, PCSZ pcszItemText )
+    virtual bool SetItemText( SHORT sItemIndex, const string& strItemText )
     {
         return SendMsg( LM_SETITEMTEXT, MPFROMSHORT( sItemIndex ),
-                        MPFROMP( pcszItemText ));
+                        MPFROMP( strItemText.c_str()));
     }
 
-    virtual bool SetItemTextP( SHORT sItemIndex, PCSZ pcszItemText )
+    virtual bool SetItemTextP( SHORT sItemIndex, const string& strItemText )
     {
         return PostMsg( LM_SETITEMTEXT, MPFROMSHORT( sItemIndex ),
-                        MPFROMP( pcszItemText ));
+                        MPFROMP( strItemText.c_str()));
     }
 
     virtual bool SetItemWidth( ULONG ulNewWidth )

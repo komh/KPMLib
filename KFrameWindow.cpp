@@ -1,15 +1,16 @@
 #define INCL_WIN
 #include <os2.h>
 
+#include <string>
+
 #include <cstdlib>
-#include <cstring>
 
 #include "KWindow.h"
 #include "KFrameWindow.h"
 
 bool KFrameWindow::CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
                                     PULONG pflCreateFlags,
-                                    PCSZ pcszTitle, ULONG flClientStyle,
+                                    const string& strTitle, ULONG flClientStyle,
                                     HMODULE hmodResources, ULONG ulId,
                                     KWindow& kwndClient )
 {
@@ -21,7 +22,7 @@ bool KFrameWindow::CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
     fcd.idResources   = ulId;
 
     SetClassName( WC_FRAME );
-    CreateWindow( pkwndP, pcszTitle, flStyle, 0, 0, 0, 0, 0,
+    CreateWindow( pkwndP, strTitle, flStyle, 0, 0, 0, 0, 0,
                   KWND_TOP, ulId, &fcd, 0 );
 
     kwndClient.CreateWindow( this, "",

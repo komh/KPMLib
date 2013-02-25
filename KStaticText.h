@@ -4,6 +4,8 @@
 #define INCL_WIN
 #include <os2.h>
 
+#include <string>
+
 #include "KWindow.h"
 
 class KStaticText : public KWindow
@@ -12,7 +14,7 @@ public :
     KStaticText() : KWindow() {};
     virtual ~KStaticText() {};
 
-    virtual bool CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
+    virtual bool CreateWindow( const KWindow* pkwndP, const string& strName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,

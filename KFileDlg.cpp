@@ -5,12 +5,18 @@
 KFileDlg::KFileDlg() : KDialog()
 {
     memset( &_fild, 0, sizeof( _fild ));
+
+    _ppszITypeList  = 0;
+    _ppszIDriveList = 0;
 }
 
 KFileDlg::~KFileDlg()
 {
     if( _fild.papszFQFilename )
         WinFreeFileDlgList( _fild.papszFQFilename );
+
+    delete[] _ppszITypeList;
+    delete[] _ppszIDriveList;
 }
 
 bool KFileDlg::FileDlg( const KWindow* pkwndP, const KWindow* pkwndO )

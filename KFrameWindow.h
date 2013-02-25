@@ -4,6 +4,8 @@
 #define INCL_WIN
 #include <os2.h>
 
+#include <string>
+
 #include "KWindow.h"
 #include "KScrollBar.h"
 #include "KMenu.h"
@@ -17,7 +19,7 @@ public :
 
     virtual bool CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
                                   PULONG pflCreateFlags,
-                                  PCSZ pcszTitle, ULONG flClientStyle,
+                                  const string& strTitle, ULONG flClientStyle,
                                   HMODULE hmodResources, ULONG ulId,
                                   KWindow& kwndClient );
 

@@ -4,6 +4,7 @@
 #define INCL_WIN
 #include <os2.h>
 
+#include <string>
 #include <list>
 using namespace std;
 
@@ -30,7 +31,7 @@ public :
             delete *it;
     }
 
-    virtual bool CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
+    virtual bool CreateWindow( const KWindow* pkwndP, const string& strName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
@@ -42,7 +43,7 @@ public :
         if( MiniRecord )
             flStyle |= CCS_MINIRECORDCORE;
 
-        return KWindow::CreateWindow( pkwndP, pcszName, flStyle, x, y,
+        return KWindow::CreateWindow( pkwndP, strName, flStyle, x, y,
                                       cx, cy, pkwndO, pkwndS, id,
                                       pCtlData, pPresParams );
     }

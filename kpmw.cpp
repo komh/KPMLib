@@ -1,8 +1,9 @@
 #define INCL_WIN
 #include <os2.h>
 
+#include <string>
+
 #include <cstdlib>
-#include <cstring>
 
 #include "KPMLib.h"
 
@@ -228,16 +229,16 @@ MRESULT KMyClientWindow::EnChange( USHORT id )
     {
         case IDEF_MYEF :
         {
-            char szBuf[ 512 ];
+            string strBuf;
 
             KEntryField kef;
 
             WindowFromID( id, kef );
-            kef.QueryWindowText( sizeof( szBuf ), szBuf );
+            kef.QueryWindowText( strBuf );
 
             KStaticText kst;
             WindowFromID( IDST_MYSTATIC, kst );
-            kst.SetWindowText( szBuf );
+            kst.SetWindowText( strBuf );
             break;
         }
     }
@@ -251,17 +252,16 @@ MRESULT KMyClientWindow::LnEnter( USHORT id )
     {
         case IDLB_MYLB :
         {
-            char szBuf[ 512 ];
+            string strBuf;
 
             KListBox klb;
 
             WindowFromID( id, klb );
-            klb.QueryItemText( klb.QuerySelection( LIT_FIRST ),
-                               sizeof( szBuf ), szBuf );
+            klb.QueryItemText( klb.QuerySelection( LIT_FIRST ), strBuf );
 
             KStaticText kst;
             WindowFromID( IDST_MYSTATIC, kst );
-            kst.SetWindowText( szBuf );
+            kst.SetWindowText( strBuf );
             break;
         }
     }
@@ -275,16 +275,16 @@ MRESULT KMyClientWindow::CbnEfChange( USHORT id )
     {
         case IDCB_MYCB :
         {
-            char szBuf[ 512 ];
+            string strBuf;
 
             KComboBox kcb;
 
             WindowFromID( id, kcb );
-            kcb.QueryWindowText( sizeof( szBuf ), szBuf );
+            kcb.QueryWindowText( strBuf );
 
             KStaticText kst;
             WindowFromID( IDST_MYSTATIC, kst );
-            kst.SetWindowText( szBuf );
+            kst.SetWindowText( strBuf );
             break;
         }
     }
@@ -527,7 +527,7 @@ int KMyPMApp::Run()
     mi.id = 0;
     mi.hwndSubMenu = NULLHANDLE;
     mi.hItem = 0;
-    kmSys.InsertItem( &mi, 0 );
+    kmSys.InsertItem( &mi, "");
 
     KEntryField kef;
     kef.CreateWindow( &kclient, "My Entry Field",
@@ -541,8 +541,21 @@ int KMyPMApp::Run()
                       500, 200, 100, 150, &kclient, KWND_TOP,
                       IDLB_MYLB );
 
+#if 0
     klb.InsertItem( LIT_END, "Item 1");
     klb.InsertItem( LIT_END, "Item 2");
+#else
+    LBOXINFO lbi;
+
+    lbi.lItemIndex  = LIT_END;
+    lbi.ulItemCount = 2;
+
+    vector< string > vsItem;
+
+    vsItem.push_back("Item 1");
+    vsItem.push_back("Item 2");
+    klb.InsertMultiItems( &lbi, vsItem );
+#endif
 
     KComboBox kcb;
     kcb.CreateWindow( &kclient, "My Combox Box",

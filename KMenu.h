@@ -1,6 +1,8 @@
 #ifndef KMENU_H
 #define KMENU_H
 
+#include <string>
+
 #include "KWindow.h"
 
 class KMenu : public KWindow
@@ -9,7 +11,7 @@ public :
     KMenu() : KWindow() {};
     virtual ~KMenu() {};
 
-    virtual bool CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
+    virtual bool CreateWindow( const KWindow* pkwndP, const string& strName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
@@ -51,15 +53,16 @@ public :
         return PostMsg( MM_ENDMENUMODE, MPFROMLONG( fDismiss ));
     }
 
-    virtual SHORT InsertItem( PMENUITEM pmi, PCSZ pcszText )
+    virtual SHORT InsertItem( PMENUITEM pmi, const string& strText )
     {
         return SHORT1FROMMR( SendMsg( MM_INSERTITEM, MPFROMP( pmi ),
-                                      MPFROMP( pcszText )));
+                                      MPFROMP( strText.c_str())));
     }
 
-    virtual bool InsertItemP( PMENUITEM pmi, PCSZ pcszText )
+    virtual bool InsertItemP( PMENUITEM pmi, const string& strText )
     {
-        return PostMsg( MM_INSERTITEM, MPFROMP( pmi ), MPFROMP( pcszText ));
+        return PostMsg( MM_INSERTITEM, MPFROMP( pmi ),
+                        MPFROMP( strText.c_str()));
     }
 
     virtual bool IsItemValid( USHORT usItem, BOOL fIncSub )
@@ -108,12 +111,21 @@ public :
                         MPFROMP( prcl ));
     }
 
-    virtual SHORT QueryItemText( USHORT usItem, SHORT sMaxCount,
-                                 PCSZ pcszText )
+    virtual SHORT QueryItemText( USHORT usItem, string& strText )
     {
-        return SHORT1FROMMR( SendMsg( MM_QUERYITEMTEXT,
-                                      MPFROM2SHORT( usItem, sMaxCount ),
-                                      MPFROMP( pcszText )));
+        SHORT sMaxCount = QueryItemTextLength( usItem ) + 1;
+        PSZ   pszText   = new CHAR[ sMaxCount ];
+        SHORT rc;
+
+        rc = SHORT1FROMMR( SendMsg( MM_QUERYITEMTEXT,
+                                    MPFROM2SHORT( usItem, sMaxCount ),
+                                    MPFROMP( pszText )));
+
+        strText = pszText;
+
+        delete[] pszText;
+
+        return rc;
     }
 
     virtual SHORT QueryItemTextLength( USHORT usItem )
@@ -199,16 +211,16 @@ public :
                         MPFROMLONG( ulHandle ));
     }
 
-    virtual bool SetItemText( USHORT usItem, PCSZ pcszText )
+    virtual bool SetItemText( USHORT usItem, const string& strText )
     {
         return SendMsg( MM_SETITEMTEXT, MPFROMSHORT( usItem ),
-                        MPFROMP( pcszText ));
+                        MPFROMP( strText.c_str()));
     }
 
-    virtual bool SetItemTextP( USHORT usItem, PCSZ pcszText )
+    virtual bool SetItemTextP( USHORT usItem, const string& strText )
     {
         return PostMsg( MM_SETITEMTEXT, MPFROMSHORT( usItem ),
-                        MPFROMP( pcszText ));
+                        MPFROMP( strText.c_str()));
     }
 
     virtual bool StartMenuMode( bool fShowSub, bool fResume )

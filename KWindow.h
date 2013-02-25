@@ -24,7 +24,7 @@ public :
     KWindow();
     virtual ~KWindow();
 
-    virtual bool CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
+    virtual bool CreateWindow( const KWindow* pkwndP, const string& strName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
@@ -50,16 +50,19 @@ public :
                                     pkwnd2hwnd( pkwndTo ), prgptl, cwpt );
     }
 
-    virtual ULONG MessageBox( PCSZ pcszText, PCSZ pcszCaption, ULONG flStyle )
+    virtual ULONG MessageBox( const string& strText, const string& strCaption,
+                              ULONG flStyle )
     {
-        return WinMessageBox( HWND_DESKTOP, _hwnd, pcszText, pcszCaption,
+        return WinMessageBox( HWND_DESKTOP, _hwnd,
+                              strText.c_str(), strCaption.c_str(),
                               0xFFFF, flStyle );
     }
 
-    virtual ULONG MessageBox( PCSZ pcszText, PCSZ pcszCaption, ULONG id,
-                              ULONG flStyle )
+    virtual ULONG MessageBox( const string& strText, const string& strCaption,
+                              ULONG id, ULONG flStyle )
     {
-        return WinMessageBox( HWND_DESKTOP, _hwnd, pcszText, pcszCaption,
+        return WinMessageBox( HWND_DESKTOP, _hwnd,
+                              strText.c_str(), strCaption.c_str(),
                               id, flStyle );
     }
 
@@ -105,9 +108,19 @@ public :
         return WinQueryWindowRect( _hwnd, prcl );
     }
 
-    virtual LONG QueryWindowText( LONG lLength, PCH pchBuffer )
+    virtual LONG QueryWindowText( string& strBuffer )
     {
-        return WinQueryWindowText( _hwnd, lLength, pchBuffer );
+        LONG lLength   = QueryWindowTextLength() + 1;
+        PCH  pchBuffer = new CHAR[ lLength ];
+        LONG rc;
+
+        rc = WinQueryWindowText( _hwnd, lLength, pchBuffer );
+
+        strBuffer = pchBuffer;
+
+        delete[] pchBuffer;
+
+        return rc;
     }
 
     virtual LONG QueryWindowTextLength()
@@ -125,8 +138,8 @@ public :
         return WinQueryWindowUShort( _hwnd, index );
     }
 
-    virtual bool RegisterClass( HAB hab, PCSZ pcszClassName, ULONG flStyle,
-                                ULONG cbWindowData );
+    virtual bool RegisterClass( HAB hab, const string& strClassName,
+                                ULONG flStyle, ULONG cbWindowData );
 
     virtual MRESULT SendMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
     {
@@ -150,9 +163,9 @@ public :
         return WinSetWindowPtr( _hwnd, lb, p );
     }
 
-    virtual bool SetWindowText( PCSZ pcszString )
+    virtual bool SetWindowText( const string& strString )
     {
-        return WinSetWindowText( _hwnd, pcszString );
+        return WinSetWindowText( _hwnd, strString.c_str());
     }
 
     virtual bool SetWindowULong( LONG index, ULONG ul )
@@ -170,8 +183,12 @@ public :
     HWND GetHWND() const { return _hwnd; }
     virtual void SetHWND( HWND hwnd );
 
-    PCSZ GetClassName() const { return _strClassName.c_str(); }
+    const string& GetClassName() const { return _strClassName; }
     virtual void SetClassName( PCSZ pcszClassName );
+    virtual void SetClassName( const string& strClassName )
+    {
+        _strClassName = strClassName;
+    }
 
 protected :
     static map< HWND, KWindow* > _mapHWND;

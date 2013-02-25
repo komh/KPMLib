@@ -4,6 +4,8 @@
 #define INCL_WIN
 #include <os2.h>
 
+#include <string>
+
 #include "KFrameWindow.h"
 
 class KDialog : public KFrameWindow
@@ -33,9 +35,19 @@ public :
         return WinQueryButtonCheckstate( _hwnd, usID );
     }
 
-    virtual ULONG QueryDlgItemText( ULONG idItem, LONG lMaxText, PSZ pszText )
+    virtual ULONG QueryDlgItemText( ULONG idItem, string& strText )
     {
-        return WinQueryDlgItemText( _hwnd, idItem, lMaxText, pszText );
+        LONG  lMaxText = QueryDlgItemTextLength( idItem ) + 1;
+        PSZ   pszText  = new CHAR[ lMaxText ];
+        ULONG rc;
+
+        rc = WinQueryDlgItemText( _hwnd, idItem, lMaxText, pszText );
+
+        strText = pszText;
+
+        delete[] pszText;
+
+        return rc;
     }
 
     virtual LONG QueryDlgItemTextLength( ULONG idItem )
@@ -49,9 +61,9 @@ public :
         return WinSendDlgItemMsg( _hwnd, idItem, msg, mp1, mp2 );
     }
 
-    virtual bool SetDlgItemText( ULONG idItem, PCSZ pcszText )
+    virtual bool SetDlgItemText( ULONG idItem, const string& strText )
     {
-        return WinSetDlgItemText( _hwnd, idItem, pcszText );
+        return WinSetDlgItemText( _hwnd, idItem, strText.c_str());
     }
 
     ULONG GetResult() const { return _ulResult; }

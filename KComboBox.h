@@ -4,6 +4,8 @@
 #define INCL_WIN
 #include <os2.h>
 
+#include <string>
+
 #include "KWindow.h"
 
 class KComboBox : public KWindow
@@ -12,7 +14,7 @@ public :
     KComboBox() : KWindow() {};
     virtual ~KComboBox() {};
 
-    virtual bool CreateWindow( const KWindow* pkwndP, PCSZ pcszName,
+    virtual bool CreateWindow( const KWindow* pkwndP, const string& strName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
@@ -55,17 +57,17 @@ public :
         return PostMsg( LM_DELETEITEM, MPFROMSHORT( sItemIndex ));
     }
 
-    virtual SHORT LmInsertItem( SHORT sItemIndex, PCSZ pcszItemText )
+    virtual SHORT LmInsertItem( SHORT sItemIndex, const string& strItemText )
     {
         return SHORT1FROMMR( SendMsg( LM_INSERTITEM,
                                       MPFROMSHORT( sItemIndex ),
-                                      MPFROMP( pcszItemText )));
+                                      MPFROMP( strItemText.c_str())));
     }
 
-    virtual bool LmInsertItemP( SHORT sItemIndex, PCSZ pcszItemText )
+    virtual bool LmInsertItemP( SHORT sItemIndex, const string& strItemText )
     {
         return PostMsg( LM_INSERTITEM, MPFROMSHORT( sItemIndex ),
-                        MPFROMP( pcszItemText ));
+                        MPFROMP( strItemText.c_str()));
     }
 
     virtual SHORT LmQueryItemCount()
@@ -73,12 +75,21 @@ public :
         return SHORT1FROMMR( SendMsg( LM_QUERYITEMCOUNT ));
     }
 
-    virtual SHORT LMQueryItemText( SHORT sItemIndex, SHORT sMaxCount,
-                                   PSZ pszItemText )
+    virtual SHORT LMQueryItemText( SHORT sItemIndex, string& strItemText )
     {
-        return SHORT1FROMMR( SendMsg( LM_QUERYITEMTEXT,
-                                      MPFROM2SHORT( sItemIndex, sMaxCount ),
-                                      MPFROMP( pszItemText )));
+        SHORT sMaxCount   = LmQueryItemTextLength( sItemIndex ) + 1;
+        PSZ   pszItemText = new CHAR[ sMaxCount ];;
+        SHORT rc;
+
+        rc = SHORT1FROMMR( SendMsg( LM_QUERYITEMTEXT,
+                                    MPFROM2SHORT( sItemIndex, sMaxCount ),
+                                    MPFROMP( pszItemText )));
+
+        strItemText = pszItemText;
+
+        delete[] pszItemText;
+
+        return rc;
     }
 
     virtual SHORT LmQueryItemTextLength( SHORT sItemIndex )
@@ -99,11 +110,11 @@ public :
     }
 
     virtual SHORT LmSearchString( USHORT usCmd, SHORT sItemStart,
-                                PCSZ pcszSearchString )
+                                  const string& strSearchString )
     {
         return SHORT1FROMMR( SendMsg( LM_SEARCHSTRING,
                                       MPFROM2SHORT( usCmd, sItemStart ),
-                                      MPFROMP( pcszSearchString )));
+                                      MPFROMP( strSearchString.c_str())));
     }
 
     virtual bool LmSelectItem( SHORT sItemIndex, bool fSelect )
@@ -118,16 +129,16 @@ public :
                         MPFROMLONG( fSelect ));
     }
 
-    virtual bool LmSetItemText( SHORT sItemIndex, PCSZ pcszItemText )
+    virtual bool LmSetItemText( SHORT sItemIndex, const string& strItemText )
     {
         return SendMsg( LM_SETITEMTEXT, MPFROMSHORT( sItemIndex ),
-                        MPFROMP( pcszItemText ));
+                        MPFROMP( strItemText.c_str()));
     }
 
-    virtual bool LmSetItemTextP( SHORT sItemIndex, PCSZ pcszItemText )
+    virtual bool LmSetItemTextP( SHORT sItemIndex, const string& strItemText )
     {
         return PostMsg( LM_SETITEMTEXT, MPFROMSHORT( sItemIndex ),
-                        MPFROMP( pcszItemText ));
+                        MPFROMP( strItemText.c_str()));
     }
 
     virtual bool LmSetTopIndex( SHORT sItemIndex )
