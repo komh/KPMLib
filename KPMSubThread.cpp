@@ -8,14 +8,25 @@
 
 bool KPMSubThread::BeginThread( void* arg, int cbStackSize )
 {
-    void* apArg[] = { this, arg };
+    HEV  hevDone;
+    bool rc = false;
+
+    DosCreateEventSem( NULL, &hevDone, 0, FALSE );
+
+    void* apArg[] = { this, &hevDone, arg };
 
     _tid = _beginthread( ThreadStart, 0, cbStackSize, apArg );
 
-    if( _tid == -1 )
-        return false;
+    if( _tid != -1 )
+    {
+        DosWaitEventSem( hevDone, SEM_INDEFINITE_WAIT );
 
-    return true;
+        rc = true;
+    }
+
+    DosCloseEventSem( hevDone );
+
+    return rc;
 }
 
 bool KPMSubThread::WaitThread( bool fWait )
@@ -30,9 +41,13 @@ bool KPMSubThread::WaitThread( bool fWait )
 
 void KPMSubThread::ThreadStart( void* arg )
 {
-    void** ppArg = reinterpret_cast< void** >( arg );
-    KPMSubThread* thread = reinterpret_cast< KPMSubThread* >( ppArg[ 0 ]);
-    arg = ppArg[ 1 ];
+    void**        ppArg    = reinterpret_cast< void** >( arg );
+    KPMSubThread* thread   = reinterpret_cast< KPMSubThread* >( ppArg[ 0 ]);
+    PHEV          phevDone = reinterpret_cast< PHEV >( ppArg[ 1 ]);
+
+    arg = ppArg[ 2 ];
+
+    DosPostEventSem( *phevDone );
 
     thread->PMThreadStart( arg );
 }
