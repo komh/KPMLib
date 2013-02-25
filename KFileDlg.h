@@ -112,8 +112,13 @@ public :
     {
         _vsFQFilename.clear();
 
-        for( ULONG i = 0; i < _fild.ulFQFCount; i++ )
-            _vsFQFilename.push_back(( *_fild.papszFQFilename )[ i ]);
+        if( _fild.papszFQFilename )
+        {
+            for( ULONG i = 0; i < _fild.ulFQFCount; i++ )
+                _vsFQFilename.push_back(( *_fild.papszFQFilename )[ i ]);
+        }
+        else if( _fild.ulFQFCount == 1 ) /* Entered directly only in EF */
+            _vsFQFilename.push_back( _fild.szFullFile );
 
         return _vsFQFilename;
     }
