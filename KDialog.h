@@ -38,6 +38,11 @@ public :
         return WinQueryDlgItemText( _hwnd, idItem, lMaxText, pszText );
     }
 
+    virtual LONG QueryDlgItemTextLength( ULONG idItem )
+    {
+        return WinQueryDlgItemTextLength( _hwnd, idItem );
+    }
+
     virtual MRESULT SendDlgItemMsg( ULONG idItem, ULONG msg, MPARAM mp1,
                                     MPARAM mp2 )
     {
