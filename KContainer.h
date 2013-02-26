@@ -392,6 +392,13 @@ public :
                         MPFROMLONG( lScrollInc ));
     }
 
+    virtual T* SearchString( PSEARCHSTRING pss, int iAfter )
+    {
+        return reinterpret_cast< T* >
+                    ( SendMsg( CM_SEARCHSTRING, MPFROMP( pss ),
+                               MPFROMP( iAfter )));
+    }
+
     virtual T* SearchString( PSEARCHSTRING pss, T* pAfter )
     {
         return reinterpret_cast< T* >
