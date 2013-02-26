@@ -161,6 +161,28 @@ void KWindow::SetClassName( PCSZ pcszClassName )
     _strClassName = pcszClassName;
 }
 
+void KWindow::Centering( bool horz, bool vert )
+{
+    RECTL rclP, rcl;
+    KWindow kwndP;
+    LONG x, y;
+
+    QueryWindow( QW_PARENT, kwndP );
+    kwndP.QueryWindowRect( &rclP );
+
+    QueryWindowRect( &rcl );
+    x = rcl.xLeft;
+    y = rcl.yBottom;
+
+    if( horz )
+        x = (( rclP.xRight - rclP.xLeft ) - ( rcl.xRight - rcl.xLeft )) / 2;
+
+    if( vert )
+        y = (( rclP.yTop - rclP.yBottom ) - ( rcl.yTop - rcl.yBottom )) / 2;
+
+    SetWindowPos( 0, x, y, 0, 0, SWP_MOVE );
+}
+
 MRESULT EXPENTRY KWindow::WndProc( HWND hwnd, ULONG msg, MPARAM mp1,
                                    MPARAM mp2 )
 {

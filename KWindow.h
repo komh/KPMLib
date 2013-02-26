@@ -192,6 +192,8 @@ public :
         _strClassName = strClassName;
     }
 
+    virtual void Centering( bool horz = true, bool vert = true );
+
 protected :
     static map< HWND, KWindow* > _mapHWND;
 
