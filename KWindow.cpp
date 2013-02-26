@@ -82,6 +82,17 @@ bool KWindow::RegisterClass( HAB hab, const string& strClassName,
                              sizeof( PVOID ) + cbWindowData );
 }
 
+bool KWindow::QueryWindow( LONG lCode, KWindow& kwnd )
+{
+    HWND hwnd = WinQueryWindow( _hwnd, lCode );
+    if( !hwnd )
+        return false;
+
+    kwnd.SetHWND( hwnd );
+
+    return true;
+}
+
 bool KWindow::WindowFromID( ULONG id, KWindow& kwnd )
 {
     HWND     hwnd;

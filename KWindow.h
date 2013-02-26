@@ -93,6 +93,8 @@ public :
         return WinQuerySysValue( HWND_DESKTOP, iSysValue );
     }
 
+    virtual bool QueryWindow( LONG lCode, KWindow& kwndRelated );
+
     virtual bool QueryWindowPos( PSWP pswp )
     {
         return WinQueryWindowPos( _hwnd, pswp );
