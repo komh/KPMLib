@@ -32,19 +32,19 @@ public :
     virtual void SetTitle( const string& strTitle )
     {
         _strTitle      = strTitle;
-        _fild.pszTitle = const_cast< char* >( _strTitle.c_str());
+        _fild.pszTitle = CSTR2PSZ( _strTitle.c_str());
     }
 
     virtual void SetOkButton( const string& strOKButton )
     {
         _strOKButton      = strOKButton;
-        _fild.pszOKButton = const_cast< char* >( _strOKButton.c_str());
+        _fild.pszOKButton = CSTR2PSZ( _strOKButton.c_str());
     }
 
     virtual void SetIType( const string& strIType )
     {
         _strIType      = strIType;
-        _fild.pszIType = const_cast< char* >( _strIType.c_str());
+        _fild.pszIType = CSTR2PSZ( _strIType.c_str());
     }
 
     virtual void SetITypeList( const KFDVECSTR& vsITypeList )
@@ -56,8 +56,7 @@ public :
         _ppszITypeList = new PSZ[ _vsITypeList.size() + 1 ];
 
         for( size_t i = 0; i < _vsITypeList.size(); i++ )
-            _ppszITypeList[ i ] = const_cast< char* >
-                                    ( _vsITypeList[ i ].c_str());
+            _ppszITypeList[ i ] = CSTR2PSZ( _vsITypeList[ i ].c_str());
         _ppszITypeList[ _vsITypeList.size()] = 0;
 
         _fild.papszITypeList = reinterpret_cast< PAPSZ >( &_ppszITypeList );
@@ -66,7 +65,7 @@ public :
     virtual void SetIDrive( const string& strIDrive )
     {
         _strIDrive      = strIDrive;
-        _fild.pszIDrive = const_cast< char* >( _strIDrive.c_str());
+        _fild.pszIDrive = CSTR2PSZ( _strIDrive.c_str());
     }
 
     virtual void SetIDriveList( const KFDVECSTR& vsIDriveList )
@@ -78,8 +77,7 @@ public :
         _ppszIDriveList = new PSZ[ _vsIDriveList.size() + 1 ];
 
         for( size_t i = 0; i < vsIDriveList.size(); i++ )
-            _ppszIDriveList[ i ] = const_cast< char* >
-                                        ( _vsIDriveList[ i ].c_str());
+            _ppszIDriveList[ i ] = CSTR2PSZ( _vsIDriveList[ i ].c_str());
         _ppszIDriveList[ vsIDriveList.size()] = 0;
 
         _fild.papszIDriveList = reinterpret_cast< PAPSZ >( &_ppszIDriveList );

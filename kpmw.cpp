@@ -580,8 +580,7 @@ int KMyPMApp::Run()
 
     prec = kcnr.AllocRecord( 1 );
     prec->hptrIcon = WinQuerySysPointer( HWND_DESKTOP, SPTR_APPICON, FALSE );
-    prec->pszIcon = reinterpret_cast< PSZ >
-                        ( const_cast< char * >("Item1"));
+    prec->pszIcon = CSTR2PSZ("Item1");
 
     ri.cb                = sizeof( RECORDINSERT );
     ri.pRecordOrder      = reinterpret_cast< PRECORDCORE >( CMA_END );
@@ -593,8 +592,7 @@ int KMyPMApp::Run()
 
     prec = kcnr.AllocRecord( 1 );
     prec->hptrIcon = WinQuerySysPointer( HWND_DESKTOP, SPTR_APPICON, FALSE );
-    prec->pszIcon = reinterpret_cast< PSZ >
-                        ( const_cast< char * >("Item2"));
+    prec->pszIcon = CSTR2PSZ("Item2");
 
     ri.cb                = sizeof( RECORDINSERT );
     ri.pRecordOrder      = reinterpret_cast< PRECORDCORE >( CMA_END );
