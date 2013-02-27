@@ -1029,5 +1029,9 @@ private :
     string _strClassName;
     PFNWP  _pfnwpOldProc;
 };
-#endif
 
+ULONG MessageBox( const KWindow* pkwndO, const string& strText,
+                  const string& strCaption, ULONG flStyle );
+ULONG MessageBox( const KWindow* pkwndO, const string& strText,
+                  const string& strCaption, ULONG id, ULONG flStyle );
+#endif
