@@ -47,6 +47,11 @@ public :
         _fild.pszIType = CSTR2PSZ( _strIType.c_str());
     }
 
+    virtual void SetITypeList( PAPSZ papszITypeList )
+    {
+        _fild.papszITypeList = papszITypeList;
+    }
+
     virtual void SetITypeList( const KFDVECSTR& vsITypeList )
     {
         _vsITypeList = vsITypeList;
@@ -66,6 +71,11 @@ public :
     {
         _strIDrive      = strIDrive;
         _fild.pszIDrive = CSTR2PSZ( _strIDrive.c_str());
+    }
+
+    virtual void setIDriveList( PAPSZ papszIDriveList )
+    {
+        _fild.papszIDriveList = papszIDriveList;
     }
 
     virtual void SetIDriveList( const KFDVECSTR& vsIDriveList )
@@ -99,6 +109,7 @@ public :
     LONG GetReturn() const { return _fild.lReturn; }
     LONG GetSrc() const { return _fild.lSRC; }
 
+    PCSZ GetFullFile() const { return _fild.szFullFile; }
     const string& GetFullFile()
     {
         _strFullFile = _fild.szFullFile;
@@ -106,6 +117,7 @@ public :
         return _strFullFile;
     }
 
+    const PAPSZ GetFQFilename() const { return _fild.papszFQFilename; }
     const KFDVECSTR& GetFQFilename()
     {
         _vsFQFilename.clear();
