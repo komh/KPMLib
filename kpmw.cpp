@@ -583,7 +583,7 @@ int KMyPMApp::Run()
     prec->pszIcon = CSTR2PSZ("Item1");
 
     ri.cb                = sizeof( RECORDINSERT );
-    ri.pRecordOrder      = reinterpret_cast< PRECORDCORE >( CMA_END );
+    ri.pRecordOrder      = TOPRECC( CMA_END );
     ri.pRecordParent     = 0;
     ri.zOrder            = static_cast< USHORT >( CMA_TOP );
     ri.fInvalidateRecord = FALSE;
@@ -595,7 +595,7 @@ int KMyPMApp::Run()
     prec->pszIcon = CSTR2PSZ("Item2");
 
     ri.cb                = sizeof( RECORDINSERT );
-    ri.pRecordOrder      = reinterpret_cast< PRECORDCORE >( CMA_END );
+    ri.pRecordOrder      = TOPRECC( CMA_END );
     ri.pRecordParent     = 0;
     ri.zOrder            = static_cast< USHORT >( CMA_TOP );
     ri.fInvalidateRecord = FALSE;

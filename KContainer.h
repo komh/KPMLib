@@ -10,6 +10,9 @@ using namespace std;
 
 #include "KWindow.h"
 
+#define TOPRECC( x ) ( reinterpret_cast< PRECORDCORE >( x ))
+#define TOPFI( x )   ( reinterpret_cast< PFIELDINFO >( x ))
+
 template< typename T, bool MiniRecord = false >
 class KContainer : public KWindow
 {
@@ -520,6 +523,8 @@ public :
         return PostMsg( CM_SORTRECORD, MPFROMP( SortCompare ),
                         MPFROMP( psp ));
     }
+
+    virtual T* I2PT( int i ) { return reinterpret_cast< T* >( i ); }
 
 protected :
 
