@@ -78,12 +78,6 @@ public :
                                       MPFROMP( strText.c_str())));
     }
 
-    virtual bool InsertItemP( PMENUITEM pmi, const string& strText )
-    {
-        return PostMsg( MM_INSERTITEM, MPFROMP( pmi ),
-                        MPFROMP( strText.c_str()));
-    }
-
     virtual bool IsItemValid( USHORT usItem, BOOL fIncSub )
     {
         return SendMsg( MM_ISITEMVALID, MPFROM2SHORT( usItem, fIncSub ));
@@ -198,12 +192,6 @@ public :
                         MPFROMP( pmi ));
     }
 
-    virtual bool SetItemP( bool fIncSub, PMENUITEM pmi )
-    {
-        return PostMsg( MM_SETITEM, MPFROM2SHORT( 0, fIncSub ),
-                        MPFROMP( pmi ));
-    }
-
     virtual bool SetItemAttr( USHORT usItem, bool fIncSub,
                               USHORT usMask, USHORT usData )
     {
@@ -233,12 +221,6 @@ public :
     virtual bool SetItemText( USHORT usItem, const string& strText )
     {
         return SendMsg( MM_SETITEMTEXT, MPFROMSHORT( usItem ),
-                        MPFROMP( strText.c_str()));
-    }
-
-    virtual bool SetItemTextP( USHORT usItem, const string& strText )
-    {
-        return PostMsg( MM_SETITEMTEXT, MPFROMSHORT( usItem ),
                         MPFROMP( strText.c_str()));
     }
 

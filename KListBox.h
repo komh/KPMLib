@@ -81,12 +81,6 @@ public :
                                       MPFROMP( strItemText.c_str())));
     }
 
-    virtual bool InsertItemP( SHORT sItemIndex, const string& strItemText )
-    {
-        return PostMsg( LM_INSERTITEM, MPFROMSHORT( sItemIndex ),
-                        MPFROMP( strItemText.c_str()));
-    }
-
     virtual LONG InsertMultiItems( PLBOXINFO plbi, PCSZ* papcszText )
     {
         return LONGFROMMR( SendMsg( LM_INSERTMULTITEMS,
@@ -110,29 +104,6 @@ public :
 
         return rc;
     }
-
-#if 0
-    virtual bool InsertMultiItemsP( PLBOXINFO plbi, const KLBVECSTR& vsText )
-    {
-        PCSZ* papcszText;
-        LONG  rc;
-
-        papcszText = new PCSZ[ plbi->ulItemCount ];
-
-        for( size_t i = 0; i < vsText.size(); i++ )
-            papcszText[ i ] = vsText[ i ].c_str();
-
-        rc = PostMsg( LM_INSERTMULTITEMS, MPFROMP( plbi ),
-                      MPFROMP( papcszText ));
-
-        // FIXME :
-        // this causes to crash because memory can be freed
-        // before it is passed to PM
-        delete[] papcszText;
-
-        return rc;
-    }
-#endif
 
     virtual SHORT QueryItemCount()
     {
@@ -224,12 +195,6 @@ public :
     virtual bool SetItemText( SHORT sItemIndex, const string& strItemText )
     {
         return SendMsg( LM_SETITEMTEXT, MPFROMSHORT( sItemIndex ),
-                        MPFROMP( strItemText.c_str()));
-    }
-
-    virtual bool SetItemTextP( SHORT sItemIndex, const string& strItemText )
-    {
-        return PostMsg( LM_SETITEMTEXT, MPFROMSHORT( sItemIndex ),
                         MPFROMP( strItemText.c_str()));
     }
 

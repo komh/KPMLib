@@ -83,12 +83,6 @@ public :
                                       MPFROMP( strItemText.c_str())));
     }
 
-    virtual bool LmInsertItemP( SHORT sItemIndex, const string& strItemText )
-    {
-        return PostMsg( LM_INSERTITEM, MPFROMSHORT( sItemIndex ),
-                        MPFROMP( strItemText.c_str()));
-    }
-
     virtual SHORT LmQueryItemCount()
     {
         return SHORT1FROMMR( SendMsg( LM_QUERYITEMCOUNT ));
@@ -151,12 +145,6 @@ public :
     virtual bool LmSetItemText( SHORT sItemIndex, const string& strItemText )
     {
         return SendMsg( LM_SETITEMTEXT, MPFROMSHORT( sItemIndex ),
-                        MPFROMP( strItemText.c_str()));
-    }
-
-    virtual bool LmSetItemTextP( SHORT sItemIndex, const string& strItemText )
-    {
-        return PostMsg( LM_SETITEMTEXT, MPFROMSHORT( sItemIndex ),
                         MPFROMP( strItemText.c_str()));
     }
 
