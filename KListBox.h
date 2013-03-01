@@ -87,6 +87,12 @@ public :
                         MPFROMP( strItemText.c_str()));
     }
 
+    virtual LONG InsertMultiItems( PLBOXINFO plbi, PCSZ* papcszText )
+    {
+        return LONGFROMMR( SendMsg( LM_INSERTMULTITEMS,
+                                    MPFROMP( plbi ), MPFROMP( papcszText )));
+    }
+
     virtual LONG InsertMultiItems( PLBOXINFO plbi, const KLBVECSTR& vsText )
     {
         PCSZ* papcszText;
