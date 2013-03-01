@@ -189,6 +189,11 @@ public :
         return WinSetWindowText( _hwnd, strString.c_str());
     }
 
+    virtual bool SetWindowUShort( LONG index, USHORT us )
+    {
+        return WinSetWindowUShort( _hwnd, index, us );
+    }
+
     virtual bool SetWindowULong( LONG index, ULONG ul )
     {
         return WinSetWindowULong( _hwnd, index, ul );
