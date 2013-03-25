@@ -231,6 +231,11 @@ public :
 
     virtual void Centering( bool horz = true, bool vert = true ) const;
 
+    bool Resize( LONG cx, LONG cy ) const
+    {
+        return SetWindowPos( 0, 0, 0, cx, cy, SWP_SIZE );
+    }
+
 protected :
     static map< HWND, KWindow* > _mapHWND;
 
