@@ -167,6 +167,11 @@ public :
         return WinSendMsg( _hwnd, ulMsg, mp1, mp2 );
     }
 
+    virtual bool SetActiveWindow()
+    {
+        return WinSetActiveWindow( HWND_DESKTOP, _hwnd );
+    }
+
     virtual bool SetFocus( bool fSet = true )
     {
         return WinSetFocus( HWND_DESKTOP, fSet ? _hwnd  : HWND_DESKTOP );
