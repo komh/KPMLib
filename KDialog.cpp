@@ -56,9 +56,7 @@ bool KDialog::LoadDlg( KWindow* pkwndP, KWindow* pkwndO, HMODULE hmod,
 
     CreateParams cp = { sizeof( cp ), pCreateParams, this };
 
-    _hwnd = WinLoadDlg( hwndP, hwndO, DlgProc, hmod, idDlg, &cp );
-
-    return _hwnd;
+    return WinLoadDlg( hwndP, hwndO, DlgProc, hmod, idDlg, &cp );
 }
 
 MRESULT EXPENTRY KDialog::DlgProc( HWND hwndDlg, ULONG msg, MPARAM mp1,
