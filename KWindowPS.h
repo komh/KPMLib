@@ -66,7 +66,7 @@ public :
 
     const HPS& GetHPS() const { return _hps; }
 
-protected :
+private :
     HPS _hps;
 };
 #endif

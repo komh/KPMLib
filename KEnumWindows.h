@@ -60,7 +60,7 @@ public :
         return WinEndEnumWindows( _henum );
     }
 
-protected :
+private:
     HENUM _henum;
 };
 #endif

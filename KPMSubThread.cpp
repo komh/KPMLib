@@ -34,10 +34,12 @@ bool KPMSubThread::BeginThread( void* arg, int cbStackSize )
 
     void* apArg[] = { this, &hevDone, arg };
 
-    _tid = _beginthread( ThreadStart, 0, cbStackSize, apArg );
+    int tid = _beginthread( ThreadStart, 0, cbStackSize, apArg );
 
-    if( _tid != -1 )
+    if( tid != -1 )
     {
+        SetTID( tid );
+
         DosWaitEventSem( hevDone, SEM_INDEFINITE_WAIT );
 
         rc = true;
@@ -50,7 +52,7 @@ bool KPMSubThread::BeginThread( void* arg, int cbStackSize )
 
 bool KPMSubThread::WaitThread( bool fWait ) const
 {
-    TID tid = _tid;
+    TID tid = GetTID();
 
     if( DosWaitThread( &tid, fWait ? DCWW_WAIT : DCWW_NOWAIT ))
         return false;
@@ -73,12 +75,12 @@ void KPMSubThread::ThreadStart( void* arg )
 
 void KPMSubThread::PMThreadStart( void* arg )
 {
-    _hab = WinInitialize( 0 );
-    _hmq = WinCreateMsgQueue( _hab, 0 );
+    SetHAB( WinInitialize( 0 ));
+    SetHMQ( WinCreateMsgQueue( GetHAB(), 0 ));
 
     ThreadMain( arg );
 
-    WinDestroyMsgQueue( _hmq );
-    WinTerminate( _hab );
+    WinDestroyMsgQueue( GetHMQ());
+    WinTerminate( GetHAB());
 }
 

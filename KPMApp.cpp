@@ -26,8 +26,8 @@ int KPMApp::Run()
 {
     QMSG qm;
 
-    while( WinGetMsg( _hab, &qm, 0, 0, 0 ))
-        WinDispatchMsg( _hab, &qm );
+    while( WinGetMsg( GetHAB(), &qm, 0, 0, 0 ))
+        WinDispatchMsg( GetHAB(), &qm );
 
     return 0;
 }

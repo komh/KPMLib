@@ -24,15 +24,15 @@
 
 KPMMainThread::KPMMainThread()
 {
-    _tid = 1;
+    SetTID( 1 );
 
-    _hab = WinInitialize( 0 );
-    _hmq = WinCreateMsgQueue( _hab, 0);
+    SetHAB( WinInitialize( 0 ));
+    SetHMQ( WinCreateMsgQueue( GetHAB(), 0 ));
 }
 
 KPMMainThread::~KPMMainThread()
 {
-    WinDestroyMsgQueue( _hmq );
-    WinTerminate( _hab );
+    WinDestroyMsgQueue( GetHMQ());
+    WinTerminate( GetHAB());
 }
 

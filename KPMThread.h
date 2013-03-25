@@ -31,11 +31,16 @@ public :
 
     virtual int Run() = 0;
 
-    int GetTID() const { return _tid; }
-    HAB GetHAB() const { return _hab; }
-    HMQ GetHMQ() const { return _hmq; }
+    int  GetTID() const { return _tid; }
+    void SetTID( int tid ) { _tid = tid; }
 
-protected :
+    HAB  GetHAB() const { return _hab; }
+    void SetHAB( HAB hab ) { _hab = hab; }
+
+    HMQ  GetHMQ() const { return _hmq; }
+    void SetHMQ( HMQ hmq ) { _hmq = hmq; }
+
+private :
     int _tid;
 
     HAB _hab;

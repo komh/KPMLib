@@ -50,7 +50,7 @@ public :
     const KTitleBar& GetTitleBar() const { return _kwndTitleBar; }
     const KScrollBar& GetVertScroll() const { return _kwndVertScroll; }
 
-protected :
+private :
     KWindow    _kwndClient;
     KScrollBar _kwndHorzScroll;
     KMenu      _kwndMenu;

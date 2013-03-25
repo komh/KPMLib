@@ -216,28 +216,33 @@ MRESULT KDirDlg::OnSetFocusToLB()
 
 bool KDirDlg::FileDlg(const KWindow* pkwndP, const KWindow* pkwndO)
 {
-    int   len = strlen(_fild.szFullFile);
+    int   len = GetFullFile().length();
     char *p;
 
+    CHAR  szFullFile[CCHMAXPATH];
+    strcpy( szFullFile, GetFullFile().c_str());
+
     // Remove the trailing back-slash
-    while (len > 0 && _fild.szFullFile[len - 1] == '\\')
+    while (len > 0 && szFullFile[len - 1] == '\\')
         len--;
 
     // To prevent from treating the last components of szFullFile as
     // a filename
-    strncpy(_fild.szFullFile + len, "\\^",
-            sizeof(_fild.szFullFile) - len - 1);
+    strncpy(szFullFile + len, "\\^",
+            sizeof(szFullFile) - len - 1);
 
     bool rc = KFileDlg::FileDlg(pkwndP, pkwndO);
 
     // Remove a temporary filename part
-    p = strrchr( _fild.szFullFile, '\\');
+    p = strrchr( szFullFile, '\\');
     // Except x:\ case
-    if (p && (p - _fild.szFullFile) == 2)
+    if (p && (p - szFullFile) == 2)
         p++;
 
     if (p)
         *p = '\0';
+
+    SetFullFile(szFullFile);
 
     return rc;
 }

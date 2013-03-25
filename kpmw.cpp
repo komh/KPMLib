@@ -445,7 +445,7 @@ public :
 int KMyPMApp::Run()
 {
     KMyClientWindow kclient;
-    kclient.RegisterClass( _hab, WC_KPMW, CS_SIZEREDRAW,
+    kclient.RegisterClass( GetHAB(), WC_KPMW, CS_SIZEREDRAW,
                            sizeof( PVOID ));
 
     ULONG flFrameFlags = FCF_SYSMENU | FCF_TITLEBAR | FCF_MINMAX |

@@ -88,9 +88,6 @@ public :
     ULONG GetResult() const { return _ulResult; }
 
 protected :
-    static MRESULT EXPENTRY DlgProc( HWND hwndDlg, ULONG msg, MPARAM mp1,
-                                     MPARAM mp2 );
-
     virtual MRESULT KDefWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     {
         return WinDefDlgProc( GetHWND(), msg, mp1, mp2 );
@@ -98,5 +95,8 @@ protected :
 
 private :
     ULONG _ulResult;
+
+    static MRESULT EXPENTRY DlgProc( HWND hwndDlg, ULONG msg, MPARAM mp1,
+                                     MPARAM mp2 );
 };
 #endif
