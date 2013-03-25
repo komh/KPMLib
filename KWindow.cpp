@@ -208,7 +208,7 @@ void KWindow::SetClassName( PCSZ pcszClassName )
     _strClassName = pcszClassName;
 }
 
-void KWindow::Centering( bool horz, bool vert ) const
+bool KWindow::Centering( bool horz, bool vert ) const
 {
     RECTL rclP, rcl;
     KWindow kwndP;
@@ -227,7 +227,7 @@ void KWindow::Centering( bool horz, bool vert ) const
     if( vert )
         y = (( rclP.yTop - rclP.yBottom ) - ( rcl.yTop - rcl.yBottom )) / 2;
 
-    SetWindowPos( 0, x, y, 0, 0, SWP_MOVE );
+    return SetWindowPos( 0, x, y, 0, 0, SWP_MOVE );
 }
 
 MRESULT EXPENTRY KWindow::WndProc( HWND hwnd, ULONG msg, MPARAM mp1,

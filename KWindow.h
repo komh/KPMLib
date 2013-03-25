@@ -229,7 +229,7 @@ public :
         _strClassName = strClassName;
     }
 
-    virtual void Centering( bool horz = true, bool vert = true ) const;
+    virtual bool Centering( bool horz = true, bool vert = true ) const;
 
     bool Resize( LONG cx, LONG cy ) const
     {
