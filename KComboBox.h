@@ -39,56 +39,58 @@ public :
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
 
-    virtual bool Hilite( bool fHilite )
+    virtual bool Hilite( bool fHilite ) const
     {
         return SendMsg( CBM_HILITE, MPFROMLONG( fHilite ));
     }
 
-    virtual bool HiliteP( bool fHilite )
+    virtual bool HiliteP( bool fHilite ) const
     {
         return PostMsg( CBM_HILITE, MPFROMLONG( fHilite ));
     }
 
-    virtual bool IsLitShowing() { return SendMsg( CBM_ISLISTSHOWING ); }
+    virtual bool IsLitShowing() const { return SendMsg( CBM_ISLISTSHOWING ); }
 
-    virtual bool ShowList( bool fShow )
+    virtual bool ShowList( bool fShow ) const
     {
         return SendMsg( CBM_SHOWLIST, MPFROMLONG( fShow ));
     }
 
-    virtual bool ShowListP( bool fShow )
+    virtual bool ShowListP( bool fShow ) const
     {
         return PostMsg( CBM_SHOWLIST, MPFROMLONG( fShow ));
     }
 
     // member-functions for ListBox control
-    virtual bool LmDeleteAll() { return SendMsg( LM_DELETEALL ); }
-    virtual bool LmDeleteAllP() { return PostMsg( LM_DELETEALL ); }
+    virtual bool LmDeleteAll() const { return SendMsg( LM_DELETEALL ); }
+    virtual bool LmDeleteAllP() const { return PostMsg( LM_DELETEALL ); }
 
-    virtual SHORT LmDeleteItem( SHORT sItemIndex )
+    virtual SHORT LmDeleteItem( SHORT sItemIndex ) const
     {
         return SHORT1FROMMR( SendMsg( LM_DELETEITEM,
                                       MPFROMSHORT( sItemIndex )));
     }
 
-    virtual bool LmDeleteItemP( SHORT sItemIndex )
+    virtual bool LmDeleteItemP( SHORT sItemIndex ) const
     {
         return PostMsg( LM_DELETEITEM, MPFROMSHORT( sItemIndex ));
     }
 
-    virtual SHORT LmInsertItem( SHORT sItemIndex, const string& strItemText )
+    virtual SHORT LmInsertItem( SHORT sItemIndex,
+                                const string& strItemText ) const
     {
         return SHORT1FROMMR( SendMsg( LM_INSERTITEM,
                                       MPFROMSHORT( sItemIndex ),
                                       MPFROMP( strItemText.c_str())));
     }
 
-    virtual SHORT LmQueryItemCount()
+    virtual SHORT LmQueryItemCount() const
     {
         return SHORT1FROMMR( SendMsg( LM_QUERYITEMCOUNT ));
     }
 
-    virtual SHORT LMQueryItemText( SHORT sItemIndex, string& strItemText )
+    virtual SHORT LMQueryItemText( SHORT sItemIndex,
+                                   string& strItemText ) const
     {
         SHORT sMaxCount   = LmQueryItemTextLength( sItemIndex ) + 1;
         PSZ   pszItemText = new CHAR[ sMaxCount ];;
@@ -105,76 +107,77 @@ public :
         return rc;
     }
 
-    virtual SHORT LmQueryItemTextLength( SHORT sItemIndex )
+    virtual SHORT LmQueryItemTextLength( SHORT sItemIndex ) const
     {
         return SHORT1FROMMR( SendMsg( LM_QUERYITEMTEXTLENGTH,
                                       MPFROMSHORT( sItemIndex )));
     }
 
-    virtual SHORT LmQuerySelection( SHORT sItemStart )
+    virtual SHORT LmQuerySelection( SHORT sItemStart ) const
     {
         return SHORT1FROMMR( SendMsg( LM_QUERYSELECTION,
                                       MPFROMSHORT( sItemStart )));
     }
 
-    virtual SHORT LmQueryTopIndex()
+    virtual SHORT LmQueryTopIndex() const
     {
         return SHORT1FROMMR( SendMsg( LM_QUERYTOPINDEX ));
     }
 
     virtual SHORT LmSearchString( USHORT usCmd, SHORT sItemStart,
-                                  const string& strSearchString )
+                                  const string& strSearchString ) const
     {
         return SHORT1FROMMR( SendMsg( LM_SEARCHSTRING,
                                       MPFROM2SHORT( usCmd, sItemStart ),
                                       MPFROMP( strSearchString.c_str())));
     }
 
-    virtual bool LmSelectItem( SHORT sItemIndex, bool fSelect )
+    virtual bool LmSelectItem( SHORT sItemIndex, bool fSelect ) const
     {
         return SendMsg( LM_SELECTITEM, MPFROMSHORT( sItemIndex ),
                         MPFROMLONG( fSelect ));
     }
 
-    virtual bool LmSelectItemP( SHORT sItemIndex, bool fSelect )
+    virtual bool LmSelectItemP( SHORT sItemIndex, bool fSelect ) const
     {
         return PostMsg( LM_SELECTITEM, MPFROMSHORT( sItemIndex ),
                         MPFROMLONG( fSelect ));
     }
 
-    virtual bool LmSetItemText( SHORT sItemIndex, const string& strItemText )
+    virtual bool LmSetItemText( SHORT sItemIndex,
+                                const string& strItemText ) const
     {
         return SendMsg( LM_SETITEMTEXT, MPFROMSHORT( sItemIndex ),
                         MPFROMP( strItemText.c_str()));
     }
 
-    virtual bool LmSetTopIndex( SHORT sItemIndex )
+    virtual bool LmSetTopIndex( SHORT sItemIndex ) const
     {
         return SendMsg( LM_SETTOPINDEX, MPFROMSHORT( sItemIndex ));
     }
 
-    virtual bool LmSetTopIndexP( SHORT sItemIndex )
+    virtual bool LmSetTopIndexP( SHORT sItemIndex ) const
     {
         return PostMsg( LM_SETTOPINDEX, MPFROMSHORT( sItemIndex ));
     }
 
     // member-functions for EntryField control
-    virtual bool EmClear() { return SendMsg( EM_CLEAR ); }
-    virtual bool EmClearP() { return PostMsg( EM_CLEAR ); }
-    virtual bool EmCopy() { return SendMsg( EM_COPY ); }
-    virtual bool EmCopyP() { return PostMsg( EM_COPY ); }
-    virtual bool EmCut() { return SendMsg( EM_CUT ); }
-    virtual bool EmCutP() { return PostMsg( EM_CUT ); }
-    virtual bool EmPaste() { return SendMsg( EM_PASTE ); }
-    virtual bool EmPasteP() { return PostMsg( EM_PASTE ); }
-    virtual bool EmQueryChanged() { return SendMsg( EM_QUERYCHANGED ); }
+    virtual bool EmClear() const { return SendMsg( EM_CLEAR ); }
+    virtual bool EmClearP() const { return PostMsg( EM_CLEAR ); }
+    virtual bool EmCopy() const { return SendMsg( EM_COPY ); }
+    virtual bool EmCopyP() const { return PostMsg( EM_COPY ); }
+    virtual bool EmCut() const { return SendMsg( EM_CUT ); }
+    virtual bool EmCutP() const { return PostMsg( EM_CUT ); }
+    virtual bool EmPaste() const { return SendMsg( EM_PASTE ); }
+    virtual bool EmPasteP() const { return PostMsg( EM_PASTE ); }
+    virtual bool EmQueryChanged() const { return SendMsg( EM_QUERYCHANGED ); }
 
-    virtual SHORT EmQueryFirstChar()
+    virtual SHORT EmQueryFirstChar() const
     {
         return SHORT1FROMMR( SendMsg( EM_QUERYFIRSTCHAR ));
     }
 
-    virtual void EmQuerySel( SHORT& sMinSel, SHORT& sMaxSel )
+    virtual void EmQuerySel( SHORT& sMinSel, SHORT& sMaxSel ) const
     {
         MRESULT mr = SendMsg( EM_QUERYSEL );
 
@@ -182,32 +185,32 @@ public :
         sMaxSel = HIUSHORT( mr );
     }
 
-    virtual bool EmSetFirstChar( SHORT sOffset )
+    virtual bool EmSetFirstChar( SHORT sOffset ) const
     {
         return SendMsg( EM_SETFIRSTCHAR, MPFROMSHORT( sOffset ));
     }
 
-    virtual bool EmSetFirstCharP( SHORT sOffset )
+    virtual bool EmSetFirstCharP( SHORT sOffset ) const
     {
         return PostMsg( EM_SETFIRSTCHAR, MPFROMSHORT( sOffset ));
     }
 
-    virtual bool EmSetSel( USHORT usMinSel, USHORT usMaxSel )
+    virtual bool EmSetSel( USHORT usMinSel, USHORT usMaxSel ) const
     {
         return SendMsg( EM_SETSEL, MPFROM2SHORT( usMinSel, usMaxSel ));
     }
 
-    virtual bool EmSetSelP( USHORT usMinSel, USHORT usMaxSel )
+    virtual bool EmSetSelP( USHORT usMinSel, USHORT usMaxSel ) const
     {
         return PostMsg( EM_SETSEL, MPFROM2SHORT( usMinSel, usMaxSel ));
     }
 
-    virtual bool EmSetTextLimit( SHORT sTextLimit )
+    virtual bool EmSetTextLimit( SHORT sTextLimit ) const
     {
         return SendMsg( EM_SETTEXTLIMIT, MPFROMSHORT( sTextLimit ));
     }
 
-    virtual bool EmSetTextLimitP( SHORT sTextLimit )
+    virtual bool EmSetTextLimitP( SHORT sTextLimit ) const
     {
         return PostMsg( EM_SETTEXTLIMIT, MPFROMSHORT( sTextLimit ));
     }

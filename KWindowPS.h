@@ -42,15 +42,15 @@ public :
     }
 
     virtual LONG DrawText( LONG cchText, PCCH lpchText, PRECTL prcl,
-                           LONG clrFore, LONG clrBack, ULONG flCmd )
+                           LONG clrFore, LONG clrBack, ULONG flCmd ) const
     {
         return WinDrawText( _hps, cchText, lpchText, prcl, clrFore, clrBack,
                             flCmd );
     }
 
-    virtual bool EndPaint() { return WinEndPaint( _hps ); }
+    virtual bool EndPaint() const { return WinEndPaint( _hps ); }
 
-    virtual bool FillRect( PRECTL prcl, LONG lColor )
+    virtual bool FillRect( PRECTL prcl, LONG lColor ) const
     {
         return WinFillRect( _hps, prcl, lColor );
     }
@@ -62,7 +62,7 @@ public :
         return _hps;
     }
 
-    virtual bool ReleasePS() { return WinReleasePS( _hps ); }
+    virtual bool ReleasePS() const { return WinReleasePS( _hps ); }
 
     const HPS& GetHPS() const { return _hps; }
 

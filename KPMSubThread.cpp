@@ -48,7 +48,7 @@ bool KPMSubThread::BeginThread( void* arg, int cbStackSize )
     return rc;
 }
 
-bool KPMSubThread::WaitThread( bool fWait )
+bool KPMSubThread::WaitThread( bool fWait ) const
 {
     TID tid = _tid;
 

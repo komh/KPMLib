@@ -47,7 +47,7 @@ public :
         return _henum;
     }
 
-    virtual bool GetNextWindow( KWindow& kwndNext )
+    virtual bool GetNextWindow( KWindow& kwndNext ) const
     {
         HWND hwndNext = WinGetNextWindow( _henum );
         kwndNext.SetHWND( hwndNext );
@@ -55,7 +55,7 @@ public :
         return hwndNext;
     }
 
-    virtual bool EndEnumWindows()
+    virtual bool EndEnumWindows() const
     {
         return WinEndEnumWindows( _henum );
     }

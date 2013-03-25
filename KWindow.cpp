@@ -117,7 +117,7 @@ bool KWindow::RegisterClass( HAB hab, const string& strClassName,
                              sizeof( PVOID ) + cbWindowData );
 }
 
-bool KWindow::QueryWindow( LONG lCode, KWindow& kwnd )
+bool KWindow::QueryWindow( LONG lCode, KWindow& kwnd ) const
 {
     HWND hwnd = WinQueryWindow( _hwnd, lCode );
     if( !hwnd )
@@ -128,7 +128,7 @@ bool KWindow::QueryWindow( LONG lCode, KWindow& kwnd )
     return true;
 }
 
-bool KWindow::WindowFromID( ULONG id, KWindow& kwnd )
+bool KWindow::WindowFromID( ULONG id, KWindow& kwnd ) const
 {
     HWND     hwnd;
 
@@ -196,7 +196,7 @@ void KWindow::SetClassName( PCSZ pcszClassName )
     _strClassName = pcszClassName;
 }
 
-void KWindow::Centering( bool horz, bool vert )
+void KWindow::Centering( bool horz, bool vert ) const
 {
     RECTL rclP, rcl;
     KWindow kwndP;

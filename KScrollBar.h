@@ -36,9 +36,12 @@ public :
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
 
-    virtual SHORT QueryPos() { return SHORT1FROMMR( SendMsg( SBM_QUERYPOS )); }
+    virtual SHORT QueryPos() const
+    {
+        return SHORT1FROMMR( SendMsg( SBM_QUERYPOS ));
+    }
 
-    virtual void QueryRange( SHORT& sFirst, SHORT& sLast )
+    virtual void QueryRange( SHORT& sFirst, SHORT& sLast ) const
     {
         MRESULT mr = SendMsg( SBM_QUERYRANGE );
 
@@ -46,34 +49,36 @@ public :
         sLast  = SHORT2FROMMR( mr );
     }
 
-    virtual bool SetPos( SHORT sSlider )
+    virtual bool SetPos( SHORT sSlider ) const
     {
         return SendMsg( SBM_SETPOS, MPFROMSHORT( sSlider ));
     }
 
-    virtual bool SetPosP( SHORT sSlider )
+    virtual bool SetPosP( SHORT sSlider ) const
     {
         return PostMsg( SBM_SETPOS, MPFROMSHORT( sSlider ));
     }
 
-    virtual bool SetScrollBar( SHORT sSlider, SHORT sFirst, SHORT sLast )
+    virtual bool SetScrollBar( SHORT sSlider,
+                               SHORT sFirst, SHORT sLast ) const
     {
         return SendMsg( SBM_SETSCROLLBAR, MPFROMSHORT( sSlider ),
                         MPFROM2SHORT( sFirst, sLast ));
     }
 
-    virtual bool SetScrollBarP( SHORT sSlider, SHORT sFirst, SHORT sLast )
+    virtual bool SetScrollBarP( SHORT sSlider,
+                                SHORT sFirst, SHORT sLast ) const
     {
         return PostMsg( SBM_SETSCROLLBAR, MPFROMSHORT( sSlider ),
                         MPFROM2SHORT( sFirst, sLast ));
     }
 
-    virtual bool SetThumbSize( SHORT sVisible, SHORT sTotal )
+    virtual bool SetThumbSize( SHORT sVisible, SHORT sTotal ) const
     {
         return SendMsg( SBM_SETTHUMBSIZE, MPFROM2SHORT( sVisible, sTotal ));
     }
 
-    virtual bool SetThumbSizeP( SHORT sVisible, SHORT sTotal )
+    virtual bool SetThumbSizeP( SHORT sVisible, SHORT sTotal ) const
     {
         return PostMsg( SBM_SETTHUMBSIZE, MPFROM2SHORT( sVisible, sTotal ));
     }

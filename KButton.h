@@ -46,48 +46,51 @@ public :
 
     enum CheckState { kUncheck = 0, kCheck, kIndeterminate };
 
-    virtual bool AutoSize() { return SendMsg( BM_AUTOSIZE ); }
-    virtual bool AutoSizeP() { return PostMsg( BM_AUTOSIZE ); }
-    virtual void Click( bool fUp ) { SendMsg( BM_CLICK, MPFROMLONG( fUp )); }
+    virtual bool AutoSize() const { return SendMsg( BM_AUTOSIZE ); }
+    virtual bool AutoSizeP() const { return PostMsg( BM_AUTOSIZE ); }
+    virtual void Click( bool fUp ) const
+    {
+        SendMsg( BM_CLICK, MPFROMLONG( fUp ));
+    }
 
-    virtual bool ClickP( bool fUp )
+    virtual bool ClickP( bool fUp ) const
     {
         return PostMsg( BM_CLICK, MPFROMLONG( fUp ));
     }
 
-    virtual USHORT QueryCheck()
+    virtual USHORT QueryCheck() const
     {
         return SHORT1FROMMR( SendMsg( BM_QUERYCHECK ));
     }
 
-    virtual SHORT QueryCheckIndex()
+    virtual SHORT QueryCheckIndex() const
     {
         return SHORT1FROMMR( SendMsg( BM_QUERYCHECKINDEX ));
     }
 
-    virtual bool QueryHilite() { return SendMsg( BM_QUERYHILITE ); }
+    virtual bool QueryHilite() const { return SendMsg( BM_QUERYHILITE ); }
 
-    virtual USHORT SetCheck( USHORT usCheck )
+    virtual USHORT SetCheck( USHORT usCheck ) const
     {
         return SHORT1FROMMR( SendMsg( BM_SETCHECK, MPFROMSHORT( usCheck )));
     }
 
-    virtual bool SetDefault( bool fDefault )
+    virtual bool SetDefault( bool fDefault ) const
     {
         return SendMsg( BM_SETDEFAULT, MPFROMLONG( fDefault ));
     }
 
-    virtual bool SetDefaultP( bool fDefault )
+    virtual bool SetDefaultP( bool fDefault ) const
     {
         return PostMsg( BM_SETDEFAULT, MPFROMLONG( fDefault ));
     }
 
-    virtual bool SetHilite( bool fHilite )
+    virtual bool SetHilite( bool fHilite ) const
     {
         return SendMsg( BM_SETHILITE, MPFROMLONG( fHilite ));
     }
 
-    virtual bool SetHiliteP( bool fHilite )
+    virtual bool SetHiliteP( bool fHilite ) const
     {
         return PostMsg( BM_SETHILITE, MPFROMLONG( fHilite ));
     }

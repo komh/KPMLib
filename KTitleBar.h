@@ -36,14 +36,14 @@ public :
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
 
-    virtual bool QueryHilite() { return SendMsg( TBM_QUERYHILITE ); }
+    virtual bool QueryHilite() const { return SendMsg( TBM_QUERYHILITE ); }
 
-    virtual bool SetHilite( bool fHighlighted )
+    virtual bool SetHilite( bool fHighlighted ) const
     {
         return SendMsg( TBM_SETHILITE, MPFROMLONG( fHighlighted ));
     }
 
-    virtual bool SetHiliteP( bool fHighlighted )
+    virtual bool SetHiliteP( bool fHighlighted ) const
     {
         return PostMsg( TBM_SETHILITE, MPFROMLONG( fHighlighted ));
     }

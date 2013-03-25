@@ -39,17 +39,17 @@ public :
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
 
-    virtual HBITMAP QueryHandle()
+    virtual HBITMAP QueryHandle() const
     {
         return LONGFROMMR( SendMsg( SM_QUERYHANDLE ));
     }
 
-    virtual HBITMAP SetHandle( HBITMAP hbmHandle )
+    virtual HBITMAP SetHandle( HBITMAP hbmHandle ) const
     {
         return LONGFROMMR( SendMsg( SM_SETHANDLE, MPFROMLONG( hbmHandle )));
     }
 
-    virtual bool SetHandleP( HBITMAP hbmHandle )
+    virtual bool SetHandleP( HBITMAP hbmHandle ) const
     {
         return PostMsg( SM_SETHANDLE, MPFROMLONG( hbmHandle ));
     }

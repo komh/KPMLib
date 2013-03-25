@@ -42,13 +42,13 @@ public :
                                   HMODULE hmodResources, ULONG ulId,
                                   KWindow& kwndClient );
 
-    KWindow& GetClient() { return _kwndClient; }
-    KScrollBar& GetHorzScroll() { return _kwndHorzScroll; }
-    KMenu& GetMenu() { return _kwndMenu; }
-    KMenu& GetMinMax() { return _kwndMinMax; }
-    KMenu& GetSysMenu() { return _kwndSysMenu; }
-    KTitleBar& GetTitleBar() { return _kwndTitleBar; }
-    KScrollBar& GetVertScroll() { return _kwndVertScroll; }
+    const KWindow& GetClient() const { return _kwndClient; }
+    const KScrollBar& GetHorzScroll() const { return _kwndHorzScroll; }
+    const KMenu& GetMenu() const { return _kwndMenu; }
+    const KMenu& GetMinMax() const { return _kwndMinMax; }
+    const KMenu& GetSysMenu() const { return _kwndSysMenu; }
+    const KTitleBar& GetTitleBar() const { return _kwndTitleBar; }
+    const KScrollBar& GetVertScroll() const { return _kwndVertScroll; }
 
 protected :
     KWindow    _kwndClient;

@@ -49,28 +49,29 @@ public :
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
 
-    virtual bool DestroyPointer( HPOINTER hptr )
+    virtual bool DestroyPointer( HPOINTER hptr ) const
     {
         return WinDestroyPointer( hptr );
     }
 
     virtual bool DestroyWindow();
 
-    virtual HPOINTER LoadPointer( HMODULE hmodResource, ULONG idPointer )
+    virtual HPOINTER LoadPointer( HMODULE hmodResource,
+                                  ULONG idPointer ) const
     {
         return WinLoadPointer( HWND_DESKTOP, hmodResource, idPointer );
     }
 
     virtual bool MapWindowPoints( const KWindow* pkwndFrom,
                                   const KWindow* pkwndTo, PPOINTL prgptl,
-                                  LONG cwpt )
+                                  LONG cwpt ) const
     {
         return  WinMapWindowPoints( pkwnd2hwnd( pkwndFrom ),
                                     pkwnd2hwnd( pkwndTo ), prgptl, cwpt );
     }
 
     virtual ULONG MessageBox( const string& strText, const string& strCaption,
-                              ULONG flStyle )
+                              ULONG flStyle ) const
     {
         return WinMessageBox( HWND_DESKTOP, _hwnd,
                               strText.c_str(), strCaption.c_str(),
@@ -78,58 +79,61 @@ public :
     }
 
     virtual ULONG MessageBox( const string& strText, const string& strCaption,
-                              ULONG id, ULONG flStyle )
+                              ULONG id, ULONG flStyle ) const
     {
         return WinMessageBox( HWND_DESKTOP, _hwnd,
                               strText.c_str(), strCaption.c_str(),
                               id, flStyle );
     }
 
-    virtual bool PostMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
+    virtual bool PostMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 ) const
     {
         return WinPostMsg( _hwnd, ulMsg, mp1, mp2 );
     }
 
-    virtual HAB QueryAnchorBlock() { return WinQueryAnchorBlock( _hwnd ); }
+    virtual HAB QueryAnchorBlock() const
+    {
+        return WinQueryAnchorBlock( _hwnd );
+    }
 
-    virtual bool QueryPointerPos( PPOINTL pptlPoint )
+    virtual bool QueryPointerPos( PPOINTL pptlPoint ) const
     {
         return WinQueryPointerPos( HWND_DESKTOP, pptlPoint );
     }
 
-    virtual ULONG QueryTaskSizePos( PSWP pswp )
+    virtual ULONG QueryTaskSizePos( PSWP pswp ) const
     {
         return WinQueryTaskSizePos( QueryAnchorBlock(), 0, pswp );
     }
 
-    virtual HPOINTER QuerySysPointer( LONG lID, bool fCopy )
+    virtual HPOINTER QuerySysPointer( LONG lID, bool fCopy ) const
     {
         return WinQuerySysPointer( HWND_DESKTOP, lID, fCopy );
     }
 
-    virtual LONG QuerySysValue( LONG iSysValue )
+    virtual LONG QuerySysValue( LONG iSysValue ) const
     {
         return WinQuerySysValue( HWND_DESKTOP, iSysValue );
     }
 
-    virtual bool QueryWindow( LONG lCode, KWindow& kwndRelated );
+    virtual bool QueryWindow( LONG lCode, KWindow& kwndRelated ) const;
 
-    virtual bool QueryWindowPos( PSWP pswp )
+    virtual bool QueryWindowPos( PSWP pswp ) const
     {
         return WinQueryWindowPos( _hwnd, pswp );
     }
 
-    virtual PVOID QueryWindowPtr( LONG index )
+    virtual PVOID QueryWindowPtr( LONG index ) const
     {
         return WinQueryWindowPtr( _hwnd, index );
     }
 
-    virtual bool QueryWindowRect( PRECTL prcl )
+    virtual bool QueryWindowRect( PRECTL prcl ) const
     {
         return WinQueryWindowRect( _hwnd, prcl );
     }
 
-    virtual LONG QueryWindowText( string& strBuffer )
+    virtual LONG QueryWindowText( string& strBuffer ) const
     {
         LONG lLength   = QueryWindowTextLength() + 1;
         PCH  pchBuffer = new CHAR[ lLength ];
@@ -144,17 +148,17 @@ public :
         return rc;
     }
 
-    virtual LONG QueryWindowTextLength()
+    virtual LONG QueryWindowTextLength() const
     {
         return WinQueryWindowTextLength( _hwnd );
     }
 
-    virtual ULONG QueryWindowULong( LONG index )
+    virtual ULONG QueryWindowULong( LONG index ) const
     {
         return WinQueryWindowULong( _hwnd, index );
     }
 
-    virtual USHORT QueryWindowUShort( LONG index )
+    virtual USHORT QueryWindowUShort( LONG index ) const
     {
         return WinQueryWindowUShort( _hwnd, index );
     }
@@ -162,54 +166,55 @@ public :
     virtual bool RegisterClass( HAB hab, const string& strClassName,
                                 ULONG flStyle, ULONG cbWindowData );
 
-    virtual MRESULT SendMsg( ULONG ulMsg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
+    virtual MRESULT SendMsg( ULONG ulMsg,
+                             MPARAM mp1 = 0, MPARAM mp2 = 0 ) const
     {
         return WinSendMsg( _hwnd, ulMsg, mp1, mp2 );
     }
 
-    virtual bool SetActiveWindow()
+    virtual bool SetActiveWindow() const
     {
         return WinSetActiveWindow( HWND_DESKTOP, _hwnd );
     }
 
-    virtual bool SetFocus( bool fSet = true )
+    virtual bool SetFocus( bool fSet = true ) const
     {
         return WinSetFocus( HWND_DESKTOP, fSet ? _hwnd  : HWND_DESKTOP );
     }
 
     virtual bool SetWindowPos( const KWindow* pkwndRel, LONG x, LONG y,
-                               LONG cx, LONG cy, ULONG fl )
+                               LONG cx, LONG cy, ULONG fl ) const
     {
         return WinSetWindowPos( _hwnd, pkwnd2hwnd( pkwndRel ),
                                 x, y, cx, cy, fl );
     }
 
-    virtual bool SetWindowPtr( LONG lb, PVOID p )
+    virtual bool SetWindowPtr( LONG lb, PVOID p ) const
     {
         return WinSetWindowPtr( _hwnd, lb, p );
     }
 
-    virtual bool SetWindowText( const string& strString )
+    virtual bool SetWindowText( const string& strString ) const
     {
         return WinSetWindowText( _hwnd, strString.c_str());
     }
 
-    virtual bool SetWindowUShort( LONG index, USHORT us )
+    virtual bool SetWindowUShort( LONG index, USHORT us ) const
     {
         return WinSetWindowUShort( _hwnd, index, us );
     }
 
-    virtual bool SetWindowULong( LONG index, ULONG ul )
+    virtual bool SetWindowULong( LONG index, ULONG ul ) const
     {
         return WinSetWindowULong( _hwnd, index, ul );
     }
 
-    virtual bool ShowWindow( BOOL fNewVisibility )
+    virtual bool ShowWindow( BOOL fNewVisibility ) const
     {
         return WinShowWindow( _hwnd, fNewVisibility );
     }
 
-    virtual bool WindowFromID( ULONG id, KWindow& kwnd );
+    virtual bool WindowFromID( ULONG id, KWindow& kwnd ) const;
 
     HWND GetHWND() const { return _hwnd; }
     virtual void SetHWND( HWND hwnd );
@@ -221,7 +226,7 @@ public :
         _strClassName = strClassName;
     }
 
-    virtual void Centering( bool horz = true, bool vert = true );
+    virtual void Centering( bool horz = true, bool vert = true ) const;
 
 protected :
     static map< HWND, KWindow* > _mapHWND;

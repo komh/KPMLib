@@ -32,7 +32,7 @@ public :
     virtual ~KPMSubThread() {}
 
     virtual bool BeginThread( void *arg = 0, int cbStackSize = 1024 * 1024 );
-    virtual bool WaitThread( bool fWait = true );
+    virtual bool WaitThread( bool fWait = true ) const;
 
 protected :
     virtual int  Run() { return 0; }

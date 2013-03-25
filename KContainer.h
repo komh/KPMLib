@@ -39,7 +39,7 @@ public :
     struct StorageParam
     {
         PVOID pStorage;
-        KContainer< T, MiniRecord >* pkcnr;
+        const KContainer< T, MiniRecord >* pkcnr;
     };
 
     KContainer() : KWindow() { _fDoSort = false; }
@@ -70,14 +70,14 @@ public :
                                       pCtlData, pPresParams );
     }
 
-    virtual PFIELDINFO AllocDetailFieldInfo( USHORT nFieldInfo )
+    virtual PFIELDINFO AllocDetailFieldInfo( USHORT nFieldInfo ) const
     {
         return reinterpret_cast< PFIELDINFO >
                     ( SendMsg( CM_ALLOCDETAILFIELDINFO,
                                MPFROMSHORT( nFieldInfo )));
     }
 
-    virtual T* AllocRecord( USHORT nRecords )
+    virtual T* AllocRecord( USHORT nRecords ) const
     {
         ULONG cbRecordData = sizeof( T );
 
@@ -91,37 +91,37 @@ public :
                                MPFROMSHORT( nRecords )));
     }
 
-    virtual bool Arrange( ULONG ulType, ULONG ulFlags )
+    virtual bool Arrange( ULONG ulType, ULONG ulFlags ) const
     {
         return SendMsg( CM_ARRANGE, MPFROMLONG( ulType ),
                         MPFROMLONG( ulFlags ));
     }
 
-    virtual bool ArrangeP( ULONG ulType, ULONG ulFlags )
+    virtual bool ArrangeP( ULONG ulType, ULONG ulFlags ) const
     {
         return PostMsg( CM_ARRANGE, MPFROMLONG( ulType ),
                         MPFROMLONG( ulFlags ));
     }
 
-    virtual bool CloseEdit() { return SendMsg( CM_CLOSEEDIT ); }
-    virtual bool CloseEditP() { return PostMsg( CM_CLOSEEDIT ); }
+    virtual bool CloseEdit() const { return SendMsg( CM_CLOSEEDIT ); }
+    virtual bool CloseEditP() const { return PostMsg( CM_CLOSEEDIT ); }
 
-    virtual bool CollapseTree( T* pRecord )
+    virtual bool CollapseTree( T* pRecord ) const
     {
         return SendMsg( CM_COLLAPSETREE, MPFROMP( pRecord ));
     }
 
-    virtual bool EraseRecord( T* pRecord )
+    virtual bool EraseRecord( T* pRecord ) const
     {
         return SendMsg( CM_ERASERECORD, MPFROMP( pRecord ));
     }
 
-    virtual bool ExpandTree( T* pRecord )
+    virtual bool ExpandTree( T* pRecord ) const
     {
         return SendMsg( CM_EXPANDTREE, MPFROMP( pRecord ));
     }
 
-    virtual bool Filter( PVOID pStorage = 0 )
+    virtual bool Filter( PVOID pStorage = 0 ) const
     {
         StorageParam sp = { pStorage, this };
 
@@ -129,38 +129,40 @@ public :
     }
 
     virtual bool FreeDetailFieldInfo( PFIELDINFO* pFieldInfoArray,
-                                      USHORT cNumFieldInfo )
+                                      USHORT cNumFieldInfo ) const
     {
         return SendMsg( CM_FREEDETAILFIELDINFO, MPFROMP( pFieldInfoArray ),
                         MPFROMSHORT( cNumFieldInfo ));
     }
 
-    virtual bool FreeRecord( T** pRecordArray, USHORT cNumRecord )
+    virtual bool FreeRecord( T** pRecordArray, USHORT cNumRecord ) const
     {
         return SendMsg( CM_FREERECORD, MPFROMP( pRecordArray ),
                         MPFROMSHORT( cNumRecord ));
     }
 
-    virtual bool HorzScrollSplitWindow( USHORT usWindow, LONG lScrollInc )
+    virtual bool HorzScrollSplitWindow( USHORT usWindow,
+                                        LONG lScrollInc ) const
     {
         return SendMsg( CM_HORZSCROLLSPLITWINDOW, MPFROMSHORT( usWindow ),
                         MPFROMLONG( lScrollInc ));
     }
 
-    virtual bool HorzScrollSplitWindowP( USHORT usWindow, LONG lScrollInc )
+    virtual bool HorzScrollSplitWindowP( USHORT usWindow,
+                                         LONG lScrollInc ) const
     {
         return PostMsg( CM_HORZSCROLLSPLITWINDOW, MPFROMSHORT( usWindow ),
                         MPFROMLONG( lScrollInc ));
     }
 
     virtual USHORT InsertDetailFieldInfo( PFIELDINFO pfi,
-                                          PFIELDINFOINSERT pfii )
+                                          PFIELDINFOINSERT pfii ) const
     {
         return SHORT1FROMMR( SendMsg( CM_INSERTDETAILFIELDINFO,
                                       MPFROMP( pfi ), MPFROMP( pfii )));
     }
 
-    virtual ULONG InsertRecord( T* pRecord, PRECORDINSERT pri )
+    virtual ULONG InsertRecord( T* pRecord, PRECORDINSERT pri ) const
     {
         LONG rc = LONGFROMMR( SendMsg( CM_INSERTRECORD, MPFROMP( pRecord ),
                               MPFROMP( pri )));
@@ -171,7 +173,8 @@ public :
         return rc;
     }
 
-    virtual ULONG InsertRecordArray( T** pRecordArray, PRECORDINSERT pri )
+    virtual ULONG InsertRecordArray( T** pRecordArray,
+                                     PRECORDINSERT pri ) const
     {
         ULONG rc = LONGFROMMR( SendMsg( CM_INSERTRECORDARRAY,
                                MPFROMP( pRecordArray ), MPFROMP( pri )));
@@ -182,69 +185,70 @@ public :
         return rc;
     }
 
-    virtual bool InvalidateDetailFieldInfo()
+    virtual bool InvalidateDetailFieldInfo() const
     {
         return SendMsg( CM_INVALIDATEDETAILFIELDINFO );
     }
 
-    virtual bool InvalidateDetailFieldInfoP()
+    virtual bool InvalidateDetailFieldInfoP() const
     {
         return PostMsg( CM_INVALIDATEDETAILFIELDINFO );
     }
 
     virtual bool InvalidateRecord( T** pRecordArray, USHORT cNumRecord,
-                                   USHORT fsInvalidateRecord )
+                                   USHORT fsInvalidateRecord ) const
     {
         return SendMsg( CM_INVALIDATERECORD, MPFROMP( pRecordArray ),
                         MPFROM2SHORT( cNumRecord, fsInvalidateRecord ));
     }
 
-    virtual bool MoveTree( PTREEMOVE ptm )
+    virtual bool MoveTree( PTREEMOVE ptm ) const
     {
         return SendMsg( CM_MOVETREE, MPFROMP( ptm ));
     }
 
-    virtual bool OpenEdit( PCNREDITDATA pced )
+    virtual bool OpenEdit( PCNREDITDATA pced ) const
     {
         return SendMsg( CM_OPENEDIT, MPFROMP( pced ));
     }
 
-    virtual bool PaintBackground( POWNERBACKGROUND pobg )
+    virtual bool PaintBackground( POWNERBACKGROUND pobg ) const
     {
         return SendMsg( CM_PAINTBACKGROUND, MPFROMP( pobg ));
     }
 
-    virtual USHORT QueryCnrInfo( PCNRINFO pci, USHORT cbBuffer )
+    virtual USHORT QueryCnrInfo( PCNRINFO pci, USHORT cbBuffer ) const
     {
         return SHORT1FROMMR( SendMsg( CM_QUERYCNRINFO, MPFROMP( pci ),
                                       MPFROMSHORT( cbBuffer )));
     }
 
-    virtual PFIELDINFO QueryDetailFieldInfo( PFIELDINFO pfiBase, USHORT cmd )
+    virtual PFIELDINFO QueryDetailFieldInfo( PFIELDINFO pfiBase,
+                                             USHORT cmd ) const
     {
         return reinterpret_cast< PFIELDINFO >
                     ( SendMsg( CM_QUERYDETAILFIELDINFO, MPFROMP( pfiBase ),
                                MPFROMSHORT( cmd )));
     }
 
-    virtual LHANDLE QueryDragImage( T* pRecord )
+    virtual LHANDLE QueryDragImage( T* pRecord ) const
     {
         return LONGFROMMR( SendMsg( CM_QUERYDRAGIMAGE, MPFROMP( pRecord )));
     }
 
-    virtual bool QueryGridInfo( PGRIDINFO pgi )
+    virtual bool QueryGridInfo( PGRIDINFO pgi ) const
     {
         return SendMsg( CM_QUERYGRIDINFO, MPFROMP( pgi ));
     }
 
-    virtual T* QueryRecord( T* pRecord, USHORT cmd, USHORT fsSearch )
+    virtual T* QueryRecord( T* pRecord, USHORT cmd, USHORT fsSearch ) const
     {
         return reinterpret_cast< T* >
                     ( SendMsg( CM_QUERYRECORD, MPFROMP( pRecord ),
                                MPFROM2SHORT( cmd, fsSearch )));
     }
 
-    virtual T* QueryRecordEmphasis( T* pSearchAfter, USHORT fsMask )
+    virtual T* QueryRecordEmphasis( T* pSearchAfter, USHORT fsMask ) const
     {
         return reinterpret_cast< T* >
                     ( SendMsg( CM_QUERYRECORDEMPHASIS,
@@ -252,27 +256,28 @@ public :
                                MPFROMSHORT( fsMask )));
     }
 
-    virtual T* QueryRecordFromRect( T* pSearchAfter, PQUERYRECFROMRECT pqrfr )
+    virtual T* QueryRecordFromRect( T* pSearchAfter,
+                                    PQUERYRECFROMRECT pqrfr ) const
     {
         return reinterpret_cast< T* >
                     ( SendMsg( CM_QUERYRECORDFROMRECT,
                                MPFROMP( pSearchAfter ), MPFROMP( pqrfr )));
     }
 
-    virtual bool QueryRecordInfo( T** pRecordArray, USHORT cNumRecord )
+    virtual bool QueryRecordInfo( T** pRecordArray, USHORT cNumRecord ) const
     {
         return SendMsg( CM_QUERYRECORDINFO, MPFROMP( pRecordArray ),
                         MPFROMSHORT( cNumRecord ));
     }
 
-    virtual bool QueryRecordRect( PRECTL prcl, PQUERYRECORDRECT pqrr )
+    virtual bool QueryRecordRect( PRECTL prcl, PQUERYRECORDRECT pqrr ) const
     {
         return SendMsg( CM_QUERYRECORDRECT, MPFROMP( prcl ),
                         MPFROMP( pqrr ));
     }
 
     virtual bool QueryViewportRect( PRECTL prcl, USHORT usIndicator,
-                                    bool fRightSplitWindow )
+                                    bool fRightSplitWindow ) const
     {
         return SendMsg( CM_QUERYVIEWPORTRECT, MPFROMP( prcl ),
                         MPFROM2SHORT( usIndicator, fRightSplitWindow ));
@@ -280,7 +285,7 @@ public :
 
     virtual SHORT RemoveDetailFieldInfo( PFIELDINFO* pFieldInfoArray,
                                          USHORT cNumFieldInfo,
-                                         USHORT fsRemoveFieldInfo )
+                                         USHORT fsRemoveFieldInfo ) const
     {
         return SHORT1FROMMR( SendMsg( CM_REMOVEDETAILFIELDINFO,
                                       MPFROMP( pFieldInfoArray ),
@@ -289,40 +294,42 @@ public :
     }
 
     virtual LONG RemoveRecord( T** pRecordArray, USHORT cNumRecord,
-                               USHORT fsRemoveRecord )
+                               USHORT fsRemoveRecord ) const
     {
         return LONGFROMMR( SendMsg( CM_REMOVERECORD, MPFROMP( pRecordArray ),
                                     MPFROM2SHORT( cNumRecord,
                                                   fsRemoveRecord )));
     }
 
-    virtual bool ScrollWindow( USHORT fsScrollDirection, LONG lScrollInc )
+    virtual bool ScrollWindow( USHORT fsScrollDirection,
+                               LONG lScrollInc ) const
     {
         return SendMsg( CM_SCROLLWINDOW, MPFROMSHORT( fsScrollDirection ),
                         MPFROMLONG( lScrollInc ));
     }
 
-    virtual bool ScrollWindowP( USHORT fsScrollDirection, LONG lScrollInc )
+    virtual bool ScrollWindowP( USHORT fsScrollDirection,
+                                LONG lScrollInc ) const
     {
         return PostMsg( CM_SCROLLWINDOW, MPFROMSHORT( fsScrollDirection ),
                         MPFROMLONG( lScrollInc ));
     }
 
-    virtual T* SearchString( PSEARCHSTRING pss, int iAfter )
+    virtual T* SearchString( PSEARCHSTRING pss, int iAfter ) const
     {
         return reinterpret_cast< T* >
                     ( SendMsg( CM_SEARCHSTRING, MPFROMP( pss ),
                                MPFROMP( iAfter )));
     }
 
-    virtual T* SearchString( PSEARCHSTRING pss, T* pAfter )
+    virtual T* SearchString( PSEARCHSTRING pss, T* pAfter ) const
     {
         return reinterpret_cast< T* >
                     ( SendMsg( CM_SEARCHSTRING, MPFROMP( pss ),
                                MPFROMP( pAfter )));
     }
 
-    virtual bool SetCnrInfo( PCNRINFO pCnrInfo, ULONG ulCnrInfoFl )
+    virtual bool SetCnrInfo( PCNRINFO pCnrInfo, ULONG ulCnrInfoFl ) const
     {
         bool rc;
 
@@ -344,7 +351,7 @@ public :
         return rc;
     }
 
-    virtual bool SetGridInfo( PGRIDINFO pGridInfo, bool fRepaint )
+    virtual bool SetGridInfo( PGRIDINFO pGridInfo, bool fRepaint ) const
     {
         return SendMsg( CM_SETGRIDINFO, MPFROMP( pGridInfo ),
                         MPFROMLONG( fRepaint ));
@@ -352,29 +359,29 @@ public :
 
     virtual bool SetRecordEmphasis( T* pRecord,
                                     USHORT usChangeEmphasis,
-                                    USHORT fsEmphasisAttr )
+                                    USHORT fsEmphasisAttr ) const
     {
         return SendMsg( CM_SETRECORDEMPHASIS, MPFROMP( pRecord ),
                         MPFROM2SHORT( usChangeEmphasis, fsEmphasisAttr ));
     }
 
-    virtual bool SetTextVisibility( bool fVisible )
+    virtual bool SetTextVisibility( bool fVisible ) const
     {
         return SendMsg( CM_SETTEXTVISIBILITY, MPFROMLONG( fVisible ));
     }
 
-    virtual bool SetTextVisibilityP( bool fVisible )
+    virtual bool SetTextVisibilityP( bool fVisible ) const
     {
         return PostMsg( CM_SETTEXTVISIBILITY, MPFROMLONG( fVisible ));
     }
 
-    virtual bool SnapToGrid( T* pRecord, SHORT xDrop, SHORT yDrop )
+    virtual bool SnapToGrid( T* pRecord, SHORT xDrop, SHORT yDrop ) const
     {
         return SendMsg( CM_SNAPTOGRID, MPFROMP( pRecord ),
                         MPFROM2SHORT( xDrop, yDrop ));
     }
 
-    virtual bool SortRecord( PVOID pStorage = 0 )
+    virtual bool SortRecord( PVOID pStorage = 0 ) const
     {
         StorageParam sp = { pStorage, this };
 
@@ -386,11 +393,15 @@ public :
 
 protected :
 
-    virtual BOOL  KFilter( T* p, PVOID pStorage ) { return TRUE; }
-    virtual SHORT KSortCompare( T* p1, T* p2, PVOID pStorage ) { return 0; }
+    virtual BOOL  KFilter( T* p, PVOID pStorage ) const { return TRUE; }
+
+    virtual SHORT KSortCompare( T* p1, T* p2, PVOID pStorage ) const
+    {
+        return 0;
+    }
 
 private :
-    bool _fDoSort;
+    mutable bool _fDoSort;
 
     list< StorageParam* > _StorageParamList;
 

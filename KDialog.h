@@ -33,12 +33,12 @@ public :
     KDialog();
     virtual ~KDialog();
 
-    virtual USHORT CheckButton( USHORT usID, USHORT usChkState )
+    virtual USHORT CheckButton( USHORT usID, USHORT usChkState ) const
     {
         return WinCheckButton( _hwnd, usID, usChkState );
     }
 
-    virtual bool DismissDlg( ULONG ulResult )
+    virtual bool DismissDlg( ULONG ulResult ) const
     {
         return WinDismissDlg( _hwnd, ulResult );
     }
@@ -49,12 +49,12 @@ public :
                           ULONG idDlg, PVOID pCreateParams = 0 );
     virtual void ProcessDlg() { _ulResult = WinProcessDlg( _hwnd ); }
 
-    virtual USHORT QueryButtonCheckstate( USHORT usID )
+    virtual USHORT QueryButtonCheckstate( USHORT usID ) const
     {
         return WinQueryButtonCheckstate( _hwnd, usID );
     }
 
-    virtual ULONG QueryDlgItemText( ULONG idItem, string& strText )
+    virtual ULONG QueryDlgItemText( ULONG idItem, string& strText ) const
     {
         LONG  lMaxText = QueryDlgItemTextLength( idItem ) + 1;
         PSZ   pszText  = new CHAR[ lMaxText ];
@@ -69,18 +69,18 @@ public :
         return rc;
     }
 
-    virtual LONG QueryDlgItemTextLength( ULONG idItem )
+    virtual LONG QueryDlgItemTextLength( ULONG idItem ) const
     {
         return WinQueryDlgItemTextLength( _hwnd, idItem );
     }
 
     virtual MRESULT SendDlgItemMsg( ULONG idItem, ULONG msg, MPARAM mp1,
-                                    MPARAM mp2 )
+                                    MPARAM mp2 ) const
     {
         return WinSendDlgItemMsg( _hwnd, idItem, msg, mp1, mp2 );
     }
 
-    virtual bool SetDlgItemText( ULONG idItem, const string& strText )
+    virtual bool SetDlgItemText( ULONG idItem, const string& strText ) const
     {
         return WinSetDlgItemText( _hwnd, idItem, strText.c_str());
     }

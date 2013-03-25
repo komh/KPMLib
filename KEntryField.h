@@ -36,24 +36,24 @@ public :
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
 
-    virtual bool Clear() { return SendMsg( EM_CLEAR ); }
-    virtual bool ClearP() { return PostMsg( EM_CLEAR ); }
-    virtual bool Copy() { return SendMsg( EM_COPY ); }
-    virtual bool CopyP() { return PostMsg( EM_COPY ); }
-    virtual bool Cut() { return SendMsg( EM_CUT ); }
-    virtual bool CutP() { return PostMsg( EM_CUT ); }
-    virtual bool Paste() { return SendMsg( EM_PASTE ); }
-    virtual bool PasteP() { return PostMsg( EM_PASTE ); }
-    virtual bool QueryChanged() { return SendMsg( EM_QUERYCHANGED ); }
+    virtual bool Clear() const { return SendMsg( EM_CLEAR ); }
+    virtual bool ClearP() const { return PostMsg( EM_CLEAR ); }
+    virtual bool Copy() const { return SendMsg( EM_COPY ); }
+    virtual bool CopyP() const { return PostMsg( EM_COPY ); }
+    virtual bool Cut() const { return SendMsg( EM_CUT ); }
+    virtual bool CutP() const { return PostMsg( EM_CUT ); }
+    virtual bool Paste() const { return SendMsg( EM_PASTE ); }
+    virtual bool PasteP() const { return PostMsg( EM_PASTE ); }
+    virtual bool QueryChanged() const { return SendMsg( EM_QUERYCHANGED ); }
 
-    virtual SHORT QueryFirstChar()
+    virtual SHORT QueryFirstChar() const
     {
         return SHORT1FROMMR( SendMsg( EM_QUERYFIRSTCHAR ));
     }
 
-    virtual bool QueryReadOnly() { return SendMsg( EM_QUERYREADONLY ); }
+    virtual bool QueryReadOnly() const { return SendMsg( EM_QUERYREADONLY ); }
 
-    virtual void QuerySel( SHORT& sMinSel, SHORT& sMaxSel )
+    virtual void QuerySel( SHORT& sMinSel, SHORT& sMaxSel ) const
     {
         MRESULT mr = SendMsg( EM_QUERYSEL );
 
@@ -61,52 +61,52 @@ public :
         sMaxSel = HIUSHORT( mr );
     }
 
-    virtual bool SetFirstChar( SHORT sOffset )
+    virtual bool SetFirstChar( SHORT sOffset ) const
     {
         return SendMsg( EM_SETFIRSTCHAR, MPFROMSHORT( sOffset ));
     }
 
-    virtual bool SetFirstCharP( SHORT sOffset )
+    virtual bool SetFirstCharP( SHORT sOffset ) const
     {
         return PostMsg( EM_SETFIRSTCHAR, MPFROMSHORT( sOffset ));
     }
 
-    virtual bool SetInsertMode( bool fInsert )
+    virtual bool SetInsertMode( bool fInsert ) const
     {
         return SendMsg( EM_SETINSERTMODE, MPFROMLONG( fInsert ));
     }
 
-    virtual bool SetInsertModeP( bool fInsert )
+    virtual bool SetInsertModeP( bool fInsert ) const
     {
         return PostMsg( EM_SETINSERTMODE, MPFROMLONG( fInsert ));
     }
 
-    virtual bool SetReadOnly( bool fReadOnly )
+    virtual bool SetReadOnly( bool fReadOnly ) const
     {
         return SendMsg( EM_SETREADONLY, MPFROMLONG( fReadOnly ));
     }
 
-    virtual bool SetReadOnlyP( bool fReadOnly )
+    virtual bool SetReadOnlyP( bool fReadOnly ) const
     {
         return PostMsg( EM_SETREADONLY, MPFROMLONG( fReadOnly ));
     }
 
-    virtual bool SetSel( USHORT usMinSel, USHORT usMaxSel )
+    virtual bool SetSel( USHORT usMinSel, USHORT usMaxSel ) const
     {
         return SendMsg( EM_SETSEL, MPFROM2SHORT( usMinSel, usMaxSel ));
     }
 
-    virtual bool SetSelP( USHORT usMinSel, USHORT usMaxSel )
+    virtual bool SetSelP( USHORT usMinSel, USHORT usMaxSel ) const
     {
         return PostMsg( EM_SETSEL, MPFROM2SHORT( usMinSel, usMaxSel ));
     }
 
-    virtual bool SetTextLimit( SHORT sTextLimit )
+    virtual bool SetTextLimit( SHORT sTextLimit ) const
     {
         return SendMsg( EM_SETTEXTLIMIT, MPFROMSHORT( sTextLimit ));
     }
 
-    virtual bool SetTextLimitP( SHORT sTextLimit )
+    virtual bool SetTextLimitP( SHORT sTextLimit ) const
     {
         return PostMsg( EM_SETTEXTLIMIT, MPFROMSHORT( sTextLimit ));
     }

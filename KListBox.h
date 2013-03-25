@@ -40,54 +40,56 @@ public :
                                const KWindow* pkwndS, ULONG id,
                                PVOID pCtlData = 0, PVOID pPresParams = 0 );
 
-    virtual LONG DeleteLboxItem( LONG index )
+    virtual LONG DeleteLboxItem( LONG index ) const
     {
         return WinDeleteLboxItem( _hwnd, index );
     }
 
-    virtual LONG InsertLboxItem( LONG index, const string& str )
+    virtual LONG InsertLboxItem( LONG index, const string& str ) const
     {
         return WinInsertLboxItem( _hwnd, index, str.c_str());
     }
 
-    virtual LONG QueryLboxSelectedItem()
+    virtual LONG QueryLboxSelectedItem() const
     {
         return WinQueryLboxSelectedItem( _hwnd );
     }
 
-    virtual bool SetLboxItemText( LONG index, const string& str )
+    virtual bool SetLboxItemText( LONG index, const string& str ) const
     {
         return WinSetLboxItemText( _hwnd, index, str.c_str());
     }
 
-    virtual bool DeleteAll() { return SendMsg( LM_DELETEALL ); }
-    virtual bool DeleteAllP() { return PostMsg( LM_DELETEALL ); }
+    virtual bool DeleteAll()  const { return SendMsg( LM_DELETEALL ); }
+    virtual bool DeleteAllP()  const { return PostMsg( LM_DELETEALL ); }
 
-    virtual SHORT DeleteItem( SHORT sItemIndex )
+    virtual SHORT DeleteItem( SHORT sItemIndex ) const
     {
         return SHORT1FROMMR( SendMsg( LM_DELETEITEM,
                                       MPFROMSHORT( sItemIndex )));
     }
 
-    virtual bool DeleteItemP( SHORT sItemIndex )
+    virtual bool DeleteItemP( SHORT sItemIndex ) const
     {
         return PostMsg( LM_DELETEITEM, MPFROMSHORT( sItemIndex ));
     }
 
-    virtual SHORT InsertItem( SHORT sItemIndex, const string& strItemText )
+    virtual SHORT InsertItem( SHORT sItemIndex,
+                              const string& strItemText ) const
     {
         return SHORT1FROMMR( SendMsg( LM_INSERTITEM,
                                       MPFROMSHORT( sItemIndex ),
                                       MPFROMP( strItemText.c_str())));
     }
 
-    virtual LONG InsertMultiItems( PLBOXINFO plbi, PCSZ* papcszText )
+    virtual LONG InsertMultiItems( PLBOXINFO plbi, PCSZ* papcszText ) const
     {
         return LONGFROMMR( SendMsg( LM_INSERTMULTITEMS,
                                     MPFROMP( plbi ), MPFROMP( papcszText )));
     }
 
-    virtual LONG InsertMultiItems( PLBOXINFO plbi, const KLBVECSTR& vsText )
+    virtual LONG InsertMultiItems( PLBOXINFO plbi,
+                                   const KLBVECSTR& vsText ) const
     {
         PCSZ* papcszText;
         LONG  rc;
@@ -105,18 +107,19 @@ public :
         return rc;
     }
 
-    virtual SHORT QueryItemCount()
+    virtual SHORT QueryItemCount() const
     {
         return SHORT1FROMMR( SendMsg( LM_QUERYITEMCOUNT ));
     }
 
-    virtual ULONG QueryItemHandle( SHORT sItemIndex )
+    virtual ULONG QueryItemHandle( SHORT sItemIndex ) const
     {
         return LONGFROMMR( SendMsg( LM_QUERYITEMHANDLE,
                                     MPFROMSHORT( sItemIndex )));
     }
 
-    virtual SHORT QueryItemText( SHORT sItemIndex, string& strItemText )
+    virtual SHORT QueryItemText( SHORT sItemIndex,
+                                 string& strItemText ) const
     {
         SHORT sMaxCount = QueryItemTextLength( sItemIndex ) + 1;
         PSZ   pszItemText = new CHAR[ sMaxCount ];
@@ -133,87 +136,88 @@ public :
         return rc;
     }
 
-    virtual SHORT QueryItemTextLength( SHORT sItemIndex )
+    virtual SHORT QueryItemTextLength( SHORT sItemIndex ) const
     {
         return SHORT1FROMMR( SendMsg( LM_QUERYITEMTEXTLENGTH,
                                       MPFROMSHORT( sItemIndex )));
     }
 
-    virtual SHORT QuerySelection( SHORT sItemStart )
+    virtual SHORT QuerySelection( SHORT sItemStart ) const
     {
         return SHORT1FROMMR( SendMsg( LM_QUERYSELECTION,
                                       MPFROMSHORT( sItemStart )));
     }
 
-    virtual SHORT QueryTopIndex()
+    virtual SHORT QueryTopIndex() const
     {
         return SHORT1FROMMR( SendMsg( LM_QUERYTOPINDEX ));
     }
 
     virtual SHORT SearchString( USHORT usCmd, SHORT sItemStart,
-                                const string& strSearchString )
+                                const string& strSearchString ) const
     {
         return SHORT1FROMMR( SendMsg( LM_SEARCHSTRING,
                                       MPFROM2SHORT( usCmd, sItemStart ),
                                       MPFROMP( strSearchString.c_str())));
     }
 
-    virtual bool SelectItem( SHORT sItemIndex, bool fSelect )
+    virtual bool SelectItem( SHORT sItemIndex, bool fSelect ) const
     {
         return SendMsg( LM_SELECTITEM, MPFROMSHORT( sItemIndex ),
                         MPFROMLONG( fSelect ));
     }
 
-    virtual bool SelectItemP( SHORT sItemIndex, bool fSelect )
+    virtual bool SelectItemP( SHORT sItemIndex, bool fSelect ) const
     {
         return PostMsg( LM_SELECTITEM, MPFROMSHORT( sItemIndex ),
                         MPFROMLONG( fSelect ));
     }
 
-    virtual bool SetItemHandle( SHORT sItemIndex, ULONG ulItemHandle )
+    virtual bool SetItemHandle( SHORT sItemIndex, ULONG ulItemHandle ) const
     {
         return SendMsg( LM_SETITEMHANDLE, MPFROMSHORT( sItemIndex ),
                         MPFROMLONG( ulItemHandle ));
     }
 
-    virtual bool SetItemHandleP( SHORT sItemIndex, ULONG ulItemHandle )
+    virtual bool SetItemHandleP( SHORT sItemIndex, ULONG ulItemHandle ) const
     {
         return PostMsg( LM_SETITEMHANDLE, MPFROMSHORT( sItemIndex ),
                         MPFROMLONG( ulItemHandle ));
     }
 
-    virtual bool SetItemHeight( ULONG ulNewHeight )
+    virtual bool SetItemHeight( ULONG ulNewHeight ) const
     {
         return SendMsg( LM_SETITEMHEIGHT, MPFROMLONG( ulNewHeight ));
     }
 
-    virtual bool SetItemHeightP( ULONG ulNewHeight )
+    virtual bool SetItemHeightP( ULONG ulNewHeight ) const
     {
         return PostMsg( LM_SETITEMHEIGHT, MPFROMLONG( ulNewHeight ));
     }
 
-    virtual bool SetItemText( SHORT sItemIndex, const string& strItemText )
+    virtual bool SetItemText( SHORT sItemIndex,
+                              const string& strItemText ) const
     {
         return SendMsg( LM_SETITEMTEXT, MPFROMSHORT( sItemIndex ),
                         MPFROMP( strItemText.c_str()));
     }
 
-    virtual bool SetItemWidth( ULONG ulNewWidth )
+    virtual bool SetItemWidth( ULONG ulNewWidth ) const
     {
         return SendMsg( LM_SETITEMWIDTH, MPFROMLONG( ulNewWidth ));
     }
 
-    virtual bool SetItemWidthP( ULONG ulNewWidth )
+    virtual bool SetItemWidthP( ULONG ulNewWidth ) const
     {
         return PostMsg( LM_SETITEMWIDTH, MPFROMLONG( ulNewWidth ));
     }
 
-    virtual bool SetTopIndex( SHORT sItemIndex )
+    virtual bool SetTopIndex( SHORT sItemIndex ) const
     {
         return SendMsg( LM_SETTOPINDEX, MPFROMSHORT( sItemIndex ));
     }
 
-    virtual bool SetTopIndexP( SHORT sItemIndex )
+    virtual bool SetTopIndexP( SHORT sItemIndex ) const
     {
         return PostMsg( LM_SETTOPINDEX, MPFROMSHORT( sItemIndex ));
     }
