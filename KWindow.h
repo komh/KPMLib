@@ -217,19 +217,19 @@ public :
     virtual bool WindowFromID( ULONG id, KWindow& kwnd ) const;
 
     HWND GetHWND() const { return _hwnd; }
-    virtual void SetHWND( HWND hwnd );
+    void SetHWND( HWND hwnd );
 
     const KWindow& GetParent() const { return *_pkwndParent; }
     const KWindow& GetOwner() const { return *_pkwndOwner; }
 
     const string& GetClassName() const { return _strClassName; }
-    virtual void SetClassName( PCSZ pcszClassName );
-    virtual void SetClassName( const string& strClassName )
+    void SetClassName( PCSZ pcszClassName );
+    void SetClassName( const string& strClassName )
     {
         _strClassName = strClassName;
     }
 
-    virtual bool Centering( bool horz = true, bool vert = true ) const;
+    bool Centering( bool horz = true, bool vert = true ) const;
 
     bool Resize( LONG cx, LONG cy ) const
     {
