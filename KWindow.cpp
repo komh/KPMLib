@@ -67,11 +67,17 @@ KWindow::KWindow()
     _pfnwpOldProc  = 0;
 
     _strClassName.clear();
+
+    _pkwndParent = 0;
+    _pkwndOwner  = 0;
 }
 
 KWindow::~KWindow()
 {
     SetHWND( 0 );
+
+    delete _pkwndOwner;
+    delete _pkwndParent;
 }
 
 bool KWindow::CreateWindow( const KWindow* pkwndP, const string& strName,
@@ -178,6 +184,12 @@ void KWindow::SetHWND( HWND hwnd )
     WinQueryClassName( hwnd, sizeof( szClassName ), szClassName );
 
     _strClassName = szClassName;
+
+    _pkwndParent = new KWindow();
+    QueryWindow( QW_PARENT, *_pkwndParent );
+
+    _pkwndOwner = new KWindow();
+    QueryWindow( QW_OWNER, *_pkwndOwner );
 }
 
 void KWindow::SetClassName( PCSZ pcszClassName )

@@ -219,6 +219,9 @@ public :
     HWND GetHWND() const { return _hwnd; }
     virtual void SetHWND( HWND hwnd );
 
+    const KWindow& GetParent() const { return *_pkwndParent; }
+    const KWindow& GetOwner() const { return *_pkwndOwner; }
+
     const string& GetClassName() const { return _strClassName; }
     virtual void SetClassName( PCSZ pcszClassName );
     virtual void SetClassName( const string& strClassName )
@@ -1062,6 +1065,9 @@ protected :
 private :
     string _strClassName;
     PFNWP  _pfnwpOldProc;
+
+    KWindow* _pkwndParent;
+    KWindow* _pkwndOwner;
 };
 
 ULONG MessageBox( const KWindow* pkwndO, const string& strText,
