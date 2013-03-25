@@ -48,7 +48,7 @@ public :
                             LONG x, LONG y, LONG idItem, ULONG fs ) const
     {
         return WinPopupMenu( pkwnd2hwnd( pkwndP ), pkwnd2hwnd( pkwndO ),
-                             _hwnd, x, y, idItem, fs );
+                             GetHWND(), x, y, idItem, fs );
     }
 
     virtual SHORT DeleteItem( USHORT usItem, bool fIncSub ) const

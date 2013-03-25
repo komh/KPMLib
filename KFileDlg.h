@@ -173,7 +173,7 @@ protected :
 
     virtual MRESULT KDefWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     {
-        return WinDefFileDlgProc( _hwnd, msg, mp1, mp2 );
+        return WinDefFileDlgProc( GetHWND(), msg, mp1, mp2 );
     }
 };
 #endif

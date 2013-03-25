@@ -42,22 +42,22 @@ public :
 
     virtual LONG DeleteLboxItem( LONG index ) const
     {
-        return WinDeleteLboxItem( _hwnd, index );
+        return WinDeleteLboxItem( GetHWND(), index );
     }
 
     virtual LONG InsertLboxItem( LONG index, const string& str ) const
     {
-        return WinInsertLboxItem( _hwnd, index, str.c_str());
+        return WinInsertLboxItem( GetHWND(), index, str.c_str());
     }
 
     virtual LONG QueryLboxSelectedItem() const
     {
-        return WinQueryLboxSelectedItem( _hwnd );
+        return WinQueryLboxSelectedItem( GetHWND() );
     }
 
     virtual bool SetLboxItemText( LONG index, const string& str ) const
     {
-        return WinSetLboxItemText( _hwnd, index, str.c_str());
+        return WinSetLboxItemText( GetHWND(), index, str.c_str());
     }
 
     virtual bool DeleteAll()  const { return SendMsg( LM_DELETEALL ); }

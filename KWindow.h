@@ -237,10 +237,6 @@ public :
     }
 
 protected :
-    static map< HWND, KWindow* > _mapHWND;
-
-    HWND _hwnd;
-
     friend HWND pkwnd2hwnd( const KWindow* pkwnd );
 
     static void AddHWND( HWND hwnd, KWindow* pkwnd )
@@ -1068,6 +1064,10 @@ protected :
     }
 
 private :
+    static map< HWND, KWindow* > _mapHWND;
+
+    HWND _hwnd;
+
     string _strClassName;
     PFNWP  _pfnwpOldProc;
 

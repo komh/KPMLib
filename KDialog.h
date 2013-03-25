@@ -35,23 +35,23 @@ public :
 
     virtual USHORT CheckButton( USHORT usID, USHORT usChkState ) const
     {
-        return WinCheckButton( _hwnd, usID, usChkState );
+        return WinCheckButton( GetHWND(), usID, usChkState );
     }
 
     virtual bool DismissDlg( ULONG ulResult ) const
     {
-        return WinDismissDlg( _hwnd, ulResult );
+        return WinDismissDlg( GetHWND(), ulResult );
     }
 
     virtual void DlgBox( KWindow* pkwndP, KWindow* pkwndO, HMODULE hmod,
                          ULONG idDlg, PVOID pCreateParams = 0 );
     virtual bool LoadDlg( KWindow* pkwndP, KWindow* pkwndO, HMODULE hmod,
                           ULONG idDlg, PVOID pCreateParams = 0 );
-    virtual void ProcessDlg() { _ulResult = WinProcessDlg( _hwnd ); }
+    virtual void ProcessDlg() { _ulResult = WinProcessDlg( GetHWND()); }
 
     virtual USHORT QueryButtonCheckstate( USHORT usID ) const
     {
-        return WinQueryButtonCheckstate( _hwnd, usID );
+        return WinQueryButtonCheckstate( GetHWND(), usID );
     }
 
     virtual ULONG QueryDlgItemText( ULONG idItem, string& strText ) const
@@ -60,7 +60,7 @@ public :
         PSZ   pszText  = new CHAR[ lMaxText ];
         ULONG rc;
 
-        rc = WinQueryDlgItemText( _hwnd, idItem, lMaxText, pszText );
+        rc = WinQueryDlgItemText( GetHWND(), idItem, lMaxText, pszText );
 
         strText = pszText;
 
@@ -71,18 +71,18 @@ public :
 
     virtual LONG QueryDlgItemTextLength( ULONG idItem ) const
     {
-        return WinQueryDlgItemTextLength( _hwnd, idItem );
+        return WinQueryDlgItemTextLength( GetHWND(), idItem );
     }
 
     virtual MRESULT SendDlgItemMsg( ULONG idItem, ULONG msg, MPARAM mp1,
                                     MPARAM mp2 ) const
     {
-        return WinSendDlgItemMsg( _hwnd, idItem, msg, mp1, mp2 );
+        return WinSendDlgItemMsg( GetHWND(), idItem, msg, mp1, mp2 );
     }
 
     virtual bool SetDlgItemText( ULONG idItem, const string& strText ) const
     {
-        return WinSetDlgItemText( _hwnd, idItem, strText.c_str());
+        return WinSetDlgItemText( GetHWND(), idItem, strText.c_str());
     }
 
     ULONG GetResult() const { return _ulResult; }
@@ -93,7 +93,7 @@ protected :
 
     virtual MRESULT KDefWndProc( ULONG msg, MPARAM mp1, MPARAM mp2 )
     {
-        return WinDefDlgProc( _hwnd, msg, mp1, mp2 );
+        return WinDefDlgProc( GetHWND(), msg, mp1, mp2 );
     }
 
 private :
