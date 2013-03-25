@@ -49,9 +49,7 @@ bool KFileDlg::FileDlg( const KWindow* pkwndP, const KWindow* pkwndO )
     _fild.pfnDlgProc = FileDlgProc;
     _fild.ulUser     = reinterpret_cast< ULONG >( this );
 
-    _hwnd = WinFileDlg( hwndP, hwndO, &_fild );
-
-    return _hwnd;
+    return WinFileDlg( hwndP, hwndO, &_fild );
 }
 
 MRESULT EXPENTRY KFileDlg::FileDlgProc( HWND hwndDlg, ULONG msg, MPARAM mp1,
