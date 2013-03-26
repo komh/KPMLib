@@ -36,6 +36,11 @@ public :
     KFrameWindow() : KWindow() {}
     virtual ~KFrameWindow() {}
 
+    virtual bool CalcFrameRect( PRECTL prcl, bool fClient )
+    {
+        return WinCalcFrameRect( GetHWND(), prcl, fClient );
+    }
+
     virtual bool CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
                                   PULONG pflCreateFlags,
                                   const string& strTitle, ULONG flClientStyle,
