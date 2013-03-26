@@ -166,6 +166,13 @@ public :
     virtual bool RegisterClass( HAB hab, const string& strClassName,
                                 ULONG flStyle, ULONG cbWindowData );
 
+    virtual bool RestoreWindowPos( const string& strAppName,
+                                   const string& strKeyName ) const
+    {
+        return WinRestoreWindowPos( strAppName.c_str(), strKeyName.c_str(),
+                                    _hwnd );
+    }
+
     virtual MRESULT SendMsg( ULONG ulMsg,
                              MPARAM mp1 = 0, MPARAM mp2 = 0 ) const
     {
@@ -212,6 +219,13 @@ public :
     virtual bool ShowWindow( BOOL fNewVisibility ) const
     {
         return WinShowWindow( _hwnd, fNewVisibility );
+    }
+
+    virtual bool StoreWindowPos( const string& strAppName,
+                                 const string& strKeyName ) const
+    {
+        return WinStoreWindowPos( strAppName.c_str(), strKeyName.c_str(),
+                                  _hwnd );
     }
 
     virtual bool WindowFromID( ULONG id, KWindow& kwnd ) const;
