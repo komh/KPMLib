@@ -47,6 +47,8 @@ public :
                                   HMODULE hmodResources, ULONG ulId,
                                   KWindow& kwndClient );
 
+    virtual void SetHWND( HWND hwnd );
+
     const KWindow& GetClient() const { return _kwndClient; }
     const KScrollBar& GetHorzScroll() const { return _kwndHorzScroll; }
     const KMenu& GetMenu() const { return _kwndMenu; }

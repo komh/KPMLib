@@ -49,13 +49,8 @@ bool KFrameWindow::CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
                              0, 0, 0, 0, this, KWND_TOP, FID_CLIENT,
                              0, 0 );
 
-    WindowFromID( FID_CLIENT, _kwndClient );
-    WindowFromID( FID_HORZSCROLL, _kwndHorzScroll );
-    WindowFromID( FID_MENU, _kwndMenu );
-    WindowFromID( FID_MINMAX, _kwndMinMax );
-    WindowFromID( FID_SYSMENU, _kwndSysMenu );
-    WindowFromID( FID_TITLEBAR, _kwndTitleBar );
-    WindowFromID( FID_VERTSCROLL, _kwndVertScroll );
+    // to assign a client handle
+    SetHWND( GetHWND());
 
     if( *pflCreateFlags & FCF_SHELLPOSITION )
     {
@@ -66,5 +61,18 @@ bool KFrameWindow::CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
     }
 
     return true;
+}
+
+void KFrameWindow::SetHWND( HWND hwnd )
+{
+    KWindow::SetHWND( hwnd );
+
+    WindowFromID( FID_CLIENT, _kwndClient );
+    WindowFromID( FID_HORZSCROLL, _kwndHorzScroll );
+    WindowFromID( FID_MENU, _kwndMenu );
+    WindowFromID( FID_MINMAX, _kwndMinMax );
+    WindowFromID( FID_SYSMENU, _kwndSysMenu );
+    WindowFromID( FID_TITLEBAR, _kwndTitleBar );
+    WindowFromID( FID_VERTSCROLL, _kwndVertScroll );
 }
 
