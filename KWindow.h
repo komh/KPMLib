@@ -62,11 +62,10 @@ public :
         return WinLoadPointer( HWND_DESKTOP, hmodResource, idPointer );
     }
 
-    virtual bool MapWindowPoints( const KWindow* pkwndFrom,
-                                  const KWindow* pkwndTo, PPOINTL prgptl,
+    virtual bool MapWindowPoints( const KWindow* pkwndTo, PPOINTL prgptl,
                                   LONG cwpt ) const
     {
-        return  WinMapWindowPoints( pkwnd2hwnd( pkwndFrom ),
+        return  WinMapWindowPoints( _hwnd,
                                     pkwnd2hwnd( pkwndTo ), prgptl, cwpt );
     }
 
