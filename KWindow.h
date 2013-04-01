@@ -253,23 +253,6 @@ public :
 protected :
     friend HWND pkwnd2hwnd( const KWindow* pkwnd );
 
-    static void AddHWND( HWND hwnd, KWindow* pkwnd )
-    {
-        _mapHWND[ hwnd ] = pkwnd;
-    }
-
-    static void RemoveHWND( HWND hwnd ) { _mapHWND.erase( hwnd ); }
-
-    static KWindow* FindHWND( HWND hwnd )
-    {
-        map< HWND, KWindow* >::iterator it = _mapHWND.find( hwnd );
-
-        return ( it == _mapHWND.end()) ? 0 : it->second;
-    }
-
-    static MRESULT EXPENTRY WndProc( HWND hwnd, ULONG msg, MPARAM mp1,
-                                     MPARAM mp2 );
-
     virtual MRESULT KDefWndProc( ULONG msg, MPARAM mp1 = 0, MPARAM mp2 = 0 )
     {
         return _pfnwpOldProc ? _pfnwpOldProc( _hwnd, msg, mp1, mp2 ) :
@@ -1079,6 +1062,23 @@ protected :
 
 private :
     static map< HWND, KWindow* > _mapHWND;
+
+    static void AddHWND( HWND hwnd, KWindow* pkwnd )
+    {
+        _mapHWND[ hwnd ] = pkwnd;
+    }
+
+    static void RemoveHWND( HWND hwnd ) { _mapHWND.erase( hwnd ); }
+
+    static KWindow* FindHWND( HWND hwnd )
+    {
+        map< HWND, KWindow* >::iterator it = _mapHWND.find( hwnd );
+
+        return ( it == _mapHWND.end()) ? 0 : it->second;
+    }
+
+    static MRESULT EXPENTRY WndProc( HWND hwnd, ULONG msg, MPARAM mp1,
+                                     MPARAM mp2 );
 
     HWND _hwnd;
 
