@@ -36,7 +36,7 @@ public :
     KFrameWindow() : KWindow() {}
     virtual ~KFrameWindow() {}
 
-    virtual bool CalcFrameRect( PRECTL prcl, bool fClient )
+    virtual bool CalcFrameRect( PRECTL prcl, bool fClient ) const
     {
         return WinCalcFrameRect( GetHWND(), prcl, fClient );
     }
