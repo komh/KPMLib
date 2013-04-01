@@ -1092,4 +1092,12 @@ ULONG MessageBox( const KWindow* pkwndO, const string& strText,
                   const string& strCaption, ULONG flStyle );
 ULONG MessageBox( const KWindow* pkwndO, const string& strText,
                   const string& strCaption, ULONG id, ULONG flStyle );
+
+inline
+bool MapWindowPoints( const KWindow* pkwndFrom, const KWindow* pkwndTo,
+                      PPOINTL prgptl, LONG cwpt )
+{
+    return WinMapWindowPoints( pkwnd2hwnd( pkwndFrom ), pkwnd2hwnd( pkwndTo ),
+                               prgptl, cwpt );
+}
 #endif
