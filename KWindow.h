@@ -230,21 +230,21 @@ public :
     virtual bool WindowFromID( ULONG id, KWindow& kwnd ) const;
 
     HWND GetHWND() const { return _hwnd; }
-    void SetHWND( HWND hwnd );
+    virtual void SetHWND( HWND hwnd );
 
     const KWindow& GetParent() const { return *_pkwndParent; }
     const KWindow& GetOwner() const { return *_pkwndOwner; }
 
     const string& GetClassName() const { return _strClassName; }
-    void SetClassName( PCSZ pcszClassName );
-    void SetClassName( const string& strClassName )
+    virtual void SetClassName( PCSZ pcszClassName );
+    virtual void SetClassName( const string& strClassName )
     {
         _strClassName = strClassName;
     }
 
-    bool Centering( bool horz = true, bool vert = true ) const;
+    virtual bool Centering( bool horz = true, bool vert = true ) const;
 
-    bool Resize( LONG cx, LONG cy ) const
+    virtual bool Resize( LONG cx, LONG cy ) const
     {
         return SetWindowPos( 0, 0, 0, cx, cy, SWP_SIZE );
     }
