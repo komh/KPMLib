@@ -55,6 +55,16 @@ public :
     const KTitleBar& GetTitleBar() const { return _kwndTitleBar; }
     const KScrollBar& GetVertScroll() const { return _kwndVertScroll; }
 
+    virtual bool Activate() const
+    {
+        return SetWindowPos( 0, 0, 0, 0, 0, SWP_ACTIVATE );
+    }
+
+    virtual bool Deactivate() const
+    {
+        return SetWindowPos( 0, 0, 0, 0, 0, SWP_DEACTIVATE );
+    }
+
 private :
     KWindow    _kwndClient;
     KScrollBar _kwndHorzScroll;

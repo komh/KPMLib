@@ -249,6 +249,31 @@ public :
         return SetWindowPos( 0, 0, 0, cx, cy, SWP_SIZE );
     }
 
+    virtual bool Move( LONG x, LONG y ) const
+    {
+        return SetWindowPos( 0, x, y, 0, 0, SWP_MOVE );
+    }
+
+    virtual bool Place( const KWindow* pkwnd ) const
+    {
+        return SetWindowPos( pkwnd, 0, 0, 0, 0, SWP_ZORDER );
+    }
+
+    virtual bool Maximize() const
+    {
+        return SetWindowPos( 0, 0, 0, 0, 0, SWP_MAXIMIZE );
+    }
+
+    virtual bool Minimize() const
+    {
+        return SetWindowPos( 0, 0, 0, 0, 0, SWP_MINIMIZE );
+    }
+
+    virtual bool Restore() const
+    {
+        return SetWindowPos( 0, 0, 0, 0, 0, SWP_RESTORE );
+    }
+
 protected :
     friend HWND pkwnd2hwnd( const KWindow* pkwnd );
 
