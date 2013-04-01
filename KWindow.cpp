@@ -45,22 +45,6 @@ HWND pkwnd2hwnd( const KWindow* pkwnd )
     return pkwnd->_hwnd;
 }
 
-ULONG MessageBox( const KWindow* pkwndO, const string& strText,
-                  const string& strCaption, ULONG flStyle )
-{
-    return WinMessageBox( HWND_DESKTOP, pkwnd2hwnd( pkwndO ),
-                          strText.c_str(), strCaption.c_str(),
-                          0xFFFF, flStyle );
-}
-
-ULONG MessageBox( const KWindow* pkwndO, const string& strText,
-                  const string& strCaption, ULONG id, ULONG flStyle )
-{
-    return WinMessageBox( HWND_DESKTOP, pkwnd2hwnd( pkwndO ),
-                          strText.c_str(), strCaption.c_str(),
-                          id, flStyle );
-}
-
 KWindow::KWindow()
 {
     _hwnd          = 0;

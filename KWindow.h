@@ -1088,10 +1088,23 @@ private :
     KWindow* _pkwndOwner;
 };
 
+inline
 ULONG MessageBox( const KWindow* pkwndO, const string& strText,
-                  const string& strCaption, ULONG flStyle );
+                  const string& strCaption, ULONG flStyle )
+{
+    return WinMessageBox( HWND_DESKTOP, pkwnd2hwnd( pkwndO ),
+                          strText.c_str(), strCaption.c_str(),
+                          0xFFFF, flStyle );
+}
+
+inline
 ULONG MessageBox( const KWindow* pkwndO, const string& strText,
-                  const string& strCaption, ULONG id, ULONG flStyle );
+                  const string& strCaption, ULONG id, ULONG flStyle )
+{
+    return WinMessageBox( HWND_DESKTOP, pkwnd2hwnd( pkwndO ),
+                          strText.c_str(), strCaption.c_str(),
+                          id, flStyle );
+}
 
 inline
 bool MapWindowPoints( const KWindow* pkwndFrom, const KWindow* pkwndTo,
