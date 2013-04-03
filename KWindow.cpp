@@ -59,9 +59,6 @@ KWindow::KWindow()
 KWindow::~KWindow()
 {
     SetHWND( 0 );
-
-    delete _pkwndOwner;
-    delete _pkwndParent;
 }
 
 bool KWindow::CreateWindow( const KWindow* pkwndP, const string& strName,
@@ -147,6 +144,12 @@ void KWindow::SetHWND( HWND hwnd )
         _pfnwpOldProc  = 0;
 
         _strClassName.clear();
+
+        delete _pkwndParent;
+        _pkwndParent = 0;
+
+        delete _pkwndOwner;
+        _pkwndOwner = 0;
 
         return;
     }
