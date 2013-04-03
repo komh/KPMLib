@@ -172,10 +172,10 @@ void KWindow::SetHWND( HWND hwnd )
 
     _strClassName = szClassName;
 
-    _pkwndParent = new KWindow();
+    _pkwndParent = new KWindow;
     QueryWindow( QW_PARENT, *_pkwndParent );
 
-    _pkwndOwner = new KWindow();
+    _pkwndOwner = new KWindow;
     QueryWindow( QW_OWNER, *_pkwndOwner );
 }
 
