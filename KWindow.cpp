@@ -195,7 +195,7 @@ void KWindow::SetClassName( PCSZ pcszClassName )
     _strClassName = pcszClassName;
 }
 
-bool KWindow::Centering( bool horz, bool vert ) const
+bool KWindow::MoveToCenter( bool horz, bool vert ) const
 {
     RECTL rclP, rcl;
     KWindow kwndP;
