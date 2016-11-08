@@ -46,6 +46,11 @@ RC :=
 # specify resource compiler flags
 RCFLAGS :=
 
+# set if you want not to compress resources
+NO_COMPRESS_RES :=
+
+# Variables for programs
+#
 # 1. specify a list of programs without an extension with
 #
 #   BIN_PROGRAMS
@@ -80,13 +85,15 @@ kpmw_RCSRC     := kpmwrc.rc
 kpmw_DEF       := kpmw.def
 kpmw_EXTRADEPS := KPMLib.a
 
+# Variables for libraries
+#
 # 1. specify a list of libraries without an extension with
 #
 #   BIN_LIBRARIES
 #
 # Now, assume
 #
-#   BIN_PROGRAMS := library
+#   BIN_LIBRARIES := library
 #
 # 2. specify sources for a specific library with
 #
@@ -114,6 +121,7 @@ kpmw_EXTRADEPS := KPMLib.a
 #   library_RCSRC       for rc source
 #   library_RCFLAGS     for rc flags
 #   library_DEF         for .def file, if not set all the symbols are exported
+#   library_NO_EXPORT   if set, no symbols are exported in .def file
 #   library_EXTRADEPS   for extra dependencies
 #
 # the above is only for DLL
@@ -145,3 +153,4 @@ include Makefile.common
 # additional stuffs
 
 kpmwrc.rc : kpmwrc.h
+
