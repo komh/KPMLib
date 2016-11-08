@@ -43,7 +43,8 @@ public :
 
     virtual bool CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
                                   PULONG pflCreateFlags,
-                                  const string& strTitle, ULONG flClientStyle,
+                                  const std::string& strTitle, 
+                                  ULONG flClientStyle,
                                   HMODULE hmodResources, ULONG ulId,
                                   KWindow& kwndClient );
 

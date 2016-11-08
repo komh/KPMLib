@@ -28,6 +28,8 @@
 
 #include "kpmw.h"
 
+using namespace std;
+
 #define IDB_MYPUSH          100
 #define IDB_MYRADIO         101
 #define IDB_MYCHECKBOX      102

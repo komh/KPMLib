@@ -24,6 +24,8 @@
 
 #include "KTitleBar.h"
 
+using namespace std;
+
 bool KTitleBar::CreateWindow( const KWindow* pkwndP, const string& strName,
                               ULONG flStyle, LONG x, LONG y, LONG cx, LONG cy,
                               const KWindow* pkwndO, const KWindow* pkwndS,

@@ -26,7 +26,7 @@
 
 #include "KWindow.h"
 
-typedef vector< string > KLBVECSTR;
+typedef std::vector< std::string > KLBVECSTR;
 
 class KListBox : public KWindow
 {
@@ -34,7 +34,8 @@ public :
     KListBox() : KWindow() {};
     virtual ~KListBox() {};
 
-    virtual bool CreateWindow( const KWindow* pkwndP, const string& strName,
+    virtual bool CreateWindow( const KWindow* pkwndP, 
+                               const std::string& strName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
@@ -45,7 +46,7 @@ public :
         return WinDeleteLboxItem( GetHWND(), index );
     }
 
-    virtual LONG InsertLboxItem( LONG index, const string& str ) const
+    virtual LONG InsertLboxItem( LONG index, const std::string& str ) const
     {
         return WinInsertLboxItem( GetHWND(), index, str.c_str());
     }
@@ -55,7 +56,7 @@ public :
         return WinQueryLboxSelectedItem( GetHWND() );
     }
 
-    virtual bool SetLboxItemText( LONG index, const string& str ) const
+    virtual bool SetLboxItemText( LONG index, const std::string& str ) const
     {
         return WinSetLboxItemText( GetHWND(), index, str.c_str());
     }
@@ -75,7 +76,7 @@ public :
     }
 
     virtual SHORT InsertItem( SHORT sItemIndex,
-                              const string& strItemText ) const
+                              const std::string& strItemText ) const
     {
         return SHORT1FROMMR( SendMsg( LM_INSERTITEM,
                                       MPFROMSHORT( sItemIndex ),
@@ -119,7 +120,7 @@ public :
     }
 
     virtual SHORT QueryItemText( SHORT sItemIndex,
-                                 string& strItemText ) const
+                                 std::string& strItemText ) const
     {
         SHORT sMaxCount = QueryItemTextLength( sItemIndex ) + 1;
         PSZ   pszItemText = new CHAR[ sMaxCount ];
@@ -154,7 +155,7 @@ public :
     }
 
     virtual SHORT SearchString( USHORT usCmd, SHORT sItemStart,
-                                const string& strSearchString ) const
+                                const std::string& strSearchString ) const
     {
         return SHORT1FROMMR( SendMsg( LM_SEARCHSTRING,
                                       MPFROM2SHORT( usCmd, sItemStart ),
@@ -196,7 +197,7 @@ public :
     }
 
     virtual bool SetItemText( SHORT sItemIndex,
-                              const string& strItemText ) const
+                              const std::string& strItemText ) const
     {
         return SendMsg( LM_SETITEMTEXT, MPFROMSHORT( sItemIndex ),
                         MPFROMP( strItemText.c_str()));

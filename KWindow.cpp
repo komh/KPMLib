@@ -26,6 +26,8 @@
 
 #include "KWindow.h"
 
+using namespace std;
+
 map< HWND, KWindow*> KWindow::_mapHWND;
 
 struct CreateParams

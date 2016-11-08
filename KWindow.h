@@ -25,7 +25,6 @@
 
 #include <map>
 #include <string>
-using namespace std;
 
 #define STR2PSZ( s )   ( reinterpret_cast< PSZ >( s ))
 #define CSTR2PSZ( s )  ( reinterpret_cast< PSZ >( const_cast< char* >( s )))
@@ -43,7 +42,8 @@ public :
     KWindow();
     virtual ~KWindow();
 
-    virtual bool CreateWindow( const KWindow* pkwndP, const string& strName,
+    virtual bool CreateWindow( const KWindow* pkwndP, 
+                               const std::string& strName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
@@ -69,7 +69,8 @@ public :
                                     pkwnd2hwnd( pkwndTo ), prgptl, cwpt );
     }
 
-    virtual ULONG MessageBox( const string& strText, const string& strCaption,
+    virtual ULONG MessageBox( const std::string& strText, 
+                              const std::string& strCaption,
                               ULONG flStyle ) const
     {
         return WinMessageBox( HWND_DESKTOP, _hwnd,
@@ -77,7 +78,8 @@ public :
                               0xFFFF, flStyle );
     }
 
-    virtual ULONG MessageBox( const string& strText, const string& strCaption,
+    virtual ULONG MessageBox( const std::string& strText, 
+                              const std::string& strCaption,
                               ULONG id, ULONG flStyle ) const
     {
         return WinMessageBox( HWND_DESKTOP, _hwnd,
@@ -132,7 +134,7 @@ public :
         return WinQueryWindowRect( _hwnd, prcl );
     }
 
-    virtual LONG QueryWindowText( string& strBuffer ) const
+    virtual LONG QueryWindowText( std::string& strBuffer ) const
     {
         LONG lLength   = QueryWindowTextLength() + 1;
         PCH  pchBuffer = new CHAR[ lLength ];
@@ -162,11 +164,11 @@ public :
         return WinQueryWindowUShort( _hwnd, index );
     }
 
-    virtual bool RegisterClass( HAB hab, const string& strClassName,
+    virtual bool RegisterClass( HAB hab, const std::string& strClassName,
                                 ULONG flStyle, ULONG cbWindowData );
 
-    virtual bool RestoreWindowPos( const string& strAppName,
-                                   const string& strKeyName ) const
+    virtual bool RestoreWindowPos( const std::string& strAppName,
+                                   const std::string& strKeyName ) const
     {
         return WinRestoreWindowPos( strAppName.c_str(), strKeyName.c_str(),
                                     _hwnd );
@@ -200,7 +202,7 @@ public :
         return WinSetWindowPtr( _hwnd, lb, p );
     }
 
-    virtual bool SetWindowText( const string& strString ) const
+    virtual bool SetWindowText( const std::string& strString ) const
     {
         return WinSetWindowText( _hwnd, strString.c_str());
     }
@@ -220,8 +222,8 @@ public :
         return WinShowWindow( _hwnd, fNewVisibility );
     }
 
-    virtual bool StoreWindowPos( const string& strAppName,
-                                 const string& strKeyName ) const
+    virtual bool StoreWindowPos( const std::string& strAppName,
+                                 const std::string& strKeyName ) const
     {
         return WinStoreWindowPos( strAppName.c_str(), strKeyName.c_str(),
                                   _hwnd );
@@ -235,9 +237,9 @@ public :
     const KWindow& GetParent() const { return *_pkwndParent; }
     const KWindow& GetOwner() const { return *_pkwndOwner; }
 
-    const string& GetClassName() const { return _strClassName; }
+    const std::string& GetClassName() const { return _strClassName; }
     virtual void SetClassName( PCSZ pcszClassName );
-    virtual void SetClassName( const string& strClassName )
+    virtual void SetClassName( const std::string& strClassName )
     {
         _strClassName = strClassName;
     }
@@ -1085,7 +1087,7 @@ protected :
     }
 
 private :
-    static map< HWND, KWindow* > _mapHWND;
+    static std::map< HWND, KWindow* > _mapHWND;
 
     static void AddHWND( HWND hwnd, KWindow* pkwnd )
     {
@@ -1096,7 +1098,7 @@ private :
 
     static KWindow* FindHWND( HWND hwnd )
     {
-        map< HWND, KWindow* >::iterator it = _mapHWND.find( hwnd );
+        std::map< HWND, KWindow* >::iterator it = _mapHWND.find( hwnd );
 
         return ( it == _mapHWND.end()) ? 0 : it->second;
     }
@@ -1106,7 +1108,7 @@ private :
 
     HWND _hwnd;
 
-    string _strClassName;
+    std::string _strClassName;
     PFNWP  _pfnwpOldProc;
 
     KWindow* _pkwndParent;
@@ -1114,8 +1116,8 @@ private :
 };
 
 inline
-ULONG MessageBox( const KWindow* pkwndO, const string& strText,
-                  const string& strCaption, ULONG flStyle )
+ULONG MessageBox( const KWindow* pkwndO, const std::string& strText,
+                  const std::string& strCaption, ULONG flStyle )
 {
     return WinMessageBox( HWND_DESKTOP, pkwnd2hwnd( pkwndO ),
                           strText.c_str(), strCaption.c_str(),
@@ -1123,8 +1125,8 @@ ULONG MessageBox( const KWindow* pkwndO, const string& strText,
 }
 
 inline
-ULONG MessageBox( const KWindow* pkwndO, const string& strText,
-                  const string& strCaption, ULONG id, ULONG flStyle )
+ULONG MessageBox( const KWindow* pkwndO, const std::string& strText,
+                  const std::string& strCaption, ULONG id, ULONG flStyle )
 {
     return WinMessageBox( HWND_DESKTOP, pkwnd2hwnd( pkwndO ),
                           strText.c_str(), strCaption.c_str(),

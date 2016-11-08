@@ -24,6 +24,8 @@
 
 #include "KMenu.h"
 
+using namespace std;
+
 bool KMenu::CreateWindow( const KWindow* pkwndP, const string& strName,
                           ULONG flStyle, LONG x, LONG y, LONG cx, LONG cy,
                           const KWindow* pkwndO, const KWindow* pkwndS,

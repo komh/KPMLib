@@ -24,6 +24,8 @@
 
 #include "KStaticText.h"
 
+using namespace std;
+
 bool KStaticText::CreateWindow( const KWindow* pkwndP, const string& strName,
                                 ULONG flStyle, LONG x, LONG y,
                                 LONG cx, LONG cy, const KWindow* pkwndO,

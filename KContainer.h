@@ -25,7 +25,6 @@
 
 #include <string>
 #include <list>
-using namespace std;
 
 #include "KWindow.h"
 
@@ -46,14 +45,15 @@ public :
 
     virtual ~KContainer()
     {
-        typename list< StorageParam* >::iterator it;
+        typename std::list< StorageParam* >::iterator it;
 
         for( it = _StorageParamList.begin(); it != _StorageParamList.end();
              ++it )
             delete *it;
     }
 
-    virtual bool CreateWindow( const KWindow* pkwndP, const string& strName,
+    virtual bool CreateWindow( const KWindow* pkwndP, 
+                               const std::string& strName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
@@ -403,7 +403,7 @@ protected :
 private :
     mutable bool _fDoSort;
 
-    list< StorageParam* > _StorageParamList;
+    std::list< StorageParam* > _StorageParamList;
 
     static BOOL EXPENTRY FilterFunc( T* p, PVOID pStorage )
     {

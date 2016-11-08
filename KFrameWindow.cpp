@@ -27,9 +27,12 @@
 #include "KWindow.h"
 #include "KFrameWindow.h"
 
+using namespace std;
+
 bool KFrameWindow::CreateStdWindow( KWindow* pkwndP, ULONG flStyle,
                                     PULONG pflCreateFlags,
-                                    const string& strTitle, ULONG flClientStyle,
+                                    const string& strTitle,
+                                    ULONG flClientStyle,
                                     HMODULE hmodResources, ULONG ulId,
                                     KWindow& kwndClient )
 {

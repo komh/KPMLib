@@ -29,7 +29,7 @@
 
 #include "KDialog.h"
 
-typedef vector< string > KFDVECSTR;
+typedef std::vector< std::string > KFDVECSTR;
 
 class KFileDlg : public KDialog
 {
@@ -48,19 +48,19 @@ public :
 
     virtual void SetFl( ULONG fl ) { _fild.fl = fl; }
     virtual void SetUser( ULONG ulUser ) { _fild.ulUser = ulUser; }
-    virtual void SetTitle( const string& strTitle )
+    virtual void SetTitle( const std::string& strTitle )
     {
         _strTitle      = strTitle;
         _fild.pszTitle = CSTR2PSZ( _strTitle.c_str());
     }
 
-    virtual void SetOkButton( const string& strOKButton )
+    virtual void SetOkButton( const std::string& strOKButton )
     {
         _strOKButton      = strOKButton;
         _fild.pszOKButton = CSTR2PSZ( _strOKButton.c_str());
     }
 
-    virtual void SetIType( const string& strIType )
+    virtual void SetIType( const std::string& strIType )
     {
         _strIType      = strIType;
         _fild.pszIType = CSTR2PSZ( _strIType.c_str());
@@ -86,7 +86,7 @@ public :
         _fild.papszITypeList = reinterpret_cast< PAPSZ >( &_ppszITypeList );
     }
 
-    virtual void SetIDrive( const string& strIDrive )
+    virtual void SetIDrive( const std::string& strIDrive )
     {
         _strIDrive      = strIDrive;
         _fild.pszIDrive = CSTR2PSZ( _strIDrive.c_str());
@@ -114,7 +114,7 @@ public :
 
     virtual void SetMod( HMODULE hMod ) { _fild.hMod = hMod; }
 
-    virtual void SetFullFile( const string& strFullFile )
+    virtual void SetFullFile( const std::string& strFullFile )
     {
         strncpy( _fild.szFullFile, strFullFile.c_str(),
                  sizeof( _fild.szFullFile ) - 1 );
@@ -129,7 +129,7 @@ public :
     LONG GetSrc() const { return _fild.lSRC; }
 
     PCSZ GetFullFile() const { return _fild.szFullFile; }
-    const string& GetFullFile()
+    const std::string& GetFullFile()
     {
         _strFullFile = _fild.szFullFile;
 
@@ -162,17 +162,17 @@ protected :
     }
 
 private :
-    FILEDLG   _fild;
-    string    _strTitle;
-    string    _strOKButton;
-    string    _strIType;
-    string    _strIDrive;
-    string    _strFullFile;
-    PSZ*      _ppszITypeList;
-    KFDVECSTR _vsITypeList;
-    PSZ*      _ppszIDriveList;
-    KFDVECSTR _vsIDriveList;
-    KFDVECSTR _vsFQFilename;
+    FILEDLG     _fild;
+    std::string _strTitle;
+    std::string _strOKButton;
+    std::string _strIType;
+    std::string _strIDrive;
+    std::string _strFullFile;
+    PSZ*        _ppszITypeList;
+    KFDVECSTR   _vsITypeList;
+    PSZ*        _ppszIDriveList;
+    KFDVECSTR   _vsIDriveList;
+    KFDVECSTR   _vsFQFilename;
 
     static MRESULT EXPENTRY FileDlgProc( HWND hwndDlg, ULONG msg, MPARAM mp1,
                                          MPARAM mp2 );

@@ -30,7 +30,8 @@ public :
     KMenu() : KWindow() {};
     virtual ~KMenu() {};
 
-    virtual bool CreateWindow( const KWindow* pkwndP, const string& strName,
+    virtual bool CreateWindow( const KWindow* pkwndP, 
+                               const std::string& strName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
@@ -72,7 +73,7 @@ public :
         return PostMsg( MM_ENDMENUMODE, MPFROMLONG( fDismiss ));
     }
 
-    virtual SHORT InsertItem( PMENUITEM pmi, const string& strText ) const
+    virtual SHORT InsertItem( PMENUITEM pmi, const std::string& strText ) const
     {
         return SHORT1FROMMR( SendMsg( MM_INSERTITEM, MPFROMP( pmi ),
                                       MPFROMP( strText.c_str())));
@@ -127,7 +128,7 @@ public :
                         MPFROMP( prcl ));
     }
 
-    virtual SHORT QueryItemText( USHORT usItem, string& strText ) const
+    virtual SHORT QueryItemText( USHORT usItem, std::string& strText ) const
     {
         SHORT sMaxCount = QueryItemTextLength( usItem ) + 1;
         PSZ   pszText   = new CHAR[ sMaxCount ];
@@ -222,7 +223,7 @@ public :
                         MPFROMLONG( ulHandle ));
     }
 
-    virtual bool SetItemText( USHORT usItem, const string& strText ) const
+    virtual bool SetItemText( USHORT usItem, const std::string& strText ) const
     {
         return SendMsg( MM_SETITEMTEXT, MPFROMSHORT( usItem ),
                         MPFROMP( strText.c_str()));

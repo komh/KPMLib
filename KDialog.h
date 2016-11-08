@@ -54,7 +54,7 @@ public :
         return WinQueryButtonCheckstate( GetHWND(), usID );
     }
 
-    virtual ULONG QueryDlgItemText( ULONG idItem, string& strText ) const
+    virtual ULONG QueryDlgItemText( ULONG idItem, std::string& strText ) const
     {
         LONG  lMaxText = QueryDlgItemTextLength( idItem ) + 1;
         PSZ   pszText  = new CHAR[ lMaxText ];
@@ -80,7 +80,8 @@ public :
         return WinSendDlgItemMsg( GetHWND(), idItem, msg, mp1, mp2 );
     }
 
-    virtual bool SetDlgItemText( ULONG idItem, const string& strText ) const
+    virtual bool SetDlgItemText( ULONG idItem, 
+                                 const std::string& strText ) const
     {
         return WinSetDlgItemText( GetHWND(), idItem, strText.c_str());
     }

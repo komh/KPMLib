@@ -33,7 +33,8 @@ public :
     KStaticText() : KWindow() {};
     virtual ~KStaticText() {};
 
-    virtual bool CreateWindow( const KWindow* pkwndP, const string& strName,
+    virtual bool CreateWindow( const KWindow* pkwndP, 
+                               const std::string& strName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,

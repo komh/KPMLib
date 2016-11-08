@@ -24,6 +24,8 @@
 
 #include "KEntryField.h"
 
+using namespace std;
+
 bool KEntryField::CreateWindow( const KWindow* pkwndP, const string& strName,
                                 ULONG flStyle, LONG x, LONG y,
                                 LONG cx, LONG cy,

@@ -33,7 +33,8 @@ public :
     KComboBox() : KWindow() {};
     virtual ~KComboBox() {};
 
-    virtual bool CreateWindow( const KWindow* pkwndP, const string& strName,
+    virtual bool CreateWindow( const KWindow* pkwndP, 
+                               const std::string& strName,
                                ULONG flStyle, LONG x, LONG y,
                                LONG cx, LONG cy, const KWindow* pkwndO,
                                const KWindow* pkwndS, ULONG id,
@@ -77,7 +78,7 @@ public :
     }
 
     virtual SHORT LmInsertItem( SHORT sItemIndex,
-                                const string& strItemText ) const
+                                const std::string& strItemText ) const
     {
         return SHORT1FROMMR( SendMsg( LM_INSERTITEM,
                                       MPFROMSHORT( sItemIndex ),
@@ -90,7 +91,7 @@ public :
     }
 
     virtual SHORT LMQueryItemText( SHORT sItemIndex,
-                                   string& strItemText ) const
+                                   std::string& strItemText ) const
     {
         SHORT sMaxCount   = LmQueryItemTextLength( sItemIndex ) + 1;
         PSZ   pszItemText = new CHAR[ sMaxCount ];;
@@ -125,7 +126,7 @@ public :
     }
 
     virtual SHORT LmSearchString( USHORT usCmd, SHORT sItemStart,
-                                  const string& strSearchString ) const
+                                  const std::string& strSearchString ) const
     {
         return SHORT1FROMMR( SendMsg( LM_SEARCHSTRING,
                                       MPFROM2SHORT( usCmd, sItemStart ),
@@ -145,7 +146,7 @@ public :
     }
 
     virtual bool LmSetItemText( SHORT sItemIndex,
-                                const string& strItemText ) const
+                                const std::string& strItemText ) const
     {
         return SendMsg( LM_SETITEMTEXT, MPFROMSHORT( sItemIndex ),
                         MPFROMP( strItemText.c_str()));
