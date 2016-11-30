@@ -157,9 +157,6 @@ MRESULT KDirDlg::OnInitDlg( HWND hwnd, PVOID pcreate )
 
 MRESULT KDirDlg::OnControl( USHORT id, USHORT usCode, ULONG ulParam )
 {
-    PFILEDLG pfiledlg = reinterpret_cast< PFILEDLG >
-                            (QueryWindowPtr(QWL_USER));
-
     KWindowPS kwps;
     SWP       swp;
     RECTL     rectlString = {0,0,1000,1000};
@@ -168,8 +165,8 @@ MRESULT KDirDlg::OnControl( USHORT id, USHORT usCode, ULONG ulParam )
     int       iLength;
     CHAR      szString[CCHMAXPATH];
 
-    strcpy(szString, pfiledlg->szFullFile);
-    iLength = strlen(pfiledlg->szFullFile);
+    strcpy(szString, GetFullFile().c_str());
+    iLength = GetFullFile().length();
     /* If we are not just a drive */
     if (iLength > 3) {
         if (szString[iLength-1] == '\\') {
