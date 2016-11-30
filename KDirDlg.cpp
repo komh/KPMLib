@@ -231,7 +231,10 @@ bool KDirDlg::FileDlg(const KWindow* pkwndP, const KWindow* pkwndO)
     strncpy(szFullFile + len, "\\^",
             sizeof(szFullFile) - len - 1);
 
+    SetFullFile( szFullFile );
     bool rc = KFileDlg::FileDlg(pkwndP, pkwndO);
+
+    strcpy( szFullFile, GetFullFile().c_str());
 
     // Remove a temporary filename part
     p = strrchr( szFullFile, '\\');
