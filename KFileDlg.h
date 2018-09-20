@@ -23,6 +23,8 @@
 #define INCL_WIN
 #include <os2.h>
 
+#include <cstring>
+
 #include <string>
 
 #include <vector>
